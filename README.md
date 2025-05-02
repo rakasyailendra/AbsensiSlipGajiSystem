@@ -1,8 +1,11 @@
 <img src="kantin mama.gif" alt="GitHub Banner" width="10000%" />
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
- <p align="center"> 📋 Aplikasi Absensi Karyawan & Slip Gaji💸💼🍔 </p>
+<h1 align="center">
+  <img
+    src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=800&height=80&duration=7000&lines=Hi+Welcome+👋;+Aplikasi+Absensi+Karyawan+%26+Slip+Gaji💸💼🍔"
+  />
+</h1>
 
-##
 Aplikasi desktop berbasis Java dan Java Swing ini dibuat untuk membantu proses absensi karyawan dan pengelolaan slip gaji untuk kantin mama secara efisien dan. Dibuat dengan pendekatan OOP (Object-Oriented Programming), sistem ini mendukung fitur CRUD, dan didesain GUI dengan tampilan menarik. Project ini dibuat demi memenuhi tugas EAS mata kuliah Pemograman Berorientasi kelas F081
 ##
 Dosen Pengampu: Fawwaz Ali Akbar, S.Kom.,M.Kom
