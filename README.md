@@ -35,6 +35,7 @@ Disusun Oleh:
 💻 Teknologi yang Digunakan<br>
 Java <br>
 Java Swing<br>
+SQLlite untuk Database
 HTML5 (untuk readme github)
 
 ##
