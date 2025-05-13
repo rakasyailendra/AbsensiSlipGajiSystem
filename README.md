@@ -19,7 +19,7 @@ Disusun Oleh:
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ✨ Fitur Utama
-#### **👨‍💼 ADMINISTRASI PESANTREN**
+#### **👨‍💼 ADMIN PESANTREN**
 1. **Manajemen Data Asatidz** (Tambah/Edit/Hapus)  
 2. **Rekap Absensi Harian** dengan Validasi Lokasi  
 3. **Perhitungan Honor Otomatis** (Dasar + Tunjangan Mengajar)  
