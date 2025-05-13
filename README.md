@@ -6,7 +6,7 @@
   />
 </h1>
 
-Aplikasi desktop berbasis Java dan Java Swing ini dibuat untuk membantu proses absensi asatidz 👳🏻‍♀️🧕🏻 dan pengelolaan slip gaji untuk Pondok Pesantren Baitul Hikmah Surabaya secara efisien. Dibuat dengan pendekatan OOP (Object-Oriented Programming), sistem ini mendukung fitur CRUD, dan didesain GUI dengan tampilan menarik. Project ini dibuat demi memenuhi tugas EAS mata kuliah Pemograman Berorientasi kelas F081
+Aplikasi desktop berbasis Java dan Java Swing ini dibuat untuk membantu proses absensi pegawai 👳🏻‍♀️🧕🏻 dan pengelolaan slip gaji untuk Pondok Pesantren Baitul Hikmah Surabaya secara efisien. Dibuat dengan pendekatan OOP (Object-Oriented Programming), sistem ini mendukung fitur CRUD, dan didesain GUI dengan tampilan menarik. Project ini dibuat untuk memenuhi tugas EAS mata kuliah Pemograman Berorientasi kelas F081
 ##
 Dosen Pengampu: Fawwaz Ali Akbar, S.Kom.,M.Kom
 <br>
@@ -19,14 +19,14 @@ Disusun Oleh:
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ✨ Fitur Utama
-#### **👨‍💼 ADMINISTRASI PESANTREN**
-1. **Manajemen Data Asatidz** (Tambah/Edit/Hapus)  
+#### **👨‍💼 ADMIN PESANTREN**
+1. **Manajemen Data Pegawai** (Tambah/Edit/Hapus)  
 2. **Rekap Absensi Harian** dengan Validasi Lokasi  
 3. **Perhitungan Honor Otomatis** (Dasar + Tunjangan Mengajar)  
 4. **Cetak Slip Honor** Format PDF  
 5. **Kelola Jadwal Shift** (Reguler/Tahfizh)  
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
-👳🏻‍♀️🧕🏻📿 ASATIDZ (Ustadz/Ustadzah) <br>
+👳🏻‍♀️🧕🏻📿 Pegawai (Ustadz/Ustadzah, Penjaga, Petugas Kebersihan) <br>
 1. Melakukan absensi harian chek in dan check out (dengan unggah foto)<br>
 2. Melihat riwayat absensi pribadi<br>
 3. Melihat dan mencetak slip gaji
