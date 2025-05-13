@@ -1,12 +1,12 @@
-<img src="welcome intro.gif" alt="GitHub Banner" width="10000%" />
+<img src="opening pondok baitul hikmah.gif" alt="GitHub Banner" width="10000%" />
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 <h1 align="center">
   <img
-    src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=800&height=80&duration=7000&lines=Assalamu'alaikum+Warahmatullahi+Wabarakatuh;+Aplikasi+Absensi+Asatidz+%26+Slip+Gaji📿📊"
+    src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=800&height=80&duration=7000&lines=Assalamu'alaikum+Warahmatullahi+Wabarakatuh;+Aplikasi+Absensi+Pegawai+%26+Slip+Gaji📿📊"
   />
 </h1>
 
-Aplikasi desktop berbasis Java dan Java Swing ini dibuat untuk membantu proses absensi asatidz 👳🏻‍♀️🧕🏻 dan pengelolaan slip gaji untuk Pondok Pesantren Baitul Hikmah Surabaya secara efisien. Dibuat dengan pendekatan OOP (Object-Oriented Programming), sistem ini mendukung fitur CRUD, dan didesain GUI dengan tampilan menarik. Project ini dibuat demi memenuhi tugas EAS mata kuliah Pemograman Berorientasi kelas F081
+Aplikasi desktop berbasis Java dan Java Swing ini dibuat untuk membantu proses absensi Pegawai 👳🏻‍♀️🧕🏻 dan pengelolaan slip gaji untuk Pondok Pesantren Baitul Hikmah Surabaya secara efisien. Dibuat dengan pendekatan OOP (Object-Oriented Programming), sistem ini mendukung fitur CRUD, dan didesain GUI dengan tampilan menarik. Project ini dibuat demi memenuhi tugas EAS mata kuliah Pemograman Berorientasi kelas F081
 ##
 Dosen Pengampu: Fawwaz Ali Akbar, S.Kom.,M.Kom
 <br>
@@ -26,8 +26,8 @@ Disusun Oleh:
 4. **Cetak Slip Honor** Format PDF  
 5. **Kelola Jadwal Shift** (Reguler/Tahfizh)  
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
-👳🏻‍♀️🧕🏻📿 ASATIDZ (Ustadz/Ustadzah) <br>
-1. Melakukan absensi harian chek in dan check out (dengan unggah foto)<br>
+👳🏻‍♀️🧕🏻📿 PEGAWAI ( Penjaga pondok, Ustadz/Ustadzah, dan Petugas kebersihan) <br>
+1. Melakukan absensi harian chek in dan check out sesuai jabatan (dengan unggah foto)<br>
 2. Melihat riwayat absensi pribadi<br>
 3. Melihat dan mencetak slip gaji
  <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
