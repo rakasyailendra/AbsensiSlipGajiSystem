@@ -1,13 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+ *
+ */ Revisi
 package GUI;
 public class Absensi {
-    private String tanggal;
-    private String hari;
-    private String jam;
-    private boolean hadir;
+    private String TANGGAL;
+    private String HARI;
+    private String JAM;
+    private boolean HADIR;
 
     public Absensi(String tanggal, String hari, String jam, boolean hadir) {
         this.tanggal = tanggal;
