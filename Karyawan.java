@@ -1,16 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Karyawan {
     private String nama;
     private List<Absensi> absensiList;
-    private static final int GAJI_POKOK = 3000000;
-    private static final int POTONGAN_PER_HARI = 10000;
+    private static final int GAJI_PER_HARI = 50000;
 
     public Karyawan(String nama) {
         this.nama = nama;
@@ -26,13 +22,13 @@ public class Karyawan {
     }
 
     public int hitungGaji() {
-        int hariTidakHadir = 0;
+        int hariHadir = 0;
         for (Absensi absensi : absensiList) {
-            if (!absensi.isHadir()) {
-                hariTidakHadir++;
+            if (absensi.isHadir()) {
+                hariHadir++;
             }
         }
-        return GAJI_POKOK - (hariTidakHadir * POTONGAN_PER_HARI);
+        return hariHadir * GAJI_PER_HARI;
     }
 
     public List<Absensi> getAbsensiList() {
