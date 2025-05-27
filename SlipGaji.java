@@ -1,11 +1,13 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ *Revisi
  */
 package GUI;
 
 import java.util.List;
 
+//Kelas untuk mencetak slip gaji
 public class SlipGaji {
     private Karyawan karyawan;
 
@@ -20,6 +22,7 @@ public class SlipGaji {
     public String getSlipGaji() {
         StringBuilder slip = new StringBuilder();
         slip.append("Slip Gaji Karyawan\n");
+        slip.append("================================\n");
         slip.append("Nama: ").append(karyawan.getNama()).append("\n");
         slip.append("Gaji Bulanan: ").append(hitungGaji()).append("\n");
         slip.append("Detail Absensi:\n");
