@@ -1,0 +1,249 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 27 Bulan Mei 2025 pada 06.59
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `dbbaitulhikmah_PBO`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `absen`
+--
+
+CREATE TABLE `absen` (
+  `NIP` varchar(255) NOT NULL,
+  `nama_shift` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `jam_masuk` time NOT NULL,
+  `jam_keluar` time NOT NULL,
+  `total_lembur` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `absen`
+--
+
+INSERT INTO `absen` (`NIP`, `nama_shift`, `tanggal`, `jam_masuk`, `jam_keluar`, `total_lembur`) VALUES
+('admin', 'Shift Pagi', '2025-05-21', '14:00:00', '22:07:00', 0),
+('196807031996032001', 'Shift Malam', '2025-05-27', '06:05:00', '13:50:00', 23),
+('196105261994031001', 'Shift Pagi', '2025-05-27', '14:05:00', '21:52:00', 23),
+('admin', 'Shift Pagi', '2025-05-27', '14:00:00', '22:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `golongan`
+--
+
+CREATE TABLE `golongan` (
+  `jenis_golongan` varchar(255) NOT NULL,
+  `gaji_pokok` double NOT NULL,
+  `gaji_lembur` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `golongan`
+--
+
+INSERT INTO `golongan` (`jenis_golongan`, `gaji_pokok`, `gaji_lembur`) VALUES
+('Manajer', 100000, 10000),
+('Pegawai', 50000, 20000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `golongan_pegawai`
+--
+
+CREATE TABLE `golongan_pegawai` (
+  `NIP` varchar(255) NOT NULL,
+  `jenis_golongan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `golongan_pegawai`
+--
+
+INSERT INTO `golongan_pegawai` (`NIP`, `jenis_golongan`) VALUES
+('admin', 'Manajer'),
+('196105261994031001', 'Pegawai'),
+('196509151995031001', 'Manajer'),
+('196807031996032001', 'Pegawai'),
+('196901011996032001', 'Pegawai'),
+('196907062000031002', 'Pegawai'),
+('197007061997031002', 'Manajer'),
+('197010012000031002', 'Pegawai'),
+('197304102005011004', 'Pegawai'),
+('197412312005012004', 'Pegawai'),
+('198203022005011002', 'Pegawai');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pegawai`
+--
+
+CREATE TABLE `pegawai` (
+  `NIP` varchar(255) NOT NULL,
+  `Nama` varchar(255) NOT NULL,
+  `tgl_lahir` date NOT NULL,
+  `Biodata` text NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `admin` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `pegawai`
+--
+
+INSERT INTO `pegawai` (`NIP`, `Nama`, `tgl_lahir`, `Biodata`, `Password`, `admin`) VALUES
+('196105261994031001', 'Abdul Kholiq \r\n', '1975-06-25', 'Lulusan Pesantren: Roudlatus Syifa Malang \r\n', '5f4dcc3b5aa765d61d8327deb882cf99', 0),
+('196509151995031001', 'M. Kardi  \r\n', '1980-05-19', 'Lulusan Pesantren: Salafiyah Kholidiyah  \r\nLangitan Tuban \r\n', '7c6a180b36896a0a8c02787eeafb0e4c', 0),
+('196807031996032001', 'Dewi', '1968-07-03', 'Lulusan Pesantren: Daurul Ulum Jombang \r\n\r\n', '6cb75f652a9b52798eb6cf2201057c73', 0),
+('196901011996032001', 'Lilik', '1969-01-01', 'Lulusan Pesantren: IAIN Sunan \r\nAmpel Surabaya \r\n\r\n', '819b0643d6b89dc9b579fdfc9094f28e', 0),
+('196907062000031002', 'Abdullah \r\nSyarqa\r\n', '1985-07-06', 'Lulusan Pesantren:Darul Ulum \r\nBanyuanyar  \r\n', '34cc93ece0ba9e3f6f235d4af979b16c', 0),
+('197007061997031002', 'Nur Salam \r\n', '1970-07-06', 'Lulusan Pesantren: Sumenep \r\n', 'db0edd04aaac4506f7edab03ac855d56', 0),
+('197010012000031002', 'Rofiul Ilmi\r\n', '1970-10-01', 'Lulusan Pesantren: Darussalam Gontor \r\nPonorogo \r\n\r\n', '218dd27aebeccecae69ad8408d9a36bf', 0),
+('197304102005011004', 'Mubarok Zaidan', '1973-04-10', 'Lulusan Pesantren: YAI Pasuruan\r\nPTL Nurul Falah Surabaya \r\n', '00cdb7bb942cf6b290ceb97d6aca64a3', 0),
+('197412312005012004', 'Muhammad Nadhif', '1989-12-31', 'Lulusan Pesantren: Madrastul Quran\r\nJombang\r\n', 'b25ef06be3b6948c0bc431da46c2c738', 0),
+('198203022005011002', 'Miftahul Jannah', '1982-03-02', 'Lulusan Pesantren: Mambaul Hikam', '5d69dd95ac183c9643780ed7027d128a', 0),
+('admin', 'admin', '2000-01-01', 'Admin Session', '21232f297a57a5a743894a0e4a801fc3', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `shift`
+--
+
+CREATE TABLE `shift` (
+  `Nama_shift` varchar(255) NOT NULL,
+  `jam_masuk` time NOT NULL,
+  `jam_keluar` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `shift`
+--
+
+INSERT INTO `shift` (`Nama_shift`, `jam_masuk`, `jam_keluar`) VALUES
+('Shift Malam', '23:00:00', '07:00:00'),
+('Shift Pagi', '07:00:00', '15:00:00'),
+('Shift Sore', '15:00:00', '23:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `shift_pegawai`
+--
+
+CREATE TABLE `shift_pegawai` (
+  `NIP` varchar(255) NOT NULL,
+  `Nama_Shift` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `shift_pegawai`
+--
+
+INSERT INTO `shift_pegawai` (`NIP`, `Nama_Shift`) VALUES
+('admin', 'Shift Pagi'),
+('196105261994031001', 'Shift Pagi'),
+('196509151995031001', 'Shift Sore'),
+('196807031996032001', 'Shift Malam'),
+('196901011996032001', 'Shift Pagi'),
+('196907062000031002', 'Shift Sore'),
+('197007061997031002', 'Shift Malam'),
+('197010012000031002', 'Shift Malam'),
+('197304102005011004', 'Shift Sore'),
+('197412312005012004', 'Shift Malam'),
+('198203022005011002', 'Shift Pagi');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `absen`
+--
+ALTER TABLE `absen`
+  ADD KEY `fk_absen_pegawai` (`NIP`),
+  ADD KEY `fk_absen_shift` (`nama_shift`);
+
+--
+-- Indeks untuk tabel `golongan`
+--
+ALTER TABLE `golongan`
+  ADD PRIMARY KEY (`jenis_golongan`);
+
+--
+-- Indeks untuk tabel `golongan_pegawai`
+--
+ALTER TABLE `golongan_pegawai`
+  ADD KEY `fk_golongan_pegawai` (`jenis_golongan`),
+  ADD KEY `fk_pegawai_golongan` (`NIP`);
+
+--
+-- Indeks untuk tabel `pegawai`
+--
+ALTER TABLE `pegawai`
+  ADD PRIMARY KEY (`NIP`);
+
+--
+-- Indeks untuk tabel `shift`
+--
+ALTER TABLE `shift`
+  ADD PRIMARY KEY (`Nama_shift`);
+
+--
+-- Indeks untuk tabel `shift_pegawai`
+--
+ALTER TABLE `shift_pegawai`
+  ADD KEY `fk_shift_pegawai` (`Nama_Shift`),
+  ADD KEY `fk_pegawai_shift` (`NIP`);
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `absen`
+--
+ALTER TABLE `absen`
+  ADD CONSTRAINT `fk_absen_pegawai` FOREIGN KEY (`NIP`) REFERENCES `pegawai` (`NIP`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_absen_shift` FOREIGN KEY (`nama_shift`) REFERENCES `shift` (`Nama_shift`);
+
+--
+-- Ketidakleluasaan untuk tabel `golongan_pegawai`
+--
+ALTER TABLE `golongan_pegawai`
+  ADD CONSTRAINT `fk_golongan_pegawai` FOREIGN KEY (`jenis_golongan`) REFERENCES `golongan` (`jenis_golongan`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_pegawai_golongan` FOREIGN KEY (`NIP`) REFERENCES `pegawai` (`NIP`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `shift_pegawai`
+--
+ALTER TABLE `shift_pegawai`
+  ADD CONSTRAINT `fk_pegawai_shift` FOREIGN KEY (`NIP`) REFERENCES `pegawai` (`NIP`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_shift_pegawai` FOREIGN KEY (`Nama_Shift`) REFERENCES `shift` (`Nama_shift`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
