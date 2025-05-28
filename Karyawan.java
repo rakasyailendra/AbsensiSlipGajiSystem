@@ -9,6 +9,9 @@ public class Karyawan {
     private static final int GAJI_PER_HARI = 50000;
 
     public Karyawan(String nama) {
+        if (nama == null || nama.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nama karyawan tidak boleh kosong");
+        }
         this.nama = nama;
         this.absensiList = new ArrayList<>();
     }
@@ -22,16 +25,21 @@ public class Karyawan {
     }
 
     public int hitungGaji() {
-        int hariHadir = 0;
-        for (Absensi absensi : absensiList) {
-            if (absensi.isHadir()) {
-                hariHadir++;
-            }
-        }
-        return hariHadir * GAJI_PER_HARI;
+        return (int) absensiList.stream()
+                .filter(Absensi::isHadir)
+                .count() * GAJI_PER_HARI;
     }
 
     public List<Absensi> getAbsensiList() {
         return absensiList;
+    }
+
+    @Override
+    public String toString() {
+        return "Karyawan{" +
+                "nama='" + nama + '\'' +
+                ", jumlahHadir=" + absensiList.stream().filter(Absensi::isHadir).count() +
+                ", gaji=" + hitungGaji() +
+                '}';
     }
 }
