@@ -1,0 +1,36 @@
+Nama: Raka
+Absensi: 19-02-2025, senin, 07.00, Hadir
+Gaji Bulanan: 3000000
+
+Nama: test
+Absensi: rabu, selasa, 06.00, Hadir
+Gaji Bulanan: 3000000
+
+Nama: dickno
+Absensi: 01-05-2025, selasa, 07.00, Hadir
+Gaji Bulanan: 3000000
+
+Nama: rakasyainz
+Absensi: 02 , selasa, 07.00, Hadir
+Gaji Bulanan: 3000000
+
+Nama: dito
+Absensi: , , , Tidak Hadir
+Gaji Bulanan: 2990000
+
+Nama: dito
+Absensi: 03, rabu, 15.00, Hadir
+Gaji Bulanan: 3000000
+
+Nama: dicky
+Absensi: 02-05-2025, selasa, 07-00 wib, Hadir
+Gaji Bulanan: 3000000
+
+Nama: raka
+Absensi: 02-7-2025, senin, 07.00, Hadir
+Gaji Bulanan: 3000000
+
+Nama: raka
+Absensi: 02, rabu, 12.00, Hadir
+Gaji Bulanan: 3000000
+
