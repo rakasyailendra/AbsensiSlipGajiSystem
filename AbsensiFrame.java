@@ -1,5 +1,5 @@
 
-/update
+/update validasi
 package GUI;
 
 import javax.swing.*;
