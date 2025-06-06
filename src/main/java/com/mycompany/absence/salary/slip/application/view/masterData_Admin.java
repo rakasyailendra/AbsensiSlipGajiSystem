@@ -213,8 +213,8 @@ public class masterData_Admin extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(haloAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         headerAdminLayout.setVerticalGroup(
             headerAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,20 +230,20 @@ public class masterData_Admin extends javax.swing.JFrame {
         table_absensiPegawaiHariini.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
         table_absensiPegawaiHariini.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Foto Masuk", "Jam Keluar", "Foto Keluar"
+                "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"
             }
         ));
         jScrollPane1.setViewportView(table_absensiPegawaiHariini);

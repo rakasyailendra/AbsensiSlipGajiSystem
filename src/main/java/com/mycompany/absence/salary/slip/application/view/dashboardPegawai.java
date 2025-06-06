@@ -110,6 +110,11 @@ public class dashboardPegawai extends javax.swing.JFrame {
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
         MenuLogout.setText("Logout");
+        MenuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuLogoutMouseClicked(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(179, 201, 208));
         jLabel2.setForeground(new java.awt.Color(179, 201, 208));
@@ -411,8 +416,8 @@ public class dashboardPegawai extends javax.swing.JFrame {
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelUtama_dashboardPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
+                    .addComponent(panelUtama_dashboardPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                    .addComponent(headerPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,6 +456,15 @@ public class dashboardPegawai extends javax.swing.JFrame {
     private void ButtonCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCheckOutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ButtonCheckOutActionPerformed
+
+    private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLogoutMouseClicked
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?", "Konfirmasi Logout", javax.swing.JOptionPane.YES_NO_OPTION);
+            if (confirm == java.awt.event.KeyEvent.VK_Y || confirm == javax.swing.JOptionPane.YES_OPTION) {
+                loginForm login = new loginForm(); // Membuat objek form tujuan
+                login.setVisible(true);            // Menampilkan form tujuan
+                this.dispose();                    // Menutup form saat ini
+            }
+    }//GEN-LAST:event_MenuLogoutMouseClicked
 
     private void showAbsensiPegawaiHariini() {
         AbsenRepository absenRepository = new AbsenRepository();

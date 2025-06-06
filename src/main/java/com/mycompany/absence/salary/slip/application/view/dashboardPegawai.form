@@ -54,8 +54,8 @@
                   <Component id="sideBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="headerPegawai" max="32767" attributes="0"/>
                       <Component id="panelUtama_dashboardPegawai" pref="962" max="32767" attributes="0"/>
+                      <Component id="headerPegawai" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -176,6 +176,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Logout"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuLogoutMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
