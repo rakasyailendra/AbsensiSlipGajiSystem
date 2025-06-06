@@ -466,6 +466,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_MenuLogoutMouseClicked
 
+    // Menampilkan absensi pegawai hari ini
     private void showAbsensiPegawaiHariini() {
         AbsenRepository absenRepository = new AbsenRepository();
         ShiftRepository shiftRepository = new ShiftRepository();

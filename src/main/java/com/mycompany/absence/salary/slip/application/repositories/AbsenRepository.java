@@ -22,8 +22,8 @@ public class AbsenRepository implements CrudRepository<Absen> {
 
     @Override
     public Response<Absen> save(Absen entity) {
-        String query = "INSERT INTO absen (id_pegawai, id_shift, tanggal, jam_masuk, jam_keluar, foto_masuk, foto_keluar) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO absen (id_pegawai, id_shift, tanggal, jam_masuk, jam_keluar) "
+                + "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             var preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -32,8 +32,6 @@ public class AbsenRepository implements CrudRepository<Absen> {
             preparedStatement.setDate(3, new java.sql.Date(entity.getTanggal().getTime()));
             preparedStatement.setTime(4, Time.valueOf(entity.getJamMasuk()));
             preparedStatement.setTime(5, Time.valueOf(entity.getJamKeluar()));
-            preparedStatement.setString(6, entity.getFotoMasuk());
-            preparedStatement.setString(7, entity.getFotoKeluar());
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows > 0) {
@@ -96,8 +94,6 @@ public class AbsenRepository implements CrudRepository<Absen> {
                 absen.setTanggal(resultSet.getDate("tanggal"));
                 absen.setJamMasuk(resultSet.getTime("jam_masuk").toLocalTime());
                 absen.setJamKeluar(resultSet.getTime("jam_keluar").toLocalTime());
-                absen.setFotoMasuk(resultSet.getString("foto_masuk"));
-                absen.setFotoKeluar(resultSet.getString("foto_keluar"));
 
                 return Response.success("Absen found", absen);
             } else {
@@ -144,8 +140,6 @@ public class AbsenRepository implements CrudRepository<Absen> {
                 absen.setTanggal(resultSet.getDate("tanggal"));
                 absen.setJamMasuk(resultSet.getTime("jam_masuk").toLocalTime());
                 absen.setJamKeluar(resultSet.getTime("jam_keluar").toLocalTime());
-                absen.setFotoMasuk(resultSet.getString("foto_masuk"));
-                absen.setFotoKeluar(resultSet.getString("foto_keluar"));
                 absens.add(absen);
             }
 
@@ -173,8 +167,6 @@ public class AbsenRepository implements CrudRepository<Absen> {
                 absen.setTanggal(resultSet.getDate("tanggal"));
                 absen.setJamMasuk(resultSet.getTime("jam_masuk").toLocalTime());
                 absen.setJamKeluar(resultSet.getTime("jam_keluar").toLocalTime());
-                absen.setFotoMasuk(resultSet.getString("foto_masuk"));
-                absen.setFotoKeluar(resultSet.getString("foto_keluar"));
                 absens.add(absen);
             }
 
