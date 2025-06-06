@@ -202,12 +202,14 @@ public class dashboardPegawai extends javax.swing.JFrame {
             headerPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPegawaiLayout.createSequentialGroup()
                 .addGroup(headerPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(headerPegawaiLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(headerPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(halo)
-                            .addComponent(haloNamaPegawai_isiOtomatis))))
+                            .addComponent(haloNamaPegawai_isiOtomatis)))
+                    .addGroup(headerPegawaiLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -376,7 +378,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ButtonCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         panelUtama_dashboardPegawaiLayout.setVerticalGroup(
             panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,6 +468,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_MenuLogoutMouseClicked
 
+    // Menampilkan absensi pegawai hari ini
     private void showAbsensiPegawaiHariini() {
         AbsenRepository absenRepository = new AbsenRepository();
         ShiftRepository shiftRepository = new ShiftRepository();
