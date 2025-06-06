@@ -55,7 +55,6 @@ public class masterData_Admin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1200, 640));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -64,7 +63,7 @@ public class masterData_Admin extends javax.swing.JFrame {
         sideBar.setBackground(new java.awt.Color(2, 84, 106));
         sideBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/absence/salary/slip/application/img/logo pesantren (sidebar).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo pesantren (sidebar).png"))); // NOI18N
 
         MenuDashboardAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDashboardAdmin.setForeground(new java.awt.Color(179, 201, 208));

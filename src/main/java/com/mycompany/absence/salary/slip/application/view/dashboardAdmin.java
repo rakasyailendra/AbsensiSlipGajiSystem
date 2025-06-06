@@ -103,7 +103,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
         sideBar.setBackground(new java.awt.Color(2, 84, 106));
         sideBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/absence/salary/slip/application/img/logo pesantren (sidebar).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo pesantren (sidebar).png"))); // NOI18N
 
         MenuDashboardAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDashboardAdmin.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,6 +161,11 @@ public class dashboardAdmin extends javax.swing.JFrame {
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
         MenuLogout.setText("Logout");
+        MenuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                MenuLogoutMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout sideBarLayout = new javax.swing.GroupLayout(sideBar);
         sideBar.setLayout(sideBarLayout);
@@ -396,7 +401,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addGap(12, 12, 12))
                     .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                         .addComponent(panel_jumlahPegawai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -428,11 +433,9 @@ public class dashboardAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 966, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
+                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,6 +472,15 @@ public class dashboardAdmin extends javax.swing.JFrame {
             dashboard.setVisible(true);                      // Menampilkan form tujuan
             this.dispose();                                  // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenupegawaiAdminMouseClicked
+
+    private void MenuLogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLogoutMouseExited
+            // Buka form login
+            loginForm login = new loginForm();
+            login.setVisible(true);
+
+            // Tutup form sekarang
+            this.dispose();
+    }//GEN-LAST:event_MenuLogoutMouseExited
 
     private void showAbsensiPegawaiHariini() {
         AbsenRepository absenRepository = new AbsenRepository();
