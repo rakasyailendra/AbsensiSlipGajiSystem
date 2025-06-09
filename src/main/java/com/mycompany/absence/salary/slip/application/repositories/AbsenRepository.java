@@ -10,6 +10,7 @@ import com.mycompany.absence.salary.slip.application.utils.DatabaseConnection;
 import com.mycompany.absence.salary.slip.application.utils.Response;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -31,13 +32,19 @@ public class AbsenRepository implements CrudRepository<Absen> {
             preparedStatement.setInt(2, entity.getIdShift());
             preparedStatement.setDate(3, new java.sql.Date(entity.getTanggal().getTime()));
             preparedStatement.setTime(4, Time.valueOf(entity.getJamMasuk()));
-            preparedStatement.setTime(5, Time.valueOf(entity.getJamKeluar()));
+
+            if (entity.getJamKeluar() != null) {
+                preparedStatement.setTime(5, Time.valueOf(entity.getJamKeluar()));
+            } else {
+                preparedStatement.setNull(5, java.sql.Types.TIME);
+            }
+
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows > 0) {
                 var generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    entity.setId(generatedKeys.getInt(1)); // Assuming the ID is auto-generated
+                    entity.setId(generatedKeys.getInt(1));
                     return Response.success("Absen saved successfully", entity);
                 } else {
                     return Response.failure("Failed to retrieve generated ID");
@@ -61,10 +68,17 @@ public class AbsenRepository implements CrudRepository<Absen> {
             preparedStatement.setInt(2, entity.getIdShift());
             preparedStatement.setDate(3, new java.sql.Date(entity.getTanggal().getTime()));
             preparedStatement.setTime(4, Time.valueOf(entity.getJamMasuk()));
-            preparedStatement.setTime(5, Time.valueOf(entity.getJamKeluar()));
+
+            if (entity.getJamKeluar() != null) {
+                preparedStatement.setTime(5, Time.valueOf(entity.getJamKeluar()));
+            } else {
+                preparedStatement.setNull(5, java.sql.Types.TIME);
+            }
+
             preparedStatement.setString(6, entity.getFotoMasuk());
             preparedStatement.setString(7, entity.getFotoKeluar());
             preparedStatement.setInt(8, entity.getId());
+
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows > 0) {
@@ -92,8 +106,12 @@ public class AbsenRepository implements CrudRepository<Absen> {
                 absen.setIdPegawai(resultSet.getInt("id_pegawai"));
                 absen.setIdShift(resultSet.getInt("id_shift"));
                 absen.setTanggal(resultSet.getDate("tanggal"));
-                absen.setJamMasuk(resultSet.getTime("jam_masuk").toLocalTime());
-                absen.setJamKeluar(resultSet.getTime("jam_keluar").toLocalTime());
+
+                Time jamMasuk = resultSet.getTime("jam_masuk");
+                absen.setJamMasuk(jamMasuk != null ? jamMasuk.toLocalTime() : null);
+
+                Time jamKeluar = resultSet.getTime("jam_keluar");
+                absen.setJamKeluar(jamKeluar != null ? jamKeluar.toLocalTime() : null);
 
                 return Response.success("Absen found", absen);
             } else {
@@ -138,8 +156,13 @@ public class AbsenRepository implements CrudRepository<Absen> {
                 absen.setIdPegawai(resultSet.getInt("id_pegawai"));
                 absen.setIdShift(resultSet.getInt("id_shift"));
                 absen.setTanggal(resultSet.getDate("tanggal"));
-                absen.setJamMasuk(resultSet.getTime("jam_masuk").toLocalTime());
-                absen.setJamKeluar(resultSet.getTime("jam_keluar").toLocalTime());
+
+                Time jamMasuk = resultSet.getTime("jam_masuk");
+                absen.setJamMasuk(jamMasuk != null ? jamMasuk.toLocalTime() : null);
+
+                Time jamKeluar = resultSet.getTime("jam_keluar");
+                absen.setJamKeluar(jamKeluar != null ? jamKeluar.toLocalTime() : null);
+
                 absens.add(absen);
             }
 
@@ -148,7 +171,6 @@ public class AbsenRepository implements CrudRepository<Absen> {
             return Response.failure("Error finding absen: " + e.getMessage());
         }
     }
-
 
     public Response<ArrayList<Absen>> findByIdPegawai(Integer idPegawai) {
         String query = "SELECT * FROM absen WHERE id_pegawai = ?";
@@ -165,8 +187,13 @@ public class AbsenRepository implements CrudRepository<Absen> {
                 absen.setIdPegawai(resultSet.getInt("id_pegawai"));
                 absen.setIdShift(resultSet.getInt("id_shift"));
                 absen.setTanggal(resultSet.getDate("tanggal"));
-                absen.setJamMasuk(resultSet.getTime("jam_masuk").toLocalTime());
-                absen.setJamKeluar(resultSet.getTime("jam_keluar").toLocalTime());
+
+                Time jamMasuk = resultSet.getTime("jam_masuk");
+                absen.setJamMasuk(jamMasuk != null ? jamMasuk.toLocalTime() : null);
+
+                Time jamKeluar = resultSet.getTime("jam_keluar");
+                absen.setJamKeluar(jamKeluar != null ? jamKeluar.toLocalTime() : null);
+
                 absens.add(absen);
             }
 
