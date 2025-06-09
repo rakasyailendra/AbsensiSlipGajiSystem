@@ -8,12 +8,12 @@ package com.mycompany.absence.salary.slip.application.view;
  *
  * @author User
  */
-public class masterData_Admin extends javax.swing.JFrame {
+public class masterJabatan_Admin extends javax.swing.JFrame {
 
     /**
-     * Creates new form masterData_Pegawai
+     * Creates new form masterJabatan_Admin
      */
-    public masterData_Admin() {
+    public masterJabatan_Admin() {
         initComponents();
     }
 
@@ -45,16 +45,17 @@ public class masterData_Admin extends javax.swing.JFrame {
         headerAdmin = new javax.swing.JPanel();
         btmCancel = new javax.swing.JLabel();
         haloAdmin = new javax.swing.JLabel();
-        panelUtama_masterPegawai_Admin = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_absensiPegawaiHariini = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        pn_content_masterJabatan = new javax.swing.JPanel();
+        pn_utama_masterJabatan = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1200, 640));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -75,7 +76,7 @@ public class masterData_Admin extends javax.swing.JFrame {
         });
 
         MenupegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenupegawaiAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        MenupegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenupegawaiAdmin.setText("Pegawai");
 
         MenuPenggajianAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -87,7 +88,7 @@ public class masterData_Admin extends javax.swing.JFrame {
         jLabel2.setText("MASTER DATA");
 
         MenuJabatanAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuJabatanAdmin.setForeground(new java.awt.Color(179, 201, 208));
+        MenuJabatanAdmin.setForeground(new java.awt.Color(255, 255, 255));
         MenuJabatanAdmin.setText("Jabatan");
 
         MenuShiftAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -194,7 +195,6 @@ public class masterData_Admin extends javax.swing.JFrame {
         headerAdmin.setPreferredSize(new java.awt.Dimension(800, 86));
 
         btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cancel.png"))); // NOI18N
-        btmCancel.setPreferredSize(new java.awt.Dimension(50, 25));
         btmCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btmCancelMouseClicked(evt);
@@ -212,91 +212,34 @@ public class masterData_Admin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerAdminLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(haloAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 755, Short.MAX_VALUE)
                 .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         headerAdminLayout.setVerticalGroup(
             headerAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerAdminLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(haloAdmin)
+                .addGroup(headerAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headerAdminLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(haloAdmin))
+                    .addGroup(headerAdminLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btmCancel)))
                 .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(headerAdminLayout.createSequentialGroup()
-                .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        table_absensiPegawaiHariini.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
-        table_absensiPegawaiHariini.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"
-            }
-        ));
-        jScrollPane1.setViewportView(table_absensiPegawaiHariini);
+        pn_utama_masterJabatan.setLayout(new java.awt.BorderLayout());
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel4.setText("Kelola Pegawai");
-
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
-
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelUtama_masterPegawai_AdminLayout = new javax.swing.GroupLayout(panelUtama_masterPegawai_Admin);
-        panelUtama_masterPegawai_Admin.setLayout(panelUtama_masterPegawai_AdminLayout);
-        panelUtama_masterPegawai_AdminLayout.setHorizontalGroup(
-            panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
-                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+        javax.swing.GroupLayout pn_content_masterJabatanLayout = new javax.swing.GroupLayout(pn_content_masterJabatan);
+        pn_content_masterJabatan.setLayout(pn_content_masterJabatanLayout);
+        pn_content_masterJabatanLayout.setHorizontalGroup(
+            pn_content_masterJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        panelUtama_masterPegawai_AdminLayout.setVerticalGroup(
-            panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        pn_content_masterJabatanLayout.setVerticalGroup(
+            pn_content_masterJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -307,10 +250,8 @@ public class masterData_Admin extends javax.swing.JFrame {
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
+                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                    .addComponent(pn_content_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,8 +259,7 @@ public class masterData_Admin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(headerAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pn_content_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
@@ -328,19 +268,21 @@ public class masterData_Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void MenuDashboardAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardAdminMouseClicked
+        dashboardAdmin dashboard = new dashboardAdmin(); // Membuat objek form tujuan
+        dashboard.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuDashboardAdminMouseClicked
+
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btmCancelMouseClicked
         dispose();
     }//GEN-LAST:event_btmCancelMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void MenuDashboardAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardAdminMouseClicked
-            dashboardAdmin dashboard = new dashboardAdmin(); // Membuat objek form tujuan
-            dashboard.setVisible(true);                      // Menampilkan form tujuan
-            this.dispose();                                  // Menutup form saat ini (opsional)
-    }//GEN-LAST:event_MenuDashboardAdminMouseClicked
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        pn_utama_masterJabatan.add(new form_masterJabatan());
+        pn_utama_masterJabatan.repaint();
+        pn_utama_masterJabatan.revalidate();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -359,23 +301,20 @@ public class masterData_Admin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(masterData_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(masterJabatan_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(masterData_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(masterJabatan_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(masterData_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(masterJabatan_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(masterData_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(masterJabatan_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new masterData_Admin().setVisible(true);
+                new masterJabatan_Admin().setVisible(true);
             }
         });
     }
@@ -394,18 +333,13 @@ public class masterData_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel btmCancel;
     private javax.swing.JLabel haloAdmin;
     private javax.swing.JPanel headerAdmin;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel panelUtama_masterPegawai_Admin;
+    private javax.swing.JPanel pn_content_masterJabatan;
+    private javax.swing.JPanel pn_utama_masterJabatan;
     private javax.swing.JPanel sideBar;
-    private javax.swing.JTable table_absensiPegawaiHariini;
     // End of variables declaration//GEN-END:variables
 }

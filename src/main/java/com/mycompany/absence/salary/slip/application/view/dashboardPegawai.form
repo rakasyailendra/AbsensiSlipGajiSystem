@@ -408,6 +408,7 @@
                 <Property name="text" type="java.lang.String" value="Check In"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonCheckInMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCheckInActionPerformed"/>
               </Events>
             </Component>

@@ -95,6 +95,11 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 formMousePressed(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -129,10 +134,20 @@ public class dashboardAdmin extends javax.swing.JFrame {
         MenuJabatanAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuJabatanAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuJabatanAdmin.setText("Jabatan");
+        MenuJabatanAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuJabatanAdminMouseClicked(evt);
+            }
+        });
 
         MenuShiftAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuShiftAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuShiftAdmin.setText("Shift");
+        MenuShiftAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuShiftAdminMouseClicked(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(179, 201, 208));
         jLabel3.setForeground(new java.awt.Color(179, 201, 208));
@@ -234,7 +249,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 .addComponent(MenuGajipegawaiAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(MenuLogout)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         headerAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -436,13 +451,10 @@ public class dashboardAdmin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE))))
+                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +462,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(headerAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
+                .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
@@ -475,7 +487,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseDragged
 
     private void MenupegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenupegawaiAdminMouseClicked
-            masterData_Admin dashboard = new masterData_Admin(); // Membuat objek form tujuan
+            masterPegawai_Admin dashboard = new masterPegawai_Admin(); // Membuat objek form tujuan
             dashboard.setVisible(true);                      // Menampilkan form tujuan
             this.dispose();                                  // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenupegawaiAdminMouseClicked
@@ -492,6 +504,22 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 this.dispose();                    // Menutup form saat ini
             }
     }//GEN-LAST:event_MenuLogoutMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void MenuJabatanAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuJabatanAdminMouseClicked
+            masterJabatan_Admin dashboard = new masterJabatan_Admin(); // Membuat objek form tujuan
+            dashboard.setVisible(true);                      // Menampilkan form tujuan
+            this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuJabatanAdminMouseClicked
+
+    private void MenuShiftAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftAdminMouseClicked
+            masterShift_Admin dashboard = new masterShift_Admin(); // Membuat objek form tujuan
+            dashboard.setVisible(true);                      // Menampilkan form tujuan
+            this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuShiftAdminMouseClicked
 
     private void showAbsensiPegawaiHariini() {
         AbsenRepository absenRepository = new AbsenRepository();
