@@ -6,23 +6,18 @@ package com.mycompany.absence.salary.slip.application.view;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.absence.salary.slip.application.models.Absen;
-import com.mycompany.absence.salary.slip.application.models.Jabatan;
-import com.mycompany.absence.salary.slip.application.models.JabatanPegawai;
 import com.mycompany.absence.salary.slip.application.models.Pegawai;
 import com.mycompany.absence.salary.slip.application.models.Shift;
 import com.mycompany.absence.salary.slip.application.models.ShiftPegawai;
 import com.mycompany.absence.salary.slip.application.repositories.AbsenRepository;
 import com.mycompany.absence.salary.slip.application.repositories.JabatanPegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.JabatanRepository;
-import com.mycompany.absence.salary.slip.application.repositories.PegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.ShiftPegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.ShiftRepository;
 import com.mycompany.absence.salary.slip.application.utils.Response;
@@ -139,7 +134,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         var absenHariIni = absenRepository.findByIdPegawai(pegawaiId);
 
         boolean sudahCheckIn = absenHariIni.isSuccess() && absenHariIni.getData().stream()
-                .map(absen -> absen.getTanggal().toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+                .map(Absen::getTanggal)
                 .anyMatch(tanggal -> tanggal.isEqual(today));
 
         if (sudahCheckIn) {
@@ -147,11 +142,27 @@ public class dashboardPegawai extends javax.swing.JFrame {
             return;
         }
 
+        // Pop up keterlambatan check-in
+        LocalTime now = LocalTime.now();
+        Integer shift = shiftPegawaiResponse.getData().get(0).getIdShift();
+        Response<Shift> shiftResponse = shiftRepository.findById(shift);
+        if (now.isAfter(shiftResponse.getData().getJamMasuk().plusMinutes(30))) {
+            // Jika terlambat lebih dari 30 menit, tampilkan konfirmasi
+            int response = JOptionPane.showConfirmDialog(this,
+                    "Anda terlambat Check In. Apakah Anda ingin tetap Check In?",
+                    "Konfirmasi Check In",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (response != JOptionPane.YES_OPTION) {
+                return; // Keluar jika tidak ingin Check In
+            }
+        }
+
         // Simpan data absen
         Absen absen = new Absen();
         absen.setIdPegawai(pegawaiId);
         absen.setIdShift(shiftPegawaiResponse.getData().get(0).getIdShift());
-        absen.setTanggal(java.sql.Date.valueOf(today));
+        absen.setTanggal(today);
         absen.setJamMasuk(LocalTime.now());
 
         Response<Absen> response = absenRepository.save(absen);
@@ -164,12 +175,114 @@ public class dashboardPegawai extends javax.swing.JFrame {
         }
     }
 
+    private void absenCheckOut() {
+        int pegawaiId = currentUser.getId();
+        LocalDate today = LocalDate.now();
+
+        // Ambil data absensi hari ini
+        var absenHariIni = absenRepository.findByIdPegawai(pegawaiId);
+
+        boolean sudahCheckIn = absenHariIni.isSuccess() && absenHariIni.getData().stream()
+                .anyMatch(absen -> absen.getTanggal().isEqual(today) && absen.getJamMasuk() != null);
+
+        if (!sudahCheckIn) {
+            JOptionPane.showMessageDialog(this, "Anda belum Check In hari ini.");
+            return;
+        }
+
+        boolean sudahCheckOut = absenHariIni.getData().stream()
+                .anyMatch(absen -> absen.getTanggal().isEqual(today) && absen.getJamKeluar() != null);
+
+        if (sudahCheckOut) {
+            JOptionPane.showMessageDialog(this, "Anda sudah Check Out hari ini.");
+            return;
+        }
+
+        // Ambil jam keluar shift
+        Response<ArrayList<ShiftPegawai>> shiftPegawaiResponse = shiftPegawaiRepository.findByPegawaiId(pegawaiId);
+        if (!shiftPegawaiResponse.isSuccess() || shiftPegawaiResponse.getData().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Data shift tidak ditemukan.");
+            return;
+        }
+
+        ShiftPegawai shiftPegawai = shiftPegawaiResponse.getData().get(0);
+        Response<Shift> shiftResponse = shiftRepository.findById(shiftPegawai.getIdShift());
+        if (!shiftResponse.isSuccess() || shiftResponse.getData() == null) {
+            JOptionPane.showMessageDialog(this, "Shift pegawai tidak valid.");
+            return;
+        }
+
+        LocalTime now = LocalTime.now();
+        LocalTime batasCheckOut = shiftResponse.getData().getJamKeluar();
+        if (now.isBefore(batasCheckOut)) {
+            JOptionPane.showMessageDialog(this,
+                    "Anda belum bisa Check Out. Batas Check Out adalah pukul " + batasCheckOut + ".");
+            // Jika belum waktunya check out, keluar dari method
+            return;
+        } else if (now.isAfter(batasCheckOut.plusMinutes(60))) {
+            JOptionPane.showMessageDialog(this,
+                    "Anda sudah melewati batas Check Out. Batas Check Out adalah pukul " + batasCheckOut + ".");
+
+            // Tampilkan opsi untuk tetap Check Out
+            int response = JOptionPane.showConfirmDialog(this,
+                    "Anda sudah melewati batas Check Out. Apakah Anda ingin tetap Check Out?",
+                    "Konfirmasi Check Out",
+                    JOptionPane.YES_NO_OPTION);
+            if (response != JOptionPane.YES_OPTION) {
+                return; // Keluar jika tidak ingin Check Out
+            }
+
+            Absen absen = absenHariIni.getData().stream()
+                    .filter(a -> a.getTanggal().isEqual(today) && a.getJamKeluar() == null)
+                    .findFirst()
+                    .orElse(null);
+            if (absen == null) {
+                JOptionPane.showMessageDialog(this, "Data absensi tidak ditemukan.");
+                return;
+            }
+            absen.setJamKeluar(now);
+            Response<Absen> updateResponse = absenRepository.update(absen);
+            if (updateResponse.isSuccess()) {
+                JOptionPane.showMessageDialog(this, "Check Out Berhasil");
+                initializeComponents();
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this, "Check Out Gagal: " + updateResponse.getMessage());
+                System.err.println("Error: " + updateResponse.getMessage());
+                return;
+            }
+        } else {
+            // Simpan jam keluar
+            Absen absen = absenHariIni.getData().stream()
+                    .filter(a -> a.getTanggal().isEqual(today) && a.getJamKeluar() == null)
+                    .findFirst()
+                    .orElse(null);
+
+            if (absen != null) {
+                absen.setJamKeluar(now);
+                Response<Absen> response = absenRepository.update(absen);
+                if (response.isSuccess()) {
+                    JOptionPane.showMessageDialog(this, "Check Out Berhasil");
+                    initializeComponents();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Check Out Gagal: " + response.getMessage());
+                    System.err.println("Error: " + response.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Data absensi tidak ditemukan.");
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
@@ -235,6 +348,11 @@ public class dashboardPegawai extends javax.swing.JFrame {
         MenuShiftkuPegawai.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuShiftkuPegawai.setForeground(new java.awt.Color(179, 201, 208));
         MenuShiftkuPegawai.setText("Shift Ku");
+        MenuShiftkuPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuShiftkuPegawaiMouseClicked(evt);
+            }
+        });
 
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
@@ -252,6 +370,11 @@ public class dashboardPegawai extends javax.swing.JFrame {
         MenuGajikuPegawai.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuGajikuPegawai.setForeground(new java.awt.Color(179, 201, 208));
         MenuGajikuPegawai.setText("Gaji Ku");
+        MenuGajikuPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuGajikuPegawaiMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout sideBarLayout = new javax.swing.GroupLayout(sideBar);
         sideBar.setLayout(sideBarLayout);
@@ -311,7 +434,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         headerPegawai.setBackground(new java.awt.Color(255, 255, 255));
         headerPegawai.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cancel.png"))); // NOI18N
+        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel.png"))); // NOI18N
         btmCancel.setPreferredSize(new java.awt.Dimension(50, 25));
         btmCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -386,6 +509,11 @@ public class dashboardPegawai extends javax.swing.JFrame {
         ButtonCheckOut.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         ButtonCheckOut.setForeground(new java.awt.Color(255, 255, 255));
         ButtonCheckOut.setText("Check Out");
+        ButtonCheckOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ButtonCheckOutMouseClicked(evt);
+            }
+        });
         ButtonCheckOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonCheckOutActionPerformed(evt);
@@ -532,7 +660,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
                                                                         .addGroup(panelUtama_dashboardPegawaiLayout
                                                                                 .createSequentialGroup()
                                                                                 .addComponent(jLabel7,
-                                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                         92, Short.MAX_VALUE)
                                                                                 .addGap(6, 6, 6)))
                                                                 .addGroup(panelUtama_dashboardPegawaiLayout
@@ -646,7 +774,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
                                 .addComponent(headerPegawai, javax.swing.GroupLayout.PREFERRED_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelUtama_dashboardPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 541,
+                                .addComponent(panelUtama_dashboardPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 544,
                                         Short.MAX_VALUE)));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
@@ -654,6 +782,22 @@ public class dashboardPegawai extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MenuGajikuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuGajikuPegawaiMouseClicked
+        menuGajiku_Pegawai menuGaji = new menuGajiku_Pegawai();
+        menuGaji.setVisible(true); // Menampilkan form tujuan
+        this.dispose(); // Menutup form saat ini
+    }// GEN-LAST:event_MenuGajikuPegawaiMouseClicked
+
+    private void MenuShiftkuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuShiftkuPegawaiMouseClicked
+        menuShiftku_Pegawai menuShift = new menuShiftku_Pegawai();
+        menuShift.setVisible(true); // Menampilkan form tujuan
+        this.dispose(); // Menutup form saat ini
+    }// GEN-LAST:event_MenuShiftkuPegawaiMouseClicked
+
+    private void ButtonCheckOutMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_ButtonCheckOutMouseClicked
+        absenCheckOut(); // Panggil method untuk melakukan check-out
+    }// GEN-LAST:event_ButtonCheckOutMouseClicked
 
     private void buttonCheckInMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_buttonCheckInMouseClicked
         absenCheckIn();
@@ -686,6 +830,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?",
                 "Konfirmasi Logout", javax.swing.JOptionPane.YES_NO_OPTION);
         if (confirm == java.awt.event.KeyEvent.VK_Y || confirm == javax.swing.JOptionPane.YES_OPTION) {
+            SessionManager.getInstance().logout();
             loginForm login = new loginForm(); // Membuat objek form tujuan
             login.setVisible(true); // Menampilkan form tujuan
             this.dispose(); // Menutup form saat ini
@@ -706,23 +851,28 @@ public class dashboardPegawai extends javax.swing.JFrame {
          * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+                    .getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(dashboardPegawai.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         }
         // </editor-fold>

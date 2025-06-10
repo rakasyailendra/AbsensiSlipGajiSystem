@@ -29,7 +29,7 @@ public class PegawaiRepository implements CrudRepository<Pegawai> {
             var preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, entity.getNip());
             preparedStatement.setString(2, entity.getNama());
-            preparedStatement.setDate(3, new java.sql.Date(entity.getTanggalLahir().getTime()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(entity.getTanggalLahir()));
             preparedStatement.setString(4, entity.getAlamat());
             preparedStatement.setString(5, entity.getPassword());
             preparedStatement.setBoolean(6, entity.getIsAdmin());
@@ -55,7 +55,7 @@ public class PegawaiRepository implements CrudRepository<Pegawai> {
             var preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, entity.getNip());
             preparedStatement.setString(2, entity.getNama());
-            preparedStatement.setDate(3, new java.sql.Date(entity.getTanggalLahir().getTime()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(entity.getTanggalLahir()));
             preparedStatement.setString(4, entity.getAlamat());
             preparedStatement.setString(5, entity.getPassword());
             preparedStatement.setBoolean(6, entity.getIsAdmin());
@@ -84,7 +84,7 @@ public class PegawaiRepository implements CrudRepository<Pegawai> {
                 pegawai.setId(resultSet.getInt("id"));
                 pegawai.setNip(resultSet.getString("nip"));
                 pegawai.setNama(resultSet.getString("nama"));
-                pegawai.setTanggalLahir(resultSet.getDate("tanggal_lahir"));
+                pegawai.setTanggalLahir(resultSet.getDate("tanggal_lahir").toLocalDate());
                 pegawai.setAlamat(resultSet.getString("alamat"));
                 pegawai.setPassword(resultSet.getString("password"));
                 pegawai.setIsAdmin(resultSet.getBoolean("is_admin"));
@@ -128,7 +128,7 @@ public class PegawaiRepository implements CrudRepository<Pegawai> {
                 pegawai.setId(resultSet.getInt("id"));
                 pegawai.setNip(resultSet.getString("nip"));
                 pegawai.setNama(resultSet.getString("nama"));
-                pegawai.setTanggalLahir(resultSet.getDate("tanggal_lahir"));
+                pegawai.setTanggalLahir(resultSet.getDate("tanggal_lahir").toLocalDate());
                 pegawai.setAlamat(resultSet.getString("alamat"));
                 pegawai.setPassword(resultSet.getString("password"));
                 pegawai.setIsAdmin(resultSet.getBoolean("is_admin"));
@@ -151,13 +151,28 @@ public class PegawaiRepository implements CrudRepository<Pegawai> {
                 pegawai.setId(resultSet.getInt("id"));
                 pegawai.setNip(resultSet.getString("nip"));
                 pegawai.setNama(resultSet.getString("nama"));
-                pegawai.setTanggalLahir(resultSet.getDate("tanggal_lahir"));
+                pegawai.setTanggalLahir(resultSet.getDate("tanggal_lahir").toLocalDate());
                 pegawai.setAlamat(resultSet.getString("alamat"));
                 pegawai.setPassword(resultSet.getString("password"));
                 pegawai.setIsAdmin(resultSet.getBoolean("is_admin"));
                 return Response.success("Pegawai found", pegawai);
             } else {
                 return Response.failure("Pegawai not found");
+            }
+        } catch (Exception e) {
+            return Response.failure("Exception occurred: " + e.getMessage());
+        }
+    }
+
+    public Response<Boolean> deleteAll() {
+        String query = "DELETE FROM pegawai";
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            var preparedStatement = conn.prepareStatement(query);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                return Response.success("All Pegawai deleted successfully", true);
+            } else {
+                return Response.failure("No Pegawai found to delete");
             }
         } catch (Exception e) {
             return Response.failure("Exception occurred: " + e.getMessage());

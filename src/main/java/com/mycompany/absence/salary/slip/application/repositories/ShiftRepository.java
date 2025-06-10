@@ -126,4 +126,19 @@ public class ShiftRepository implements CrudRepository<Shift> {
             return Response.failure("Exception occurred: " + e.getMessage());
         }
     }
+
+    public Response<Boolean> deleteAll() {
+        String query = "DELETE FROM shift";
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            var preparedStatement = conn.prepareStatement(query);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                return Response.success("All shifts deleted successfully", true);
+            } else {
+                return Response.failure("No shifts found to delete");
+            }
+        } catch (Exception e) {
+            return Response.failure("Exception occurred: " + e.getMessage());
+        }
+    }
 }

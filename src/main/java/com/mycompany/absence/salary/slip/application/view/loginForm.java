@@ -4,6 +4,8 @@
  */
 package com.mycompany.absence.salary.slip.application.view;
 
+import javax.swing.JOptionPane;
+
 import com.mycompany.absence.salary.slip.application.services.AuthenticationService;
 import com.mycompany.absence.salary.slip.application.utils.SessionManager;
 
@@ -336,8 +338,8 @@ public class loginForm extends javax.swing.JFrame {
 
             this.dispose(); // Close the login form
         } else {
-            // Authentication failed, show an error message
-            System.out.println("Login failed: " + response.getMessage());
+            JOptionPane.showMessageDialog(this, "Login failed: " + response.getMessage(),
+                    "Login Error", JOptionPane.ERROR_MESSAGE);
             bersih();
         }
     }// GEN-LAST:event_buttonLoginActionPerformed

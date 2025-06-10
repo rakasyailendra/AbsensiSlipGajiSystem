@@ -194,7 +194,7 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
         headerAdmin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         headerAdmin.setPreferredSize(new java.awt.Dimension(800, 86));
 
-        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cancel.png"))); // NOI18N
+        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel.png"))); // NOI18N
         btmCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btmCancelMouseClicked(evt);

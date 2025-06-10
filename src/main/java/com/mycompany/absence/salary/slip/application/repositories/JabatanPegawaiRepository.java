@@ -141,6 +141,23 @@ public class JabatanPegawaiRepository implements CrudRepository<JabatanPegawai> 
         }
     }
 
+    public Response<Boolean> deleteAll() {
+        String query = "DELETE FROM jabatan_pegawai";
+        try (Connection conn = DatabaseConnection.getConnection();
+                var preparedStatement = conn.prepareStatement(query)) {
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                return Response.success("All Jabatan Pegawai deleted successfully", true);
+            } else {
+                return Response.failure("No Jabatan Pegawai found to delete");
+            }
+
+        } catch (Exception e) {
+            return Response.failure("Exception occurred while deleting all: " + e.getMessage());
+        }
+    }
+
     // Mapper untuk mengubah ResultSet menjadi Entity
     private JabatanPegawai mapResultToEntity(java.sql.ResultSet resultSet) throws Exception {
         JabatanPegawai entity = new JabatanPegawai();

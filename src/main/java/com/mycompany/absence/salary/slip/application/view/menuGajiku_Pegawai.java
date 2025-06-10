@@ -4,6 +4,11 @@
  */
 package com.mycompany.absence.salary.slip.application.view;
 
+import javax.swing.table.DefaultTableModel;
+
+import com.mycompany.absence.salary.slip.application.models.Pegawai;
+import com.mycompany.absence.salary.slip.application.utils.SessionManager;
+
 /**
  *
  * @author User
@@ -15,6 +20,21 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
      */
     public menuGajiku_Pegawai() {
         initComponents();
+    }
+
+    Pegawai currentUser = SessionManager.getInstance().getCurrentUser();
+    
+    private void initializeComponents() {
+        haloNamaPegawai_isiOtomatis.setText(currentUser.getNama());
+    }
+
+    private void initializeTable() {
+        
+    }
+
+    private void populateTableGaji() {
+        String[] columnNames = {"Nama Pegawai", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
     }
 
     /**
@@ -63,10 +83,20 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         MenuDashboardPegawai.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDashboardPegawai.setForeground(new java.awt.Color(179, 201, 208));
         MenuDashboardPegawai.setText("Dashboard");
+        MenuDashboardPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuDashboardPegawaiMouseClicked(evt);
+            }
+        });
 
         MenuShiftkuPegawai.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuShiftkuPegawai.setForeground(new java.awt.Color(255, 255, 255));
+        MenuShiftkuPegawai.setForeground(new java.awt.Color(179, 201, 208));
         MenuShiftkuPegawai.setText("Shift Ku");
+        MenuShiftkuPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuShiftkuPegawaiMouseClicked(evt);
+            }
+        });
 
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
@@ -81,9 +111,15 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(179, 201, 208));
         jLabel2.setText("LAPORAN");
 
+        MenuGajikuPegawai.setBackground(new java.awt.Color(255, 255, 255));
         MenuGajikuPegawai.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuGajikuPegawai.setForeground(new java.awt.Color(179, 201, 208));
+        MenuGajikuPegawai.setForeground(new java.awt.Color(255, 255, 255));
         MenuGajikuPegawai.setText("Gaji Ku");
+        MenuGajikuPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuGajikuPegawaiMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout sideBarLayout = new javax.swing.GroupLayout(sideBar);
         sideBar.setLayout(sideBarLayout);
@@ -130,7 +166,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         headerPegawai.setBackground(new java.awt.Color(255, 255, 255));
         headerPegawai.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cancel.png"))); // NOI18N
+        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel.png"))); // NOI18N
         btmCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btmCancelMouseClicked(evt);
@@ -272,7 +308,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(headerPegawai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelUtama_shiftkuPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
+                .addComponent(panelUtama_shiftkuPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
@@ -282,7 +318,14 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLogoutMouseClicked
-        // TODO add your handling code here:
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?",
+                "Konfirmasi Logout", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm == java.awt.event.KeyEvent.VK_Y || confirm == javax.swing.JOptionPane.YES_OPTION) {
+            SessionManager.getInstance().logout();
+            loginForm login = new loginForm(); // Membuat objek form tujuan
+            login.setVisible(true); // Menampilkan form tujuan
+            this.dispose(); // Menutup form saat ini
+        }
     }//GEN-LAST:event_MenuLogoutMouseClicked
 
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btmCancelMouseClicked
@@ -292,6 +335,25 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
     private void jCombo_BulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_BulanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCombo_BulanActionPerformed
+
+    private void MenuGajikuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuGajikuPegawaiMouseClicked
+        menuShiftku_Pegawai shiftkuPegawai = new menuShiftku_Pegawai();
+        shiftkuPegawai.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_MenuGajikuPegawaiMouseClicked
+
+    private void MenuShiftkuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftkuPegawaiMouseClicked
+        // TODO add your handling code here:
+        menuShiftku_Pegawai shiftkuPegawai = new menuShiftku_Pegawai();
+        shiftkuPegawai.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_MenuShiftkuPegawaiMouseClicked
+
+    private void MenuDashboardPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardPegawaiMouseClicked
+        dashboardPegawai dashboardPegawai = new dashboardPegawai();
+        dashboardPegawai.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_MenuDashboardPegawaiMouseClicked
 
     /**
      * @param args the command line arguments

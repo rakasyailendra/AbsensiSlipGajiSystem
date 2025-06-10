@@ -4,8 +4,8 @@
  */
 package com.mycompany.absence.salary.slip.application.models;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 /**
  *
@@ -14,7 +14,7 @@ import java.util.Date;
 public class Absen extends BaseEntity {
     private Integer idPegawai;
     private Integer idShift;
-    private Date tanggal;
+    private LocalDate tanggal;
     private LocalTime jamMasuk;
     private LocalTime jamKeluar;
     private String fotoMasuk;
@@ -24,9 +24,8 @@ public class Absen extends BaseEntity {
         super();
     }
 
-    public Absen(Integer idPegawai, Integer idShift, Date tanggal, LocalTime jamMasuk, LocalTime jamKeluar,
+    public Absen(Integer idPegawai, Integer idShift, LocalDate tanggal, LocalTime jamMasuk, LocalTime jamKeluar,
             String fotoMasuk, String fotoKeluar) {
-        super();
         this.idPegawai = idPegawai;
         this.idShift = idShift;
         this.tanggal = tanggal;
@@ -52,11 +51,11 @@ public class Absen extends BaseEntity {
         this.idShift = idShift;
     }
 
-    public Date getTanggal() {
+    public LocalDate getTanggal() {
         return tanggal;
     }
 
-    public void setTanggal(Date tanggal) {
+    public void setTanggal(LocalDate tanggal) {
         this.tanggal = tanggal;
     }
 
