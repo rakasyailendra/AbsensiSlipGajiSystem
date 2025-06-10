@@ -123,4 +123,19 @@ public class JabatanRepository implements CrudRepository<Jabatan> {
             return Response.failure("Exception occurred: " + e.getMessage());
         }
     }
+
+    public Response<Boolean> deleteAll() {
+        String query = "DELETE FROM jabatan";
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            var preparedStatement = conn.prepareStatement(query);
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                return Response.success("All Jabatans deleted successfully", true);
+            } else {
+                return Response.failure("No Jabatans found to delete");
+            }
+        } catch (Exception e) {
+            return Response.failure("Exception occurred: " + e.getMessage());
+        }
+    }
 }

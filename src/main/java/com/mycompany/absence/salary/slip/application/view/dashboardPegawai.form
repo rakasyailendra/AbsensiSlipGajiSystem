@@ -66,7 +66,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="headerPegawai" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="panelUtama_dashboardPegawai" pref="541" max="32767" attributes="0"/>
+                  <Component id="panelUtama_dashboardPegawai" pref="544" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -165,6 +165,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Shift Ku"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuShiftkuPegawaiMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="MenuLogout">
               <Properties>
@@ -201,6 +204,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gaji Ku"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuGajikuPegawaiMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -426,6 +432,7 @@
                 <Property name="text" type="java.lang.String" value="Check Out"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ButtonCheckOutMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonCheckOutActionPerformed"/>
               </Events>
             </Component>

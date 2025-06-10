@@ -4,6 +4,7 @@
 
 package com.mycompany.abji_finalproject_pbo_2;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -62,11 +63,11 @@ public class AbJi_FinalProject_PBO_2 {
         AbsenService absenService = new AbsenService();
         
 
-        pegawai.setNip("123456789");
-        pegawai.setNama("John Doe");
-        pegawai.setTanggalLahir(new java.util.Date());
-        pegawai.setAlamat("123 Main St");
-        pegawai.setPassword("password123");
+        pegawai.setNip("");
+        pegawai.setNama("");
+        pegawai.setTanggalLahir(LocalDate.now());
+        pegawai.setAlamat("");
+        pegawai.setPassword("");
         pegawai.setIsAdmin(true);
 
         Response<Pegawai> pegawaiResponse = pegawaiRes.save(pegawai);
@@ -77,11 +78,11 @@ public class AbJi_FinalProject_PBO_2 {
             return;
         }
 
-        pegawai2.setNip("987654321");
-        pegawai2.setNama("Jane Smith");
-        pegawai2.setTanggalLahir(new java.util.Date());
-        pegawai2.setAlamat("456 Elm St");
-        pegawai2.setPassword("password456");
+        pegawai2.setNip("");
+        pegawai2.setNama("");
+        pegawai2.setTanggalLahir(LocalDate.now());
+        pegawai2.setAlamat("");
+        pegawai2.setPassword("");
         pegawai2.setIsAdmin(false);
 
         Response<Pegawai> pegawai2Response = pegawaiRes.save(pegawai2);
@@ -139,11 +140,9 @@ public class AbJi_FinalProject_PBO_2 {
 
         absen.setIdPegawai(pegawai.getId());
         absen.setIdShift(shift.getId());
-        absen.setTanggal(new java.util.Date());
+        absen.setTanggal(LocalDate.now());
         absen.setJamMasuk(LocalTime.of(8, 30));
         absen.setJamKeluar(LocalTime.of(16, 30));
-        absen.setFotoMasuk("foto_masuk.jpg");
-        absen.setFotoKeluar("foto_keluar.jpg");
 
         Response<Absen> saveAbsenResponse = absenService.createAbsen(absen);
         if (saveAbsenResponse.isSuccess()) {
@@ -171,7 +170,7 @@ public class AbJi_FinalProject_PBO_2 {
         Pegawai pegawai = new Pegawai();
         pegawai.setNip("123456789");
         pegawai.setNama("John Doe");
-        pegawai.setTanggalLahir(new java.util.Date());
+        pegawai.setTanggalLahir(LocalDate.now());
         pegawai.setAlamat("123 Main St");
         pegawai.setPassword("password123");
         pegawai.setIsAdmin(true);
@@ -349,7 +348,7 @@ public class AbJi_FinalProject_PBO_2 {
         // Step 1: Create & Save Pegawai
         pegawai.setNip("123456789");
         pegawai.setNama("John Doe");
-        pegawai.setTanggalLahir(new java.util.Date());
+        pegawai.setTanggalLahir(LocalDate.now());
         pegawai.setAlamat("123 Main St");
         pegawai.setPassword("password123");
         pegawai.setIsAdmin(true);
@@ -455,7 +454,7 @@ public class AbJi_FinalProject_PBO_2 {
         // Step 1: Create & Save Pegawai
         pegawai.setNip("987654321");
         pegawai.setNama("Alice Smith");
-        pegawai.setTanggalLahir(new java.util.Date());
+        pegawai.setTanggalLahir(LocalDate.now());
         pegawai.setAlamat("456 Elm St");
         pegawai.setPassword("password456");
         pegawai.setIsAdmin(false);
@@ -563,7 +562,7 @@ public class AbJi_FinalProject_PBO_2 {
         // Step 1: Create & Save Pegawai
         pegawai.setNip("123456789");
         pegawai.setNama("John Doe");
-        pegawai.setTanggalLahir(new java.util.Date());
+        pegawai.setTanggalLahir(LocalDate.now());
         pegawai.setAlamat("123 Main St");
         pegawai.setPassword("password123");
         pegawai.setIsAdmin(true);
@@ -594,11 +593,9 @@ public class AbJi_FinalProject_PBO_2 {
         // Step 3: Create Absen
         absen.setIdPegawai(pegawai.getId());
         absen.setIdShift(shift.getId());
-        absen.setTanggal(new java.util.Date());
+        absen.setTanggal(LocalDate.now());
         absen.setJamMasuk(LocalTime.of(8, 30));
         absen.setJamKeluar(LocalTime.of(16, 30));
-        absen.setFotoMasuk("foto_masuk.jpg");
-        absen.setFotoKeluar("foto_keluar.jpg");
 
         Response<Absen> createAbsenResponse = absenService.createAbsen(absen);
         if (createAbsenResponse.isSuccess()) {

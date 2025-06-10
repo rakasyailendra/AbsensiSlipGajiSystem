@@ -4,6 +4,7 @@
  */
 package com.mycompany.absence.salary.slip.application.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
 public class Pegawai extends BaseEntity {
     private String nip;
     private String nama;
-    private Date tanggalLahir;
+    private LocalDate tanggalLahir;
     private String alamat;
     private String password;
     private Boolean isAdmin;
@@ -22,7 +23,7 @@ public class Pegawai extends BaseEntity {
         super();
     }
 
-    public Pegawai(String nip, String nama, Date tanggalLahir, String alamat, String password, Boolean isAdmin) {
+    public Pegawai(String nip, String nama, LocalDate tanggalLahir, String alamat, String password, Boolean isAdmin) {
         super();
         this.nip = nip;
         this.nama = nama;
@@ -48,11 +49,11 @@ public class Pegawai extends BaseEntity {
         this.nama = nama;
     }
 
-    public Date getTanggalLahir() {
+    public LocalDate getTanggalLahir() {
         return tanggalLahir;
     }
 
-    public void setTanggalLahir(Date tanggalLahir) {
+    public void setTanggalLahir(LocalDate tanggalLahir) {
         this.tanggalLahir = tanggalLahir;
     }
 

@@ -4,6 +4,16 @@
  */
 package com.mycompany.absence.salary.slip.application.view;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import com.mycompany.absence.salary.slip.application.models.Shift;
+import com.mycompany.absence.salary.slip.application.repositories.ShiftRepository;
+import com.mycompany.absence.salary.slip.application.utils.Response;
+
 /**
  *
  * @author User
@@ -15,6 +25,98 @@ public class form_masterShift extends javax.swing.JPanel {
      */
     public form_masterShift() {
         initComponents();
+        initializeComponents();
+    }
+
+    ShiftRepository shiftRepository = new ShiftRepository();
+
+    private void initializeComponents() {
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+
+        mainPanel.add(dataShift);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+
+        populateTableShift();
+        clearInputFields();
+    }
+
+    private void hapusShift() {
+        int selectedRow = table_dataShift.getSelectedRow();
+        if (selectedRow >= 0) {
+            int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this shift?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            if (confirmation != JOptionPane.YES_OPTION) {
+                return; // User chose not to delete
+            }
+
+            int shiftId = (int) table_dataShift.getValueAt(selectedRow, 0);
+            Response<Boolean> response = shiftRepository.deleteById(shiftId);
+
+            if (response.isSuccess()) {
+                JOptionPane.showMessageDialog(this, "Shift deleted successfully");
+                populateTableShift();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error deleting shift: " + response.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a shift to delete");
+        }
+    }
+
+    private void tambahShift() {
+        String namaShift = jText_namaShift.getText();
+        String jamMasuk = jText_jamMasuk.getText();
+        String jamKeluar = jText_jamKeluar.getText();
+
+        // Convert from String to local time if necessary
+        LocalTime jamMasukTime = LocalTime.parse(jamMasuk);
+        LocalTime jamKeluarTime = LocalTime.parse(jamKeluar);
+
+        Shift shift = new Shift(namaShift, jamMasukTime, jamKeluarTime);
+        Response<Shift> response = shiftRepository.save(shift);
+
+        if (response.isSuccess()) {
+            JOptionPane.showMessageDialog(this, "Shift added successfully");
+            initializeComponents();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error adding shift: " + response.getMessage());
+        }
+    }
+
+    private void clearInputFields() {
+        jText_namaShift.setText("");
+        jText_jamMasuk.setText("");
+        jText_jamKeluar.setText("");
+    }
+
+    private void populateTableShift() {
+        String[] columnNames = { "Id", "Nama Shift", "Jam Masuk", "Jam Keluar"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Prevent editing of cells
+            }
+        };
+
+        table_dataShift.setModel(model);
+
+        Response<ArrayList<Shift>> response = shiftRepository.findAll();
+        if (response.isSuccess()) {
+            ArrayList<Shift> shifts = response.getData();
+            for (Shift shift : shifts) {
+                Object[] row = {shift.getId(), shift.getNamaShift(), shift.getJamMasuk(), shift.getJamKeluar()};
+                model.addRow(row);
+            }
+        } else {
+            System.out.println("Error: " + response.getMessage());
+        }
+
+        // Sembunyikan kolom pertama (ID)
+        table_dataShift.getColumnModel().getColumn(0).setMinWidth(0);
+        table_dataShift.getColumnModel().getColumn(0).setMaxWidth(0);
+        table_dataShift.getColumnModel().getColumn(0).setWidth(0);
     }
 
     /**
@@ -309,7 +411,8 @@ public class form_masterShift extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_tambah_masterShiftActionPerformed
 
     private void btn_hapus_masterShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_masterShiftActionPerformed
-        // TODO add your handling code here:
+        hapusShift();
+        initializeComponents();
     }//GEN-LAST:event_btn_hapus_masterShiftActionPerformed
 
     private void btn_batal_masterShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterShiftActionPerformed
@@ -317,7 +420,8 @@ public class form_masterShift extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_batal_masterShiftActionPerformed
 
     private void btn_simpan_masterJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterJabatanActionPerformed
-        // TODO add your handling code here:
+        tambahShift();
+        initializeComponents();
     }//GEN-LAST:event_btn_simpan_masterJabatanActionPerformed
 
     private void btn_batal_masterPegawai2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterPegawai2ActionPerformed
