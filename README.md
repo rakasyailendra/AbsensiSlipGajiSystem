@@ -13,69 +13,36 @@ Aplikasi desktop berbasis Java dan Java Swing ini dibuat untuk membantu proses a
 Dosen Pengampu: Fawwaz Ali Akbar, S.Kom.,M.Kom
 <br>
 Disusun Oleh:
-<<<<<<< HEAD
 
 1. Muhammad Rakha Syailendra 23081010019
 2. Regina CaeliI Endyarni 23081010025
 3. Ghabriella Auranizza Fransrico 23081020028
 4. Rega Yuancahya Faiz Kristama 23081010033
 5. M. Dicky Haikal Aly 23081010043
-   <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
-✨ Fitur Utama
-
-#### **👨‍💼 ADMIN PESANTREN**
-
-=======
-
-1. Muhammad Rakha Syailendra 23081010019
-2. Regina CaeliI Endyarni 23081010025
-3. Ghabriella Auranizza Fransrico 23081020028
-4. Rega Yuancahya Faiz Kristama 23081010033
-5. M. Dicky Haikal Aly 23081010043
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
-
-#### ✨Fitur Utama✨ 
+#### ✨Fitur Utama✨
 
 #### **ADMIN PESANTREN 👨‍💼**
->>>>>>> 072a9a75bdf64ad0141a6af7c8a87517ec14f489
+
+> > > > > > > 072a9a75bdf64ad0141a6af7c8a87517ec14f489
+
 1. **Manajemen Pegawai, Shift, Jabatan** (Tambah/Edit/Hapus)
 2. **Rekap Absensi Harian**
 3. **Perhitungan Honor Otomatis** (Gaji Pokok x Jumlah Masuk)
 4. **Cetak Slip Honor** Format PDF
 5. **Kelola Jadwal Shift** (Pengurus/Pengajar/Penjaga)  
-<<<<<<< HEAD
-   <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
-
-#### **👳🏻‍♀️🧕🏻📿 PEGAWAI ( Pengurus, Pengajar (Ustadz/Ustadzah), dan Penjaga)** <br>
-
-6. Melakukan absensi harian chek in dan check out sesuai jabatan <br>
-7. Melihat jadwal shift pesantren<br>
-8. Melihat dan mencetak slip gaji
-   <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
    <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
-   💻 Teknologi yang Digunakan<br>
-   Java <br>
-   Java Swing<br>
-   MySQL untuk Database <br>
-   HTML5 (untuk readme github)
-
-##
-
-👨🏻‍💻👩🏻‍💻 Tools Project<br>
-NetBeans IDE<br>
-VScode<br>
-Github
-=======
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
 #### **PEGAWAI ( Pengurus, Pengajar (Ustadz/Ustadzah), dan Penjaga) 👳🏻‍♀️🧕🏻📿** <br>
+
 1. Melakukan absensi harian chek in dan check out sesuai jabatan <br>
 2. Melihat jadwal shift pesantren<br>
 3. Melihat dan mencetak slip gaji
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
+   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
 #### **Teknologi yang Digunakan 💻**
+
 1. Java <br>
 2. Java Swing<br>
 3. MySQL untuk Database <br>
@@ -84,8 +51,9 @@ Github
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
 #### Tools Project 👨🏻‍💻👩🏻‍💻<br>
+
 1. NetBeans IDE<br>
 2. VScode<br>
 3. Github
->>>>>>> 072a9a75bdf64ad0141a6af7c8a87517ec14f489
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
+   > > > > > > > 072a9a75bdf64ad0141a6af7c8a87517ec14f489
+   > > > > > > > <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
