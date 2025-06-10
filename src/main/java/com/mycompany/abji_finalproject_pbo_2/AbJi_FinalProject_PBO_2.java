@@ -63,11 +63,11 @@ public class AbJi_FinalProject_PBO_2 {
         AbsenService absenService = new AbsenService();
         
 
-        pegawai.setNip("");
-        pegawai.setNama("");
+        pegawai.setNip("admin");
+        pegawai.setNama("Owner Pesantren");
         pegawai.setTanggalLahir(LocalDate.now());
-        pegawai.setAlamat("");
-        pegawai.setPassword("");
+        pegawai.setAlamat("Surabaya");
+        pegawai.setPassword("admin123");
         pegawai.setIsAdmin(true);
 
         Response<Pegawai> pegawaiResponse = pegawaiRes.save(pegawai);
@@ -78,11 +78,11 @@ public class AbJi_FinalProject_PBO_2 {
             return;
         }
 
-        pegawai2.setNip("");
-        pegawai2.setNama("");
+        pegawai2.setNip("123456789");
+        pegawai2.setNama("Abdul Khaliq");
         pegawai2.setTanggalLahir(LocalDate.now());
-        pegawai2.setAlamat("");
-        pegawai2.setPassword("");
+        pegawai2.setAlamat("Malang");
+        pegawai2.setPassword("password");
         pegawai2.setIsAdmin(false);
 
         Response<Pegawai> pegawai2Response = pegawaiRes.save(pegawai2);
@@ -93,8 +93,8 @@ public class AbJi_FinalProject_PBO_2 {
             return;
         }
 
-        jabatan.setNamaJabatan("Software Engineer");
-        jabatan.setGajiPokok(5000000.0);
+        jabatan.setNamaJabatan("Pengurus");
+        jabatan.setGajiPokok(100000.0);
 
         Response<Jabatan> saveJabatanResponse = jabatanRepository.save(jabatan);
         if (saveJabatanResponse.isSuccess()) {
@@ -104,9 +104,9 @@ public class AbJi_FinalProject_PBO_2 {
             return;
         }
 
-        shift.setNamaShift("Morning Shift");
-        shift.setJamMasuk(LocalTime.of(8, 0));
-        shift.setJamKeluar(LocalTime.of(16, 0));
+        shift.setNamaShift("Shift Pagi A");
+        shift.setJamMasuk(LocalTime.of(8, 0)); //
+        shift.setJamKeluar(LocalTime.of(16, 0)); //
 
         Response<Shift> saveShiftResponse = shiftRepository.save(shift);
         if (saveShiftResponse.isSuccess()) {
@@ -141,7 +141,7 @@ public class AbJi_FinalProject_PBO_2 {
         absen.setIdPegawai(pegawai.getId());
         absen.setIdShift(shift.getId());
         absen.setTanggal(LocalDate.now());
-        absen.setJamMasuk(LocalTime.of(8, 30));
+        absen.setJamMasuk(LocalTime.of(8, 30)); //
         absen.setJamKeluar(LocalTime.of(16, 30));
 
         Response<Absen> saveAbsenResponse = absenService.createAbsen(absen);
@@ -168,11 +168,11 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Testing Pegawai class...");
 
         Pegawai pegawai = new Pegawai();
-        pegawai.setNip("123456789");
-        pegawai.setNama("John Doe");
+        pegawai.setNip("admin");
+        pegawai.setNama("Owner Pesantren");
         pegawai.setTanggalLahir(LocalDate.now());
-        pegawai.setAlamat("123 Main St");
-        pegawai.setPassword("password123");
+        pegawai.setAlamat("Surabaya");
+        pegawai.setPassword("admin123");
         pegawai.setIsAdmin(true);
 
         PegawaiRepository repository = new PegawaiRepository();
@@ -231,7 +231,7 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Testing Shift class...");
 
         Shift shift = new Shift();
-        shift.setNamaShift("Morning Shift");
+        shift.setNamaShift("Shift Pagi A");
         shift.setJamMasuk(LocalTime.of(8, 0));
         shift.setJamKeluar(LocalTime.of(16, 0));
 
@@ -253,7 +253,7 @@ public class AbJi_FinalProject_PBO_2 {
         } else {
             System.out.println("Failed to find Shift: " + findByIdResponse.getMessage());
         }
-
+        
         Response<ArrayList<Shift>> findAllResponse = repository.findAll();
         if (findAllResponse.isSuccess() && findAllResponse.getData() != null && !findAllResponse.getData().isEmpty()) {
             System.out.println("All Shifts:");
@@ -264,7 +264,7 @@ public class AbJi_FinalProject_PBO_2 {
             System.out.println("No Shifts found.");
         }
 
-        shift.setNamaShift("Evening Shift");
+        shift.setNamaShift("Shift Malam");
         shift.setJamKeluar(LocalTime.of(20, 0)); // 20:00
         Response<Shift> updateResponse = repository.update(shift);
         if (updateResponse.isSuccess()) {
@@ -285,8 +285,8 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Testing Jabatan class...");
 
         Jabatan jabatan = new Jabatan();
-        jabatan.setNamaJabatan("Software Engineer");
-        jabatan.setGajiPokok(5000000.0);
+        jabatan.setNamaJabatan("Pengajar dan Penjaga");
+        jabatan.setGajiPokok(70000.0);
 
         JabatanRepository repository = new JabatanRepository();
         Response<Jabatan> saveResponse = repository.save(jabatan);
@@ -316,8 +316,8 @@ public class AbJi_FinalProject_PBO_2 {
         }
 
         // Update Jabatan
-        jabatan.setNamaJabatan("Senior Software Engineer");
-        jabatan.setGajiPokok(7000000.0);
+        jabatan.setNamaJabatan("Pengurus");
+        jabatan.setGajiPokok(100000.0);
         Response<Jabatan> updateResponse = repository.update(jabatan);
         if (updateResponse.isSuccess()) {
             System.out.println("Jabatan updated successfully: " + updateResponse.getData());
@@ -346,11 +346,11 @@ public class AbJi_FinalProject_PBO_2 {
         JabatanPegawaiService jabatanPegawaiService = new JabatanPegawaiService();
 
         // Step 1: Create & Save Pegawai
-        pegawai.setNip("123456789");
-        pegawai.setNama("John Doe");
+        pegawai.setNip("admin");
+        pegawai.setNama("Owner Pesantren");
         pegawai.setTanggalLahir(LocalDate.now());
-        pegawai.setAlamat("123 Main St");
-        pegawai.setPassword("password123");
+        pegawai.setAlamat("Surabaya");
+        pegawai.setPassword("admin123");
         pegawai.setIsAdmin(true);
 
         Response<Pegawai> savePegawaiResponse = pegawaiRepository.save(pegawai);
@@ -362,8 +362,8 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Pegawai saved successfully: " + pegawai);
 
         // Step 2: Create & Save Jabatan #1
-        jabatan1.setNamaJabatan("Software Engineer");
-        jabatan1.setGajiPokok(5000000.0);
+        jabatan1.setNamaJabatan("Pengajar dan Penjaga");
+        jabatan1.setGajiPokok(70000.0);
 
         Response<Jabatan> saveJabatan1Response = jabatanRepository.save(jabatan1);
         if (!saveJabatan1Response.isSuccess()) {
@@ -387,8 +387,8 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Jabatan assigned successfully: " + jabatanPegawai);
 
         // Step 4: Create & Save Jabatan #2 (Update Simulation)
-        jabatan2.setNamaJabatan("Senior Software Engineer");
-        jabatan2.setGajiPokok(7000000.0);
+        jabatan2.setNamaJabatan("Pengurus");
+        jabatan2.setGajiPokok(100000.0);
 
         Response<Jabatan> saveJabatan2Response = jabatanRepository.save(jabatan2);
         if (!saveJabatan2Response.isSuccess()) {
@@ -453,10 +453,10 @@ public class AbJi_FinalProject_PBO_2 {
 
         // Step 1: Create & Save Pegawai
         pegawai.setNip("987654321");
-        pegawai.setNama("Alice Smith");
+        pegawai.setNama("M. Kadir");
         pegawai.setTanggalLahir(LocalDate.now());
-        pegawai.setAlamat("456 Elm St");
-        pegawai.setPassword("password456");
+        pegawai.setAlamat("Langitan Tuban");
+        pegawai.setPassword("password1");
         pegawai.setIsAdmin(false);
 
         Response<Pegawai> savePegawaiResponse = pegawaiRepository.save(pegawai);
@@ -469,7 +469,7 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Pegawai saved successfully: " + pegawai);
 
         // Step 2: Create & Save Shift #1
-        shift1.setNamaShift("Night Shift");
+        shift1.setNamaShift("Shift Malam");
         shift1.setJamMasuk(LocalTime.of(22, 0));
         shift1.setJamKeluar(LocalTime.of(6, 0));
 
@@ -495,7 +495,7 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Shift assigned successfully: " + shiftPegawai);
 
         // Step 4: Create & Save Shift #2 (Update Simulation)
-        shift2.setNamaShift("Early Morning Shift");
+        shift2.setNamaShift("Shift Pagi A");
         shift2.setJamMasuk(LocalTime.of(4, 0));
         shift2.setJamKeluar(LocalTime.of(12, 0));
 
@@ -560,11 +560,11 @@ public class AbJi_FinalProject_PBO_2 {
         AbsenService absenService = new AbsenService();
 
         // Step 1: Create & Save Pegawai
-        pegawai.setNip("123456789");
-        pegawai.setNama("John Doe");
+        pegawai.setNip("admin");
+        pegawai.setNama("Owner Pesantren");
         pegawai.setTanggalLahir(LocalDate.now());
-        pegawai.setAlamat("123 Main St");
-        pegawai.setPassword("password123");
+        pegawai.setAlamat("Surabaya");
+        pegawai.setPassword("admin123");
         pegawai.setIsAdmin(true);
 
         Response<Pegawai> savePegawaiResponse = pegawaiRepository.save(pegawai);
@@ -577,7 +577,7 @@ public class AbJi_FinalProject_PBO_2 {
         System.out.println("Pegawai saved successfully: " + pegawai);
 
         // Step 2: Create & Save Shift
-        shift.setNamaShift("Morning Shift");
+        shift.setNamaShift("Shift Pagi A");
         shift.setJamMasuk(LocalTime.of(8, 0));
         shift.setJamKeluar(LocalTime.of(16, 0));
 
