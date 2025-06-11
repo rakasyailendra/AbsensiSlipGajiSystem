@@ -292,7 +292,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
@@ -304,6 +304,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
         btn_tambah_masterPegawai = new javax.swing.JButton();
         btn_hapus_masterPegawai = new javax.swing.JButton();
         btn_batal_masterPegawai = new javax.swing.JButton();
+        btn_edit_masterPegawai = new javax.swing.JButton();
         tambahPegawai = new javax.swing.JPanel();
         panelKedua_masterPegawai_Admin1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -322,31 +323,49 @@ public class form_masterPegawai extends javax.swing.JPanel {
         jCombo_jabatan = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jText_password = new javax.swing.JTextField();
+        editPegawai = new javax.swing.JPanel();
+        panelKedua_masterPegawai_Admin2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        btn_simpan_masterPegawai2 = new javax.swing.JButton();
+        btn_batal_masterPegawai3 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jText_NIP_edit = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jText_tanggalLahir_edit = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jText_nama_edit = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jText_alamat_edit = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jCombo_jabatan_edit = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        jText_password_edit = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(900, 525));
         setLayout(new java.awt.CardLayout());
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        table_absensiPegawaiHariini
-                .setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
+        table_absensiPegawaiHariini.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
         table_absensiPegawaiHariini.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null }
-                },
-                new String[] {
-                        "NIP", "Nama", "Tanggal Lahir", "Alamat", "Jabatan"
-                }));
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "NIP", "Nama", "Tanggal Lahir", "Alamat", "Jabatan"
+            }
+        ));
         jScrollPane1.setViewportView(table_absensiPegawaiHariini);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -375,70 +394,74 @@ public class form_masterPegawai extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout panelUtama_masterPegawai_AdminLayout = new javax.swing.GroupLayout(
-                panelUtama_masterPegawai_Admin);
+        btn_edit_masterPegawai.setText("EDIT");
+        btn_edit_masterPegawai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit_masterPegawaiActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelUtama_masterPegawai_AdminLayout = new javax.swing.GroupLayout(panelUtama_masterPegawai_Admin);
         panelUtama_masterPegawai_Admin.setLayout(panelUtama_masterPegawai_AdminLayout);
         panelUtama_masterPegawai_AdminLayout.setHorizontalGroup(
-                panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panelUtama_masterPegawai_AdminLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870,
-                                                        Short.MAX_VALUE)
-                                                .addGap(12, 12, 12))
-                                        .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                                                .addComponent(btn_tambah_masterPegawai)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btn_hapus_masterPegawai)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btn_batal_masterPegawai)
-                                                .addGap(0, 0, Short.MAX_VALUE)))));
+            panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
+                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
+                        .addComponent(btn_tambah_masterPegawai)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_edit_masterPegawai)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_hapus_masterPegawai)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_batal_masterPegawai)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
         panelUtama_masterPegawai_AdminLayout.setVerticalGroup(
-                panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4)
-                                .addGap(37, 37, 37)
-                                .addGroup(panelUtama_masterPegawai_AdminLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btn_tambah_masterPegawai)
-                                        .addComponent(btn_hapus_masterPegawai)
-                                        .addComponent(btn_batal_masterPegawai))
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(177, Short.MAX_VALUE)));
+            panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(37, 37, 37)
+                .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_tambah_masterPegawai)
+                    .addComponent(btn_hapus_masterPegawai)
+                    .addComponent(btn_batal_masterPegawai)
+                    .addComponent(btn_edit_masterPegawai))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(177, Short.MAX_VALUE))
+        );
 
         btn_hapus_masterPegawai.getAccessibleContext().setAccessibleName("btn_hapusPegawai");
 
         javax.swing.GroupLayout dataPegawaiLayout = new javax.swing.GroupLayout(dataPegawai);
         dataPegawai.setLayout(dataPegawaiLayout);
         dataPegawaiLayout.setHorizontalGroup(
-                dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 900, Short.MAX_VALUE)
-                        .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(dataPegawaiLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(panelUtama_masterPegawai_Admin,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addContainerGap())));
+            dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 900, Short.MAX_VALUE)
+            .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dataPegawaiLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
         dataPegawaiLayout.setVerticalGroup(
-                dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 525, Short.MAX_VALUE)
-                        .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(dataPegawaiLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(panelUtama_masterPegawai_Admin,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addContainerGap())));
+            dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 525, Short.MAX_VALUE)
+            .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dataPegawaiLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
         mainPanel.add(dataPegawai, "card2");
 
@@ -466,7 +489,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
         jText_NIP.setText("jTextField1");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("Tanggal Lahir");
+        jLabel8.setText("Tanggal Lahir (dd-mm-yyyy)");
 
         jText_tanggalLahir.setText("jTextField1");
         jText_tanggalLahir.addActionListener(new java.awt.event.ActionListener() {
@@ -507,126 +530,306 @@ public class form_masterPegawai extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jText_NIP, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
-                                                Short.MAX_VALUE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jText_tanggalLahir, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
-                                                Short.MAX_VALUE)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jText_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
-                                                Short.MAX_VALUE)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jText_alamat, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
-                                                Short.MAX_VALUE)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jCombo_jabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                Short.MAX_VALUE)
-                                        .addComponent(jLabel12)
-                                        .addComponent(jText_password, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
-                                                Short.MAX_VALUE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jText_NIP, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(jText_tanggalLahir, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel9)
+                    .addComponent(jText_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
+                    .addComponent(jText_alamat, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel11)
+                    .addComponent(jCombo_jabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel12)
+                    .addComponent(jText_password, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jText_NIP, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jText_nama, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jText_tanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jText_alamat, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCombo_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jText_password, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(13, Short.MAX_VALUE)));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_NIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_tanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_alamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCombo_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
 
-        javax.swing.GroupLayout panelKedua_masterPegawai_Admin1Layout = new javax.swing.GroupLayout(
-                panelKedua_masterPegawai_Admin1);
+        javax.swing.GroupLayout panelKedua_masterPegawai_Admin1Layout = new javax.swing.GroupLayout(panelKedua_masterPegawai_Admin1);
         panelKedua_masterPegawai_Admin1.setLayout(panelKedua_masterPegawai_Admin1Layout);
         panelKedua_masterPegawai_Admin1Layout.setHorizontalGroup(
-                panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(panelKedua_masterPegawai_Admin1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
-                                                .addGap(14, 14, 14)
-                                                .addGroup(panelKedua_masterPegawai_Admin1Layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(panelKedua_masterPegawai_Admin1Layout
-                                                                .createSequentialGroup()
-                                                                .addComponent(btn_simpan_masterPegawai1)
-                                                                .addPreferredGap(
-                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(btn_batal_masterPegawai2))
-                                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(0, 500, Short.MAX_VALUE)))
-                                .addContainerGap()));
+            panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
+                                .addComponent(btn_simpan_masterPegawai1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_batal_masterPegawai2))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 500, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
         panelKedua_masterPegawai_Admin1Layout.setVerticalGroup(
-                panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5)
-                                .addGap(37, 37, 37)
-                                .addGroup(panelKedua_masterPegawai_Admin1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btn_simpan_masterPegawai1)
-                                        .addComponent(btn_batal_masterPegawai2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(12, 12, 12)));
+            panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKedua_masterPegawai_Admin1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addGap(37, 37, 37)
+                .addGroup(panelKedua_masterPegawai_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan_masterPegawai1)
+                    .addComponent(btn_batal_masterPegawai2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
+        );
 
         javax.swing.GroupLayout tambahPegawaiLayout = new javax.swing.GroupLayout(tambahPegawai);
         tambahPegawai.setLayout(tambahPegawaiLayout);
         tambahPegawaiLayout.setHorizontalGroup(
-                tambahPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tambahPegawaiLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(panelKedua_masterPegawai_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            tambahPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tambahPegawaiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelKedua_masterPegawai_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
         tambahPegawaiLayout.setVerticalGroup(
-                tambahPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tambahPegawaiLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(panelKedua_masterPegawai_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap()));
+            tambahPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tambahPegawaiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelKedua_masterPegawai_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         mainPanel.add(tambahPegawai, "card2");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(2, 84, 106));
+        jLabel6.setText("Edit Data Pegawai");
+
+        btn_simpan_masterPegawai2.setText("SIMPAN");
+        btn_simpan_masterPegawai2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpan_masterPegawai2ActionPerformed(evt);
+            }
+        });
+
+        btn_batal_masterPegawai3.setText("BATAL");
+        btn_batal_masterPegawai3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_batal_masterPegawai3ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("NIP");
+
+        jText_NIP_edit.setText("jTextField1");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setText("Tanggal Lahir (dd-mm-yyyy)");
+
+        jText_tanggalLahir_edit.setText("jTextField1");
+        jText_tanggalLahir_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_tanggalLahir_editActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setText("Nama");
+
+        jText_nama_edit.setText("jTextField1");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setText("Alamat");
+
+        jText_alamat_edit.setText("jTextField1");
+        jText_alamat_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_alamat_editActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Jabatan");
+
+        jCombo_jabatan_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_jabatan_editActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setText("Password");
+
+        jText_password_edit.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jText_NIP_edit, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(jText_tanggalLahir_edit, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel14)
+                    .addComponent(jText_nama_edit, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel15)
+                    .addComponent(jText_alamat_edit, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel16)
+                    .addComponent(jCombo_jabatan_edit, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17)
+                    .addComponent(jText_password_edit, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_NIP_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_nama_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_tanggalLahir_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_alamat_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCombo_jabatan_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_password_edit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelKedua_masterPegawai_Admin2Layout = new javax.swing.GroupLayout(panelKedua_masterPegawai_Admin2);
+        panelKedua_masterPegawai_Admin2.setLayout(panelKedua_masterPegawai_Admin2Layout);
+        panelKedua_masterPegawai_Admin2Layout.setHorizontalGroup(
+            panelKedua_masterPegawai_Admin2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKedua_masterPegawai_Admin2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelKedua_masterPegawai_Admin2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelKedua_masterPegawai_Admin2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(panelKedua_masterPegawai_Admin2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelKedua_masterPegawai_Admin2Layout.createSequentialGroup()
+                                .addComponent(btn_simpan_masterPegawai2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_batal_masterPegawai3))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 500, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelKedua_masterPegawai_Admin2Layout.setVerticalGroup(
+            panelKedua_masterPegawai_Admin2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKedua_masterPegawai_Admin2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(37, 37, 37)
+                .addGroup(panelKedua_masterPegawai_Admin2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan_masterPegawai2)
+                    .addComponent(btn_batal_masterPegawai3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
+        );
+
+        javax.swing.GroupLayout editPegawaiLayout = new javax.swing.GroupLayout(editPegawai);
+        editPegawai.setLayout(editPegawaiLayout);
+        editPegawaiLayout.setHorizontalGroup(
+            editPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPegawaiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelKedua_masterPegawai_Admin2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        editPegawaiLayout.setVerticalGroup(
+            editPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPegawaiLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelKedua_masterPegawai_Admin2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        mainPanel.add(editPegawai, "card2");
+
         add(mainPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_edit_masterPegawaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_masterPegawaiActionPerformed
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+
+        mainPanel.add(editPegawai);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_btn_edit_masterPegawaiActionPerformed
+
+    private void btn_simpan_masterPegawai2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterPegawai2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_simpan_masterPegawai2ActionPerformed
+
+    private void btn_batal_masterPegawai3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterPegawai3ActionPerformed
+        mainPanel.removeAll();
+        mainPanel.add(dataPegawai);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_btn_batal_masterPegawai3ActionPerformed
+
+    private void jText_tanggalLahir_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_tanggalLahir_editActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_tanggalLahir_editActionPerformed
+
+    private void jText_alamat_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_alamat_editActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_alamat_editActionPerformed
+
+    private void jCombo_jabatan_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_jabatan_editActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCombo_jabatan_editActionPerformed
 
     private void btn_batal_masterPegawaiActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_batal_masterPegawaiActionPerformed
         // TODO add your handling code here:
@@ -691,28 +894,47 @@ public class form_masterPegawai extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal_masterPegawai;
     private javax.swing.JButton btn_batal_masterPegawai2;
+    private javax.swing.JButton btn_batal_masterPegawai3;
+    private javax.swing.JButton btn_edit_masterPegawai;
     private javax.swing.JButton btn_hapus_masterPegawai;
     private javax.swing.JButton btn_simpan_masterPegawai1;
+    private javax.swing.JButton btn_simpan_masterPegawai2;
     private javax.swing.JButton btn_tambah_masterPegawai;
     private javax.swing.JPanel dataPegawai;
+    private javax.swing.JPanel editPegawai;
     private javax.swing.JComboBox<ComboItem> jCombo_jabatan;
+    private javax.swing.JComboBox<ComboItem> jCombo_jabatan_edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jText_NIP;
+    private javax.swing.JTextField jText_NIP_edit;
     private javax.swing.JTextField jText_alamat;
+    private javax.swing.JTextField jText_alamat_edit;
     private javax.swing.JTextField jText_nama;
+    private javax.swing.JTextField jText_nama_edit;
     private javax.swing.JTextField jText_password;
+    private javax.swing.JTextField jText_password_edit;
     private javax.swing.JTextField jText_tanggalLahir;
+    private javax.swing.JTextField jText_tanggalLahir_edit;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelKedua_masterPegawai_Admin1;
+    private javax.swing.JPanel panelKedua_masterPegawai_Admin2;
     private javax.swing.JPanel panelUtama_masterPegawai_Admin;
     private javax.swing.JTable table_absensiPegawaiHariini;
     private javax.swing.JPanel tambahPegawai;
