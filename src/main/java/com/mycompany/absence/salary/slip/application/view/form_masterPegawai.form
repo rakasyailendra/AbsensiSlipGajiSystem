@@ -86,8 +86,6 @@
                                   <Component id="btn_edit_masterPegawai" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="btn_hapus_masterPegawai" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btn_batal_masterPegawai" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -103,7 +101,6 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btn_tambah_masterPegawai" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_hapus_masterPegawai" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btn_batal_masterPegawai" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_edit_masterPegawai" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -204,14 +201,6 @@
                   </AccessibilityProperties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_hapus_masterPegawaiActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="btn_batal_masterPegawai">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="BATAL"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_batal_masterPegawaiActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_edit_masterPegawai">

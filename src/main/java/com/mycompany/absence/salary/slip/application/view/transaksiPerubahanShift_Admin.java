@@ -8,12 +8,12 @@ package com.mycompany.absence.salary.slip.application.view;
  *
  * @author User
  */
-public class masterPegawai_Admin extends javax.swing.JFrame {
+public class transaksiPerubahanShift_Admin extends javax.swing.JFrame {
 
     /**
-     * Creates new form masterData_Pegawai
+     * Creates new form masterJabatan_Admin
      */
-    public masterPegawai_Admin() {
+    public transaksiPerubahanShift_Admin() {
         initComponents();
     }
 
@@ -44,8 +44,8 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         headerAdmin = new javax.swing.JPanel();
         btmCancel = new javax.swing.JLabel();
         haloAdmin = new javax.swing.JLabel();
-        pn_content_masterPegawai = new javax.swing.JPanel();
-        pn_utama_masterPegawai = new javax.swing.JPanel();
+        pn_content_masterShift = new javax.swing.JPanel();
+        pn_utama_masterShift = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -74,8 +74,13 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         });
 
         MenupegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenupegawaiAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        MenupegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenupegawaiAdmin.setText("Pegawai");
+        MenupegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenupegawaiAdminMouseClicked(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(179, 201, 208));
         jLabel2.setForeground(new java.awt.Color(179, 201, 208));
@@ -104,13 +109,8 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         jLabel3.setText("TRANSAKSI");
 
         MenuPerubahanShift.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuPerubahanShift.setForeground(new java.awt.Color(179, 201, 208));
+        MenuPerubahanShift.setForeground(new java.awt.Color(255, 255, 255));
         MenuPerubahanShift.setText("Perubahan Shift");
-        MenuPerubahanShift.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MenuPerubahanShiftMouseClicked(evt);
-            }
-        });
 
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDatapegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
@@ -127,11 +127,6 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         MenuGajipegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuGajipegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuGajipegawaiAdmin.setText("Gaji Pegawai");
-        MenuGajipegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MenuGajipegawaiAdminMouseClicked(evt);
-            }
-        });
 
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
@@ -245,17 +240,17 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        pn_utama_masterPegawai.setLayout(new java.awt.BorderLayout());
+        pn_utama_masterShift.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout pn_content_masterPegawaiLayout = new javax.swing.GroupLayout(pn_content_masterPegawai);
-        pn_content_masterPegawai.setLayout(pn_content_masterPegawaiLayout);
-        pn_content_masterPegawaiLayout.setHorizontalGroup(
-            pn_content_masterPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pn_utama_masterPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout pn_content_masterShiftLayout = new javax.swing.GroupLayout(pn_content_masterShift);
+        pn_content_masterShift.setLayout(pn_content_masterShiftLayout);
+        pn_content_masterShiftLayout.setHorizontalGroup(
+            pn_content_masterShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama_masterShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        pn_content_masterPegawaiLayout.setVerticalGroup(
-            pn_content_masterPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pn_utama_masterPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        pn_content_masterShiftLayout.setVerticalGroup(
+            pn_content_masterShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pn_utama_masterShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -267,7 +262,7 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
-                    .addComponent(pn_content_masterPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pn_content_masterShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +270,7 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(headerAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pn_content_masterPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pn_content_masterShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
@@ -284,33 +279,33 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void MenuDashboardAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardAdminMouseClicked
+        dashboardAdmin dashboard = new dashboardAdmin(); // Membuat objek form tujuan
+        dashboard.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuDashboardAdminMouseClicked
+
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btmCancelMouseClicked
         dispose();
     }//GEN-LAST:event_btmCancelMouseClicked
 
-    private void MenuDashboardAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardAdminMouseClicked
-            dashboardAdmin dashboard = new dashboardAdmin(); // Membuat objek form tujuan
-            dashboard.setVisible(true);                      // Menampilkan form tujuan
-            this.dispose();                                  // Menutup form saat ini (opsional)
-    }//GEN-LAST:event_MenuDashboardAdminMouseClicked
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        pn_utama_masterPegawai.add(new form_masterPegawai());
-        pn_utama_masterPegawai.repaint();
-        pn_utama_masterPegawai.revalidate();
+        pn_utama_masterShift.add(new form_transaksiPerubahanShift());
+        pn_utama_masterShift.repaint();
+        pn_utama_masterShift.revalidate();
     }//GEN-LAST:event_formWindowOpened
+
+    private void MenupegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenupegawaiAdminMouseClicked
+        masterPegawai_Admin masterPegawai = new masterPegawai_Admin(); // Membuat objek form tujuan
+        masterPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenupegawaiAdminMouseClicked
 
     private void MenuJabatanAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuJabatanAdminMouseClicked
         masterJabatan_Admin masterJabatan = new masterJabatan_Admin(); // Membuat objek form tujuan
         masterJabatan.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();                                  // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenuJabatanAdminMouseClicked
-
-    private void MenuShiftAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftAdminMouseClicked
-        masterShift_Admin masterShift = new masterShift_Admin(); // Membuat objek form tujuan
-        masterShift.setVisible(true);                      // Menampilkan form tujuan
-        this.dispose();                                  // Menutup form saat ini (opsional)
-    }//GEN-LAST:event_MenuShiftAdminMouseClicked
 
     private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLogoutMouseClicked
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?",
@@ -322,17 +317,11 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MenuLogoutMouseClicked
 
-    private void MenuPerubahanShiftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPerubahanShiftMouseClicked
-        transaksiPerubahanShift_Admin transaksiPerubahanShift = new transaksiPerubahanShift_Admin(); // Membuat objek form tujuan
-        transaksiPerubahanShift.setVisible(true);                      // Menampilkan form tujuan
+    private void MenuShiftAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftAdminMouseClicked
+        masterShift_Admin masterShift = new masterShift_Admin(); // Membuat objek form tujuan
+        masterShift.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();                                  // Menutup form saat ini (opsional)
-    }//GEN-LAST:event_MenuPerubahanShiftMouseClicked
-
-    private void MenuGajipegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuGajipegawaiAdminMouseClicked
-        laporanGajiPegawai_Admin laporanGajiPegawai = new laporanGajiPegawai_Admin(); // Membuat objek form tujuan
-        laporanGajiPegawai.setVisible(true);                      // Menampilkan form tujuan
-        this.dispose();                                  // Menutup form saat ini (opsional)
-    }//GEN-LAST:event_MenuGajipegawaiAdminMouseClicked
+    }//GEN-LAST:event_MenuShiftAdminMouseClicked
 
     /**
      * @param args the command line arguments
@@ -351,18 +340,14 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(masterPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(masterPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(masterPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(masterPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -371,7 +356,7 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new masterPegawai_Admin().setVisible(true);
+                new transaksiPerubahanShift_Admin().setVisible(true);
             }
         });
     }
@@ -394,8 +379,8 @@ public class masterPegawai_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel pn_content_masterPegawai;
-    private javax.swing.JPanel pn_utama_masterPegawai;
+    private javax.swing.JPanel pn_content_masterShift;
+    private javax.swing.JPanel pn_utama_masterShift;
     private javax.swing.JPanel sideBar;
     // End of variables declaration//GEN-END:variables
 }

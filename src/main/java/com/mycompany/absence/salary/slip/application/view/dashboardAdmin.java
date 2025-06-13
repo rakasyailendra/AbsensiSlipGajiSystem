@@ -54,7 +54,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         MenuDashboardAdmin = new javax.swing.JLabel();
         MenupegawaiAdmin = new javax.swing.JLabel();
-        MenuPenggajianAdmin = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         MenuJabatanAdmin = new javax.swing.JLabel();
         MenuShiftAdmin = new javax.swing.JLabel();
@@ -122,10 +121,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
             }
         });
 
-        MenuPenggajianAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuPenggajianAdmin.setForeground(new java.awt.Color(179, 201, 208));
-        MenuPenggajianAdmin.setText("Penggajian");
-
         jLabel2.setBackground(new java.awt.Color(179, 201, 208));
         jLabel2.setForeground(new java.awt.Color(179, 201, 208));
         jLabel2.setText("MASTER DATA");
@@ -155,6 +150,11 @@ public class dashboardAdmin extends javax.swing.JFrame {
         MenuPerubahanShift.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuPerubahanShift.setForeground(new java.awt.Color(179, 201, 208));
         MenuPerubahanShift.setText("Perubahan Shift");
+        MenuPerubahanShift.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuPerubahanShiftMouseClicked(evt);
+            }
+        });
 
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDatapegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
@@ -171,6 +171,11 @@ public class dashboardAdmin extends javax.swing.JFrame {
         MenuGajipegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuGajipegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuGajipegawaiAdmin.setText("Gaji Pegawai");
+        MenuGajipegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuGajipegawaiAdminMouseClicked(evt);
+            }
+        });
 
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
@@ -203,18 +208,17 @@ public class dashboardAdmin extends javax.swing.JFrame {
                         .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(MenuDatapegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuPerubahanShift, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuPenggajianAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuJabatanAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenupegawaiAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuShiftAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(sideBarLayout.createSequentialGroup()
-                                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(MenuShiftpegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuGajipegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(MenuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(sideBarLayout.createSequentialGroup()
+                                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         sideBarLayout.setVerticalGroup(
@@ -235,20 +239,18 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MenuPenggajianAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MenuPerubahanShift)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MenuDatapegawaiAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(MenuShiftpegawaiAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(MenuGajipegawaiAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(MenuLogout)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         headerAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -437,11 +439,11 @@ public class dashboardAdmin extends javax.swing.JFrame {
                     .addComponent(panel_jumlahJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_jumlahShift, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                     .addComponent(panel_jumlahPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -469,6 +471,18 @@ public class dashboardAdmin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MenuPerubahanShiftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPerubahanShiftMouseClicked
+        transaksiPerubahanShift_Admin transaksiPerubahanShift = new transaksiPerubahanShift_Admin(); // Membuat objek form tujuan
+        transaksiPerubahanShift.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuPerubahanShiftMouseClicked
+
+    private void MenuGajipegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuGajipegawaiAdminMouseClicked
+        laporanGajiPegawai_Admin laporanGajiPegawai = new laporanGajiPegawai_Admin(); // Membuat objek form tujuan
+        laporanGajiPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuGajipegawaiAdminMouseClicked
 
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
@@ -680,7 +694,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel MenuGajipegawaiAdmin;
     private javax.swing.JLabel MenuJabatanAdmin;
     private javax.swing.JLabel MenuLogout;
-    private javax.swing.JLabel MenuPenggajianAdmin;
     private javax.swing.JLabel MenuPerubahanShift;
     private javax.swing.JLabel MenuShiftAdmin;
     private javax.swing.JLabel MenuShiftpegawaiAdmin;
