@@ -158,7 +158,6 @@ public class form_masterJabatan extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btn_tambah_masterJabatan = new javax.swing.JButton();
         btn_hapus_masterJabatan = new javax.swing.JButton();
-        btn_batal_masterJabatan = new javax.swing.JButton();
         btn_edit_masterJabatan = new javax.swing.JButton();
         tambahJabatan = new javax.swing.JPanel();
         panelKedua_masterJabatan_Admin = new javax.swing.JPanel();
@@ -171,7 +170,7 @@ public class form_masterJabatan extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jText_Gaji = new javax.swing.JTextField();
         editJabatan = new javax.swing.JPanel();
-        panelKedua_masterJabatan_Admin1 = new javax.swing.JPanel();
+        panelKetiga_masterJabatan_Admin = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         btn_simpan_masterJabatan1 = new javax.swing.JButton();
         btn_batal_masterJabatan2 = new javax.swing.JButton();
@@ -225,13 +224,6 @@ public class form_masterJabatan extends javax.swing.JPanel {
             }
         });
 
-        btn_batal_masterJabatan.setText("BATAL");
-        btn_batal_masterJabatan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_batal_masterJabatanActionPerformed(evt);
-            }
-        });
-
         btn_edit_masterJabatan.setText("EDIT");
         btn_edit_masterJabatan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,8 +248,6 @@ public class form_masterJabatan extends javax.swing.JPanel {
                         .addComponent(btn_tambah_masterJabatan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_edit_masterJabatan)
-                        .addGap(12, 12, 12)
-                        .addComponent(btn_batal_masterJabatan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_masterJabatan)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -271,7 +261,6 @@ public class form_masterJabatan extends javax.swing.JPanel {
                 .addGroup(panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_tambah_masterJabatan)
                     .addComponent(btn_hapus_masterJabatan)
-                    .addComponent(btn_batal_masterJabatan)
                     .addComponent(btn_edit_masterJabatan))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -463,18 +452,18 @@ public class form_masterJabatan extends javax.swing.JPanel {
                 .addContainerGap(277, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelKedua_masterJabatan_Admin1Layout = new javax.swing.GroupLayout(panelKedua_masterJabatan_Admin1);
-        panelKedua_masterJabatan_Admin1.setLayout(panelKedua_masterJabatan_Admin1Layout);
-        panelKedua_masterJabatan_Admin1Layout.setHorizontalGroup(
-            panelKedua_masterJabatan_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKedua_masterJabatan_Admin1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelKetiga_masterJabatan_AdminLayout = new javax.swing.GroupLayout(panelKetiga_masterJabatan_Admin);
+        panelKetiga_masterJabatan_Admin.setLayout(panelKetiga_masterJabatan_AdminLayout);
+        panelKetiga_masterJabatan_AdminLayout.setHorizontalGroup(
+            panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelKedua_masterJabatan_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelKedua_masterJabatan_Admin1Layout.createSequentialGroup()
+                    .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(panelKedua_masterJabatan_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelKedua_masterJabatan_Admin1Layout.createSequentialGroup()
+                        .addGroup(panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
                                 .addComponent(btn_simpan_masterJabatan1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_masterJabatan2))
@@ -482,13 +471,13 @@ public class form_masterJabatan extends javax.swing.JPanel {
                         .addGap(0, 500, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        panelKedua_masterJabatan_Admin1Layout.setVerticalGroup(
-            panelKedua_masterJabatan_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKedua_masterJabatan_Admin1Layout.createSequentialGroup()
+        panelKetiga_masterJabatan_AdminLayout.setVerticalGroup(
+            panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addGap(37, 37, 37)
-                .addGroup(panelKedua_masterJabatan_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_simpan_masterJabatan1)
                     .addComponent(btn_batal_masterJabatan2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -502,14 +491,14 @@ public class form_masterJabatan extends javax.swing.JPanel {
             editJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editJabatanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelKedua_masterJabatan_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelKetiga_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         editJabatanLayout.setVerticalGroup(
             editJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editJabatanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelKedua_masterJabatan_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelKetiga_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -607,7 +596,6 @@ public class form_masterJabatan extends javax.swing.JPanel {
     }// GEN-LAST:event_btn_batal_masterPegawai2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_batal_masterJabatan;
     private javax.swing.JButton btn_batal_masterJabatan1;
     private javax.swing.JButton btn_batal_masterJabatan2;
     private javax.swing.JButton btn_edit_masterJabatan;
@@ -633,7 +621,7 @@ public class form_masterJabatan extends javax.swing.JPanel {
     private javax.swing.JTextField jText_Jabatan;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelKedua_masterJabatan_Admin;
-    private javax.swing.JPanel panelKedua_masterJabatan_Admin1;
+    private javax.swing.JPanel panelKetiga_masterJabatan_Admin;
     private javax.swing.JPanel panelUtama_masterJabatan_Admin;
     private javax.swing.JTable table_dataJabatan;
     private javax.swing.JPanel tambahJabatan;

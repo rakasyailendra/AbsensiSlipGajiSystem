@@ -325,7 +325,7 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(table_shiftkuPegawai_isiOtomatis);
 
-        btn_cetakShiftku.setText("Cetak");
+        btn_cetakShiftku.setText("CETAK");
         btn_cetakShiftku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cetakShiftkuActionPerformed(evt);

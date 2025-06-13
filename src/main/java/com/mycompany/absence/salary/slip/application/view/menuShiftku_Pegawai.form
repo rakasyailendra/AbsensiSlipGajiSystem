@@ -407,7 +407,7 @@
             </Container>
             <Component class="javax.swing.JButton" name="btn_cetakShiftku">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cetak"/>
+                <Property name="text" type="java.lang.String" value="CETAK"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cetakShiftkuActionPerformed"/>

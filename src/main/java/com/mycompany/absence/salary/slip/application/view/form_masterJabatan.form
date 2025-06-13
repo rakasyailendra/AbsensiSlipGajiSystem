@@ -103,8 +103,6 @@
                                   <Component id="btn_tambah_masterJabatan" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="btn_edit_masterJabatan" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="btn_batal_masterJabatan" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="btn_hapus_masterJabatan" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -122,7 +120,6 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btn_tambah_masterJabatan" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_hapus_masterJabatan" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btn_batal_masterJabatan" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_edit_masterJabatan" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -202,14 +199,6 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_hapus_masterJabatanActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="btn_batal_masterJabatan">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="BATAL"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_batal_masterJabatanActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_edit_masterJabatan">
@@ -401,7 +390,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="panelKedua_masterJabatan_Admin1" max="32767" attributes="0"/>
+                      <Component id="panelKetiga_masterJabatan_Admin" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -410,14 +399,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="panelKedua_masterJabatan_Admin1" max="32767" attributes="0"/>
+                      <Component id="panelKetiga_masterJabatan_Admin" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="panelKedua_masterJabatan_Admin1">
+            <Container class="javax.swing.JPanel" name="panelKetiga_masterJabatan_Admin">
 
               <Layout>
                 <DimensionLayout dim="0">

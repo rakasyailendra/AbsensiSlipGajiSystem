@@ -25,18 +25,14 @@ import com.mycompany.absence.salary.slip.application.utils.Response;
  *
  * @author User
  */
-public class dashboardAdmin extends javax.swing.JFrame {
+public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
     int xx, xy;
 
     /**
      * Creates new form dashboardAdmin
      */
-    public dashboardAdmin() {
+    public laporanGajiPegawai_Admin() {
         initComponents();
-        showAbsensiPegawaiHariini();
-        updateJumlahJabatan();
-        updateJumlahPegawai();
-        updateJumlahShift();
     }
 
     /**
@@ -54,7 +50,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         MenuDashboardAdmin = new javax.swing.JLabel();
         MenupegawaiAdmin = new javax.swing.JLabel();
-        MenuPenggajianAdmin = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         MenuJabatanAdmin = new javax.swing.JLabel();
         MenuShiftAdmin = new javax.swing.JLabel();
@@ -69,18 +64,14 @@ public class dashboardAdmin extends javax.swing.JFrame {
         btmCancel = new javax.swing.JLabel();
         haloAdmin = new javax.swing.JLabel();
         panelUtama_dashboardAdmin = new javax.swing.JPanel();
-        panel_jumlahJabatan = new javax.swing.JPanel();
-        pTerkini_jumlahJabatan = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        panel_jumlahPegawai = new javax.swing.JPanel();
-        pTerkini_jumlahPegawai = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        panel_jumlahShift = new javax.swing.JPanel();
-        pTerkini_jumlahShift = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_absensiPegawaiHariini = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -110,7 +101,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo pesantren (sidebar).png"))); // NOI18N
 
         MenuDashboardAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuDashboardAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        MenuDashboardAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuDashboardAdmin.setText("Dashboard");
 
         MenupegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -121,10 +112,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 MenupegawaiAdminMouseClicked(evt);
             }
         });
-
-        MenuPenggajianAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuPenggajianAdmin.setForeground(new java.awt.Color(179, 201, 208));
-        MenuPenggajianAdmin.setText("Penggajian");
 
         jLabel2.setBackground(new java.awt.Color(179, 201, 208));
         jLabel2.setForeground(new java.awt.Color(179, 201, 208));
@@ -155,6 +142,11 @@ public class dashboardAdmin extends javax.swing.JFrame {
         MenuPerubahanShift.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuPerubahanShift.setForeground(new java.awt.Color(179, 201, 208));
         MenuPerubahanShift.setText("Perubahan Shift");
+        MenuPerubahanShift.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuPerubahanShiftMouseClicked(evt);
+            }
+        });
 
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDatapegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
@@ -169,7 +161,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
         jLabel6.setText("LAPORAN");
 
         MenuGajipegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuGajipegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
+        MenuGajipegawaiAdmin.setForeground(new java.awt.Color(255, 255, 255));
         MenuGajipegawaiAdmin.setText("Gaji Pegawai");
 
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -203,18 +195,17 @@ public class dashboardAdmin extends javax.swing.JFrame {
                         .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(MenuDatapegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuPerubahanShift, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuPenggajianAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuJabatanAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenupegawaiAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuShiftAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(sideBarLayout.createSequentialGroup()
-                                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(MenuShiftpegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MenuGajipegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(MenuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(sideBarLayout.createSequentialGroup()
+                                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         sideBarLayout.setVerticalGroup(
@@ -235,20 +226,18 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MenuPenggajianAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MenuPerubahanShift)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MenuDatapegawaiAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(MenuShiftpegawaiAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(MenuGajipegawaiAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(MenuLogout)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         headerAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -293,154 +282,68 @@ public class dashboardAdmin extends javax.swing.JFrame {
 
         panelUtama_dashboardAdmin.setPreferredSize(new java.awt.Dimension(900, 499));
 
-        panel_jumlahJabatan.setBackground(new java.awt.Color(255, 255, 255));
-        panel_jumlahJabatan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(118, 158, 169), new java.awt.Color(118, 158, 169), null));
-
-        pTerkini_jumlahJabatan.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
-        pTerkini_jumlahJabatan.setForeground(new java.awt.Color(2, 84, 106));
-        pTerkini_jumlahJabatan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pTerkini_jumlahJabatan.setText("?");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Jumlah Jabatan");
-
-        javax.swing.GroupLayout panel_jumlahJabatanLayout = new javax.swing.GroupLayout(panel_jumlahJabatan);
-        panel_jumlahJabatan.setLayout(panel_jumlahJabatanLayout);
-        panel_jumlahJabatanLayout.setHorizontalGroup(
-            panel_jumlahJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-            .addComponent(pTerkini_jumlahJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panel_jumlahJabatanLayout.setVerticalGroup(
-            panel_jumlahJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_jumlahJabatanLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(pTerkini_jumlahJabatan)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addContainerGap(61, Short.MAX_VALUE))
-        );
-
-        panel_jumlahPegawai.setBackground(new java.awt.Color(255, 255, 255));
-        panel_jumlahPegawai.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(118, 158, 169), new java.awt.Color(118, 158, 169), null));
-        panel_jumlahPegawai.setPreferredSize(new java.awt.Dimension(306, 202));
-
-        pTerkini_jumlahPegawai.setBackground(new java.awt.Color(255, 255, 255));
-        pTerkini_jumlahPegawai.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
-        pTerkini_jumlahPegawai.setForeground(new java.awt.Color(2, 84, 106));
-        pTerkini_jumlahPegawai.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pTerkini_jumlahPegawai.setText("?");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Jumlah Pegawai");
-
-        javax.swing.GroupLayout panel_jumlahPegawaiLayout = new javax.swing.GroupLayout(panel_jumlahPegawai);
-        panel_jumlahPegawai.setLayout(panel_jumlahPegawaiLayout);
-        panel_jumlahPegawaiLayout.setHorizontalGroup(
-            panel_jumlahPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-            .addComponent(pTerkini_jumlahPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panel_jumlahPegawaiLayout.setVerticalGroup(
-            panel_jumlahPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_jumlahPegawaiLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(pTerkini_jumlahPegawai)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panel_jumlahShift.setBackground(new java.awt.Color(255, 255, 255));
-        panel_jumlahShift.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(118, 158, 169), null, new java.awt.Color(118, 158, 169)));
-        panel_jumlahShift.setPreferredSize(new java.awt.Dimension(306, 163));
-
-        pTerkini_jumlahShift.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
-        pTerkini_jumlahShift.setForeground(new java.awt.Color(2, 84, 106));
-        pTerkini_jumlahShift.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pTerkini_jumlahShift.setText("?");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Jumlah Shift");
-
-        javax.swing.GroupLayout panel_jumlahShiftLayout = new javax.swing.GroupLayout(panel_jumlahShift);
-        panel_jumlahShift.setLayout(panel_jumlahShiftLayout);
-        panel_jumlahShiftLayout.setHorizontalGroup(
-            panel_jumlahShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-            .addComponent(pTerkini_jumlahShift, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        panel_jumlahShiftLayout.setVerticalGroup(
-            panel_jumlahShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_jumlahShiftLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(pTerkini_jumlahShift)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addContainerGap(61, Short.MAX_VALUE))
-        );
-
-        table_absensiPegawaiHariini.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
-        table_absensiPegawaiHariini.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"
-            }
-        ));
-        jScrollPane1.setViewportView(table_absensiPegawaiHariini);
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
         jLabel4.setText("Absensi Pegawai Hari Ini");
+
+        jLabel7.setText("Bulan :");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
+
+        jLabel9.setText("Tahun :");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2024", "2023" }));
+
+        jButton1.setText("CETAK");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout panelUtama_dashboardAdminLayout = new javax.swing.GroupLayout(panelUtama_dashboardAdmin);
         panelUtama_dashboardAdmin.setLayout(panelUtama_dashboardAdminLayout);
         panelUtama_dashboardAdminLayout.setHorizontalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(30, 30, 30)
+                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                        .addComponent(panel_jumlahPegawai, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panel_jumlahShift, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panel_jumlahJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(544, 544, 544)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelUtama_dashboardAdminLayout.setVerticalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panel_jumlahJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_jumlahShift, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                    .addComponent(panel_jumlahPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -452,8 +355,10 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 948, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
+                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,7 +366,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(headerAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
+                .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
@@ -469,6 +374,12 @@ public class dashboardAdmin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MenuPerubahanShiftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPerubahanShiftMouseClicked
+        transaksiPerubahanShift_Admin transaksiPerubahanShift = new transaksiPerubahanShift_Admin(); // Membuat objek form tujuan
+        transaksiPerubahanShift.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuPerubahanShiftMouseClicked
 
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
@@ -521,113 +432,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
         this.dispose(); // Menutup form saat ini (opsional)
     }// GEN-LAST:event_MenuShiftAdminMouseClicked
 
-    private void showAbsensiPegawaiHariini() {
-        AbsenRepository absenRepository = new AbsenRepository();
-        ShiftRepository shiftRepository = new ShiftRepository();
-        PegawaiRepository pegawaiRepository = new PegawaiRepository();
-        JabatanRepository jabatanRepository = new JabatanRepository();
-        JabatanPegawaiRepository jabatanPegawaiRepository = new JabatanPegawaiRepository();
-
-        Response<ArrayList<Absen>> findAllAbsensi = absenRepository.findAll();
-
-        String[] columnNames = { "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar" };
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        if (findAllAbsensi.isSuccess() && findAllAbsensi.getData() != null) {
-            for (Absen absen : findAllAbsensi.getData()) {
-                String namaPegawai = "-";
-                String namaJabatan = "-";
-                String namaShift = "-";
-
-                // Ambil data pegawai
-                Response<Pegawai> responsePegawai = pegawaiRepository.findById(absen.getIdPegawai());
-                if (responsePegawai != null && responsePegawai.getData() != null) {
-                    Pegawai pegawai = responsePegawai.getData();
-                    namaPegawai = pegawai.getNama();
-                    System.out.println("Pegawai: " + namaPegawai + " (ID: " + pegawai.getId() + ")");
-
-                    // Ambil jabatan pegawai
-                    Response<ArrayList<JabatanPegawai>> responseJabatanPegawai = jabatanPegawaiRepository
-                            .findByPegawaiId(absen.getIdPegawai());
-                    if (responseJabatanPegawai != null && responseJabatanPegawai.getData() != null
-                            && !responseJabatanPegawai.getData().isEmpty()) {
-                        JabatanPegawai jabatanPegawai = responseJabatanPegawai.getData().get(0); // Ambil jabatan
-                                                                                                 // pertama
-
-                        // Ambil data jabatan
-                        Response<Jabatan> responseJabatan = jabatanRepository.findById(jabatanPegawai.getIdJabatan());
-                        if (responseJabatan != null && responseJabatan.getData() != null) {
-                            namaJabatan = responseJabatan.getData().getNamaJabatan();
-                        } else {
-                            System.out.println("-> Jabatan ID " + jabatanPegawai.getIdJabatan() + " tidak ditemukan.");
-                        }
-                    } else {
-                        System.out.println("-> Tidak ada jabatan untuk pegawai ID " + pegawai.getId());
-                    }
-                } else {
-                    System.out.println("Pegawai dengan ID " + absen.getIdPegawai() + " tidak ditemukan.");
-                }
-
-                // Ambil data shift
-                Response<Shift> responseShift = shiftRepository.findById(absen.getIdShift());
-                if (responseShift != null && responseShift.getData() != null) {
-                    namaShift = responseShift.getData().getNamaShift();
-                }
-
-                // Masukkan ke dalam tabel
-                Object[] row = {
-                        namaPegawai,
-                        namaJabatan,
-                        namaShift,
-                        absen.getJamMasuk(),
-                        absen.getJamKeluar()
-                };
-
-                model.addRow(row);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Gagal mengambil data absensi pegawai: " + findAllAbsensi.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        table_absensiPegawaiHariini.setModel(model);
-    }
-
-    private void updateJumlahJabatan() {
-        JabatanRepository jabatanRepository = new JabatanRepository();
-        Response<ArrayList<Jabatan>> response = jabatanRepository.findAll();
-        if (response.isSuccess() && response.getData() != null) {
-            pTerkini_jumlahJabatan.setText(String.valueOf(response.getData().size()));
-        } else {
-            pTerkini_jumlahJabatan.setText("0");
-        }
-    }
-
-    private void updateJumlahPegawai() {
-        PegawaiRepository pegawaiRepository = new PegawaiRepository();
-        Response<ArrayList<Pegawai>> response = pegawaiRepository.findAll();
-        if (response.isSuccess() && response.getData() != null) {
-            pTerkini_jumlahPegawai.setText(String.valueOf(response.getData().size()));
-        } else {
-            pTerkini_jumlahPegawai.setText("0");
-        }
-    }
-
-    private void updateJumlahShift() {
-        ShiftRepository shiftRepository = new ShiftRepository();
-        Response<ArrayList<Shift>> response = shiftRepository.findAll();
-        if (response.isSuccess() && response.getData() != null) {
-            pTerkini_jumlahShift.setText(String.valueOf(response.getData().size()));
-        } else {
-            pTerkini_jumlahShift.setText("0");
-        }
-    }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -649,18 +454,22 @@ public class dashboardAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(dashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         }
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
         // </editor-fold>
         // </editor-fold>
         // </editor-fold>
@@ -669,7 +478,7 @@ public class dashboardAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new dashboardAdmin().setVisible(true);
+                new laporanGajiPegawai_Admin().setVisible(true);
             }
         });
     }
@@ -680,7 +489,6 @@ public class dashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel MenuGajipegawaiAdmin;
     private javax.swing.JLabel MenuJabatanAdmin;
     private javax.swing.JLabel MenuLogout;
-    private javax.swing.JLabel MenuPenggajianAdmin;
     private javax.swing.JLabel MenuPerubahanShift;
     private javax.swing.JLabel MenuShiftAdmin;
     private javax.swing.JLabel MenuShiftpegawaiAdmin;
@@ -688,24 +496,20 @@ public class dashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel btmCancel;
     private javax.swing.JLabel haloAdmin;
     private javax.swing.JPanel headerAdmin;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel pTerkini_jumlahJabatan;
-    private javax.swing.JLabel pTerkini_jumlahPegawai;
-    private javax.swing.JLabel pTerkini_jumlahShift;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelUtama_dashboardAdmin;
-    private javax.swing.JPanel panel_jumlahJabatan;
-    private javax.swing.JPanel panel_jumlahPegawai;
-    private javax.swing.JPanel panel_jumlahShift;
     private javax.swing.JPanel sideBar;
-    private javax.swing.JTable table_absensiPegawaiHariini;
     // End of variables declaration//GEN-END:variables
 }

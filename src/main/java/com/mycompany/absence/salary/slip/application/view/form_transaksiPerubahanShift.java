@@ -18,12 +18,12 @@ import com.mycompany.absence.salary.slip.application.utils.Response;
  *
  * @author User
  */
-public class form_masterShift extends javax.swing.JPanel {
+public class form_transaksiPerubahanShift extends javax.swing.JPanel {
 
     /**
      * Creates new form form_masterJabatan
      */
-    public form_masterShift() {
+    public form_transaksiPerubahanShift() {
         initComponents();
         initializeComponents();
     }
@@ -35,7 +35,7 @@ public class form_masterShift extends javax.swing.JPanel {
         mainPanel.repaint();
         mainPanel.revalidate();
 
-        mainPanel.add(dataShift);
+        mainPanel.add(dataPerubahanShift);
         mainPanel.repaint();
         mainPanel.revalidate();
 
@@ -44,14 +44,14 @@ public class form_masterShift extends javax.swing.JPanel {
     }
 
     private void hapusShift() {
-        int selectedRow = table_dataShift.getSelectedRow();
+        int selectedRow = table_dataPerubahanShift.getSelectedRow();
         if (selectedRow >= 0) {
             int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this shift?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
             if (confirmation != JOptionPane.YES_OPTION) {
                 return; // User chose not to delete
             }
 
-            int shiftId = (int) table_dataShift.getValueAt(selectedRow, 0);
+            int shiftId = (int) table_dataPerubahanShift.getValueAt(selectedRow, 0);
             Response<Boolean> response = shiftRepository.deleteById(shiftId);
 
             if (response.isSuccess()) {
@@ -66,7 +66,7 @@ public class form_masterShift extends javax.swing.JPanel {
     }
 
     private void tambahShift() {
-        String namaShift = jText_namaShift.getText();
+        String namaShift = (String) jCombo_namaShift.getSelectedItem();
         String jamMasuk = jText_jamMasuk.getText();
         String jamKeluar = jText_jamKeluar.getText();
 
@@ -86,13 +86,13 @@ public class form_masterShift extends javax.swing.JPanel {
     }
 
     private void clearInputFields() {
-        jText_namaShift.setText("");
+        // jText_namaPerubahanShift.setText(""); // Removed because it does not exist
         jText_jamMasuk.setText("");
         jText_jamKeluar.setText("");
     }
 
     private void populateTableShift() {
-        String[] columnNames = { "Id", "Nama Shift", "Jam Masuk", "Jam Keluar"};
+        String[] columnNames = { "Id", "NIP", "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -100,7 +100,7 @@ public class form_masterShift extends javax.swing.JPanel {
             }
         };
 
-        table_dataShift.setModel(model);
+        table_dataPerubahanShift.setModel(model);
 
         Response<ArrayList<Shift>> response = shiftRepository.findAll();
         if (response.isSuccess()) {
@@ -114,9 +114,9 @@ public class form_masterShift extends javax.swing.JPanel {
         }
 
         // Sembunyikan kolom pertama (ID)
-        table_dataShift.getColumnModel().getColumn(0).setMinWidth(0);
-        table_dataShift.getColumnModel().getColumn(0).setMaxWidth(0);
-        table_dataShift.getColumnModel().getColumn(0).setWidth(0);
+        table_dataPerubahanShift.getColumnModel().getColumn(0).setMinWidth(0);
+        table_dataPerubahanShift.getColumnModel().getColumn(0).setMaxWidth(0);
+        table_dataPerubahanShift.getColumnModel().getColumn(0).setWidth(0);
     }
 
     /**
@@ -129,169 +129,218 @@ public class form_masterShift extends javax.swing.JPanel {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        dataShift = new javax.swing.JPanel();
-        panelUtama_masterShift_Admin = new javax.swing.JPanel();
+        dataPerubahanShift = new javax.swing.JPanel();
+        panelUtama_transaksiPerubahanShift_Admin = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table_dataShift = new javax.swing.JTable();
+        table_dataPerubahanShift = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        btn_tambah_masterShift = new javax.swing.JButton();
-        btn_hapus_masterShift = new javax.swing.JButton();
-        btn_batal_masterShift = new javax.swing.JButton();
-        tambahShift = new javax.swing.JPanel();
-        panelKedua_masterShift_Admin = new javax.swing.JPanel();
+        btn_tambah_transaksiPerubahanShift = new javax.swing.JButton();
+        btn_hapus_transaksiPerubahanShift = new javax.swing.JButton();
+        btn_edit_transaksiPerubahanShift = new javax.swing.JButton();
+        tambahPerubahanShift = new javax.swing.JPanel();
+        panelKedua_transaksiPerubahanShift_Admin = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        btn_simpan_masterJabatan = new javax.swing.JButton();
-        btn_batal_masterPegawai2 = new javax.swing.JButton();
+        btn_simpan_transaksiPerubahanShift = new javax.swing.JButton();
+        btn_batal_transaksiPerubahanShift = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jText_namaShift = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jText_jamMasuk = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jText_jamKeluar = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jText_nipPerubahanShift = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jText_jabatanPerubahanShift = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jCombo_nama = new javax.swing.JComboBox<>();
+        jCombo_namaShift = new javax.swing.JComboBox<>();
+        editPerubahanShift = new javax.swing.JPanel();
+        panelKetiga_transaksiPerubahanShift_Admin1 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        btn_simpan_transaksiPerubahanShift1 = new javax.swing.JButton();
+        btn_batal_transaksiPerubahanShift1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jText_jamMasuk2 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jText_jamKeluar2 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jText_nipPerubahanShift1 = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jText_jabatanPerubahanShift1 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jCombo_nama1 = new javax.swing.JComboBox<>();
+        jCombo_namaShift1 = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(900, 525));
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        table_dataShift.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
-        table_dataShift.setModel(new javax.swing.table.DefaultTableModel(
+        table_dataPerubahanShift.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
+        table_dataPerubahanShift.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nama Shift", "Jam Masuk", "Jam Keluar"
+                "NIP", "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"
             }
         ));
-        jScrollPane1.setViewportView(table_dataShift);
+        jScrollPane1.setViewportView(table_dataPerubahanShift);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel4.setText("Data Shift");
+        jLabel4.setText("Data Perubahan Shift");
 
-        btn_tambah_masterShift.setText("TAMBAH");
-        btn_tambah_masterShift.addActionListener(new java.awt.event.ActionListener() {
+        btn_tambah_transaksiPerubahanShift.setText("TAMBAH");
+        btn_tambah_transaksiPerubahanShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_tambah_masterShiftActionPerformed(evt);
+                btn_tambah_transaksiPerubahanShiftActionPerformed(evt);
             }
         });
 
-        btn_hapus_masterShift.setText("HAPUS");
-        btn_hapus_masterShift.setToolTipText("");
-        btn_hapus_masterShift.addActionListener(new java.awt.event.ActionListener() {
+        btn_hapus_transaksiPerubahanShift.setText("HAPUS");
+        btn_hapus_transaksiPerubahanShift.setToolTipText("");
+        btn_hapus_transaksiPerubahanShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus_masterShiftActionPerformed(evt);
+                btn_hapus_transaksiPerubahanShiftActionPerformed(evt);
             }
         });
 
-        btn_batal_masterShift.setText("BATAL");
-        btn_batal_masterShift.addActionListener(new java.awt.event.ActionListener() {
+        btn_edit_transaksiPerubahanShift.setText("EDIT");
+        btn_edit_transaksiPerubahanShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_batal_masterShiftActionPerformed(evt);
+                btn_edit_transaksiPerubahanShiftActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelUtama_masterShift_AdminLayout = new javax.swing.GroupLayout(panelUtama_masterShift_Admin);
-        panelUtama_masterShift_Admin.setLayout(panelUtama_masterShift_AdminLayout);
-        panelUtama_masterShift_AdminLayout.setHorizontalGroup(
-            panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelUtama_transaksiPerubahanShift_AdminLayout = new javax.swing.GroupLayout(panelUtama_transaksiPerubahanShift_Admin);
+        panelUtama_transaksiPerubahanShift_Admin.setLayout(panelUtama_transaksiPerubahanShift_AdminLayout);
+        panelUtama_transaksiPerubahanShift_AdminLayout.setHorizontalGroup(
+            panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
+                .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
+                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
-                    .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
-                        .addComponent(btn_tambah_masterShift)
+                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
+                        .addComponent(btn_tambah_transaksiPerubahanShift)
+                        .addGap(12, 12, 12)
+                        .addComponent(btn_edit_transaksiPerubahanShift)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_hapus_masterShift)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_batal_masterShift)
+                        .addComponent(btn_hapus_transaksiPerubahanShift)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
-        panelUtama_masterShift_AdminLayout.setVerticalGroup(
-            panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
+        panelUtama_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
+            panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
-                .addGroup(panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_tambah_masterShift)
-                    .addComponent(btn_hapus_masterShift)
-                    .addComponent(btn_batal_masterShift))
+                .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_tambah_transaksiPerubahanShift)
+                    .addComponent(btn_hapus_transaksiPerubahanShift)
+                    .addComponent(btn_edit_transaksiPerubahanShift))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(243, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout dataShiftLayout = new javax.swing.GroupLayout(dataShift);
-        dataShift.setLayout(dataShiftLayout);
-        dataShiftLayout.setHorizontalGroup(
-            dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout dataPerubahanShiftLayout = new javax.swing.GroupLayout(dataPerubahanShift);
+        dataPerubahanShift.setLayout(dataPerubahanShiftLayout);
+        dataPerubahanShiftLayout.setHorizontalGroup(
+            dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 900, Short.MAX_VALUE)
-            .addGroup(dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataShiftLayout.createSequentialGroup()
+            .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dataPerubahanShiftLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelUtama_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        dataShiftLayout.setVerticalGroup(
-            dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dataPerubahanShiftLayout.setVerticalGroup(
+            dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 591, Short.MAX_VALUE)
-            .addGroup(dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataShiftLayout.createSequentialGroup()
+            .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dataPerubahanShiftLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelUtama_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
-        mainPanel.add(dataShift, "card2");
+        mainPanel.add(dataPerubahanShift, "card2");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel5.setText("Tambah Data Shift");
+        jLabel5.setText("Tambah Data Perubahan Shift");
 
-        btn_simpan_masterJabatan.setText("SIMPAN");
-        btn_simpan_masterJabatan.addActionListener(new java.awt.event.ActionListener() {
+        btn_simpan_transaksiPerubahanShift.setText("SIMPAN");
+        btn_simpan_transaksiPerubahanShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_simpan_masterJabatanActionPerformed(evt);
+                btn_simpan_transaksiPerubahanShiftActionPerformed(evt);
             }
         });
 
-        btn_batal_masterPegawai2.setText("BATAL");
-        btn_batal_masterPegawai2.addActionListener(new java.awt.event.ActionListener() {
+        btn_batal_transaksiPerubahanShift.setText("BATAL");
+        btn_batal_transaksiPerubahanShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_batal_masterPegawai2ActionPerformed(evt);
+                btn_batal_transaksiPerubahanShiftActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Nama Shift");
-
-        jText_namaShift.setText("jTextField1");
+        jLabel1.setText("NAMA");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Jam Masuk");
 
-        jText_jamMasuk.setText("jTextField1");
+        jText_jamMasuk.setText("Auto");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Jam Keluar");
 
-        jText_jamKeluar.setText("jTextField1");
+        jText_jamKeluar.setText("Auto");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setText("NIP");
+
+        jText_nipPerubahanShift.setText("Auto");
+        jText_nipPerubahanShift.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_nipPerubahanShiftActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Jabatan");
+
+        jText_jabatanPerubahanShift.setText("Auto");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setText("Nama Shift");
+
+        jCombo_nama.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCombo_nama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_namaActionPerformed(evt);
+            }
+        });
+
+        jCombo_namaShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -300,13 +349,19 @@ public class form_masterShift extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jText_namaShift, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel9)
                     .addComponent(jText_jamMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel10)
-                    .addComponent(jText_jamKeluar, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jText_jamKeluar, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(jText_nipPerubahanShift, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addComponent(jText_jabatanPerubahanShift, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addComponent(jCombo_nama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCombo_namaShift, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +369,19 @@ public class form_masterShift extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jText_namaShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCombo_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_nipPerubahanShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_jabatanPerubahanShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCombo_namaShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -323,60 +390,221 @@ public class form_masterShift extends javax.swing.JPanel {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jText_jamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout panelKedua_masterShift_AdminLayout = new javax.swing.GroupLayout(panelKedua_masterShift_Admin);
-        panelKedua_masterShift_Admin.setLayout(panelKedua_masterShift_AdminLayout);
-        panelKedua_masterShift_AdminLayout.setHorizontalGroup(
-            panelKedua_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKedua_masterShift_AdminLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelKedua_transaksiPerubahanShift_AdminLayout = new javax.swing.GroupLayout(panelKedua_transaksiPerubahanShift_Admin);
+        panelKedua_transaksiPerubahanShift_Admin.setLayout(panelKedua_transaksiPerubahanShift_AdminLayout);
+        panelKedua_transaksiPerubahanShift_AdminLayout.setHorizontalGroup(
+            panelKedua_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelKedua_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelKedua_masterShift_AdminLayout.createSequentialGroup()
+                    .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(panelKedua_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelKedua_masterShift_AdminLayout.createSequentialGroup()
-                                .addComponent(btn_simpan_masterJabatan)
+                        .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
+                                .addComponent(btn_simpan_transaksiPerubahanShift)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_batal_masterPegawai2))
+                                .addComponent(btn_batal_transaksiPerubahanShift))
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 500, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        panelKedua_masterShift_AdminLayout.setVerticalGroup(
-            panelKedua_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKedua_masterShift_AdminLayout.createSequentialGroup()
+        panelKedua_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
+            panelKedua_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addGap(37, 37, 37)
-                .addGroup(panelKedua_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_simpan_masterJabatan)
-                    .addComponent(btn_batal_masterPegawai2))
+                .addGroup(panelKedua_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan_transaksiPerubahanShift)
+                    .addComponent(btn_batal_transaksiPerubahanShift))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
 
-        javax.swing.GroupLayout tambahShiftLayout = new javax.swing.GroupLayout(tambahShift);
-        tambahShift.setLayout(tambahShiftLayout);
-        tambahShiftLayout.setHorizontalGroup(
-            tambahShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahShiftLayout.createSequentialGroup()
+        javax.swing.GroupLayout tambahPerubahanShiftLayout = new javax.swing.GroupLayout(tambahPerubahanShift);
+        tambahPerubahanShift.setLayout(tambahPerubahanShiftLayout);
+        tambahPerubahanShiftLayout.setHorizontalGroup(
+            tambahPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tambahPerubahanShiftLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelKedua_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelKedua_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        tambahShiftLayout.setVerticalGroup(
-            tambahShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahShiftLayout.createSequentialGroup()
+        tambahPerubahanShiftLayout.setVerticalGroup(
+            tambahPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tambahPerubahanShiftLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelKedua_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelKedua_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        mainPanel.add(tambahShift, "card2");
+        mainPanel.add(tambahPerubahanShift, "card2");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(2, 84, 106));
+        jLabel13.setText("Edit Data Perubahan Shift");
+
+        btn_simpan_transaksiPerubahanShift1.setText("SIMPAN");
+        btn_simpan_transaksiPerubahanShift1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpan_transaksiPerubahanShift1ActionPerformed(evt);
+            }
+        });
+
+        btn_batal_transaksiPerubahanShift1.setText("BATAL");
+        btn_batal_transaksiPerubahanShift1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_batal_transaksiPerubahanShift1ActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setText("NAMA");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setText("Jam Masuk");
+
+        jText_jamMasuk2.setText("Auto");
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Jam Keluar");
+
+        jText_jamKeluar2.setText("Auto");
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setText("NIP");
+
+        jText_nipPerubahanShift1.setText("Auto");
+        jText_nipPerubahanShift1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_nipPerubahanShift1ActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setText("Jabatan");
+
+        jText_jabatanPerubahanShift1.setText("Auto");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel19.setText("Nama Shift");
+
+        jCombo_nama1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCombo_nama1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_nama1ActionPerformed(evt);
+            }
+        });
+
+        jCombo_namaShift1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15)
+                    .addComponent(jText_jamMasuk2, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel16)
+                    .addComponent(jText_jamKeluar2, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel17)
+                    .addComponent(jText_nipPerubahanShift1, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel18)
+                    .addComponent(jText_jabatanPerubahanShift1, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel19)
+                    .addComponent(jCombo_nama1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCombo_namaShift1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCombo_nama1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_nipPerubahanShift1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_jabatanPerubahanShift1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCombo_namaShift1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_jamMasuk2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jText_jamKeluar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelKetiga_transaksiPerubahanShift_Admin1Layout = new javax.swing.GroupLayout(panelKetiga_transaksiPerubahanShift_Admin1);
+        panelKetiga_transaksiPerubahanShift_Admin1.setLayout(panelKetiga_transaksiPerubahanShift_Admin1Layout);
+        panelKetiga_transaksiPerubahanShift_Admin1Layout.setHorizontalGroup(
+            panelKetiga_transaksiPerubahanShift_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createSequentialGroup()
+                                .addComponent(btn_simpan_transaksiPerubahanShift1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_batal_transaksiPerubahanShift1))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 500, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelKetiga_transaksiPerubahanShift_Admin1Layout.setVerticalGroup(
+            panelKetiga_transaksiPerubahanShift_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addGap(37, 37, 37)
+                .addGroup(panelKetiga_transaksiPerubahanShift_Admin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_simpan_transaksiPerubahanShift1)
+                    .addComponent(btn_batal_transaksiPerubahanShift1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
+        );
+
+        javax.swing.GroupLayout editPerubahanShiftLayout = new javax.swing.GroupLayout(editPerubahanShift);
+        editPerubahanShift.setLayout(editPerubahanShiftLayout);
+        editPerubahanShiftLayout.setHorizontalGroup(
+            editPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPerubahanShiftLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelKetiga_transaksiPerubahanShift_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        editPerubahanShiftLayout.setVerticalGroup(
+            editPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPerubahanShiftLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelKetiga_transaksiPerubahanShift_Admin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        mainPanel.add(editPerubahanShift, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -400,59 +628,116 @@ public class form_masterShift extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_tambah_masterShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_masterShiftActionPerformed
+    private void btn_tambah_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_transaksiPerubahanShiftActionPerformed
         mainPanel.removeAll();
         mainPanel.repaint();
         mainPanel.revalidate();
 
-        mainPanel.add(tambahShift);
+        mainPanel.add(tambahPerubahanShift);
         mainPanel.repaint();
         mainPanel.revalidate();
-    }//GEN-LAST:event_btn_tambah_masterShiftActionPerformed
+    }//GEN-LAST:event_btn_tambah_transaksiPerubahanShiftActionPerformed
 
-    private void btn_hapus_masterShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_masterShiftActionPerformed
+    private void btn_hapus_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_transaksiPerubahanShiftActionPerformed
         hapusShift();
         initializeComponents();
-    }//GEN-LAST:event_btn_hapus_masterShiftActionPerformed
+    }//GEN-LAST:event_btn_hapus_transaksiPerubahanShiftActionPerformed
 
-    private void btn_batal_masterShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterShiftActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_batal_masterShiftActionPerformed
-
-    private void btn_simpan_masterJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterJabatanActionPerformed
+    private void btn_simpan_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_transaksiPerubahanShiftActionPerformed
         tambahShift();
         initializeComponents();
-    }//GEN-LAST:event_btn_simpan_masterJabatanActionPerformed
+    }//GEN-LAST:event_btn_simpan_transaksiPerubahanShiftActionPerformed
 
-    private void btn_batal_masterPegawai2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterPegawai2ActionPerformed
+    private void btn_batal_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_transaksiPerubahanShiftActionPerformed
         mainPanel.removeAll();
-        mainPanel.add(dataShift);
+        mainPanel.add(dataPerubahanShift);
         mainPanel.repaint();
         mainPanel.revalidate();
-    }//GEN-LAST:event_btn_batal_masterPegawai2ActionPerformed
+    }//GEN-LAST:event_btn_batal_transaksiPerubahanShiftActionPerformed
+
+    private void btn_edit_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_transaksiPerubahanShiftActionPerformed
+        mainPanel.removeAll();
+        mainPanel.repaint();
+        mainPanel.revalidate();
+
+        mainPanel.add(editPerubahanShift);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_btn_edit_transaksiPerubahanShiftActionPerformed
+
+    private void jText_nipPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_nipPerubahanShiftActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_nipPerubahanShiftActionPerformed
+
+    private void jCombo_namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_namaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCombo_namaActionPerformed
+
+    private void btn_simpan_transaksiPerubahanShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_transaksiPerubahanShift1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_simpan_transaksiPerubahanShift1ActionPerformed
+
+    private void btn_batal_transaksiPerubahanShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_transaksiPerubahanShift1ActionPerformed
+        mainPanel.removeAll();
+        mainPanel.add(dataPerubahanShift);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_btn_batal_transaksiPerubahanShift1ActionPerformed
+
+    private void jText_nipPerubahanShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_nipPerubahanShift1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_nipPerubahanShift1ActionPerformed
+
+    private void jCombo_nama1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_nama1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCombo_nama1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_batal_masterPegawai2;
-    private javax.swing.JButton btn_batal_masterShift;
-    private javax.swing.JButton btn_hapus_masterShift;
-    private javax.swing.JButton btn_simpan_masterJabatan;
-    private javax.swing.JButton btn_tambah_masterShift;
-    private javax.swing.JPanel dataShift;
+    private javax.swing.JButton btn_batal_transaksiPerubahanShift;
+    private javax.swing.JButton btn_batal_transaksiPerubahanShift1;
+    private javax.swing.JButton btn_edit_transaksiPerubahanShift;
+    private javax.swing.JButton btn_hapus_transaksiPerubahanShift;
+    private javax.swing.JButton btn_simpan_transaksiPerubahanShift;
+    private javax.swing.JButton btn_simpan_transaksiPerubahanShift1;
+    private javax.swing.JButton btn_tambah_transaksiPerubahanShift;
+    private javax.swing.JPanel dataPerubahanShift;
+    private javax.swing.JPanel editPerubahanShift;
+    private javax.swing.JComboBox<String> jCombo_nama;
+    private javax.swing.JComboBox<String> jCombo_nama1;
+    private javax.swing.JComboBox<String> jCombo_namaShift;
+    private javax.swing.JComboBox<String> jCombo_namaShift1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jText_jabatanPerubahanShift;
+    private javax.swing.JTextField jText_jabatanPerubahanShift1;
     private javax.swing.JTextField jText_jamKeluar;
+    private javax.swing.JTextField jText_jamKeluar2;
     private javax.swing.JTextField jText_jamMasuk;
-    private javax.swing.JTextField jText_namaShift;
+    private javax.swing.JTextField jText_jamMasuk2;
+    private javax.swing.JTextField jText_nipPerubahanShift;
+    private javax.swing.JTextField jText_nipPerubahanShift1;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel panelKedua_masterShift_Admin;
-    private javax.swing.JPanel panelUtama_masterShift_Admin;
-    private javax.swing.JTable table_dataShift;
-    private javax.swing.JPanel tambahShift;
+    private javax.swing.JPanel panelKedua_transaksiPerubahanShift_Admin;
+    private javax.swing.JPanel panelKetiga_transaksiPerubahanShift_Admin1;
+    private javax.swing.JPanel panelUtama_transaksiPerubahanShift_Admin;
+    private javax.swing.JTable table_dataPerubahanShift;
+    private javax.swing.JPanel tambahPerubahanShift;
     // End of variables declaration//GEN-END:variables
 }

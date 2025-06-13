@@ -303,7 +303,6 @@ public class form_masterPegawai extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btn_tambah_masterPegawai = new javax.swing.JButton();
         btn_hapus_masterPegawai = new javax.swing.JButton();
-        btn_batal_masterPegawai = new javax.swing.JButton();
         btn_edit_masterPegawai = new javax.swing.JButton();
         tambahPegawai = new javax.swing.JPanel();
         panelKedua_masterPegawai_Admin1 = new javax.swing.JPanel();
@@ -387,13 +386,6 @@ public class form_masterPegawai extends javax.swing.JPanel {
             }
         });
 
-        btn_batal_masterPegawai.setText("BATAL");
-        btn_batal_masterPegawai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_batal_masterPegawaiActionPerformed(evt);
-            }
-        });
-
         btn_edit_masterPegawai.setText("EDIT");
         btn_edit_masterPegawai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -420,8 +412,6 @@ public class form_masterPegawai extends javax.swing.JPanel {
                         .addComponent(btn_edit_masterPegawai)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_masterPegawai)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_batal_masterPegawai)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelUtama_masterPegawai_AdminLayout.setVerticalGroup(
@@ -433,7 +423,6 @@ public class form_masterPegawai extends javax.swing.JPanel {
                 .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_tambah_masterPegawai)
                     .addComponent(btn_hapus_masterPegawai)
-                    .addComponent(btn_batal_masterPegawai)
                     .addComponent(btn_edit_masterPegawai))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -892,7 +881,6 @@ public class form_masterPegawai extends javax.swing.JPanel {
     }// GEN-LAST:event_jText_alamatActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_batal_masterPegawai;
     private javax.swing.JButton btn_batal_masterPegawai2;
     private javax.swing.JButton btn_batal_masterPegawai3;
     private javax.swing.JButton btn_edit_masterPegawai;

@@ -8,12 +8,12 @@ package com.mycompany.absence.salary.slip.application.view;
  *
  * @author User
  */
-public class masterShift_Admin extends javax.swing.JFrame {
+public class transaksiPerubahanShift_Admin extends javax.swing.JFrame {
 
     /**
      * Creates new form masterJabatan_Admin
      */
-    public masterShift_Admin() {
+    public transaksiPerubahanShift_Admin() {
         initComponents();
     }
 
@@ -31,7 +31,6 @@ public class masterShift_Admin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         MenuDashboardAdmin = new javax.swing.JLabel();
         MenupegawaiAdmin = new javax.swing.JLabel();
-        MenuPenggajianAdmin = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         MenuJabatanAdmin = new javax.swing.JLabel();
         MenuShiftAdmin = new javax.swing.JLabel();
@@ -77,10 +76,11 @@ public class masterShift_Admin extends javax.swing.JFrame {
         MenupegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenupegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenupegawaiAdmin.setText("Pegawai");
-
-        MenuPenggajianAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuPenggajianAdmin.setForeground(new java.awt.Color(179, 201, 208));
-        MenuPenggajianAdmin.setText("Penggajian");
+        MenupegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenupegawaiAdminMouseClicked(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(179, 201, 208));
         jLabel2.setForeground(new java.awt.Color(179, 201, 208));
@@ -89,17 +89,27 @@ public class masterShift_Admin extends javax.swing.JFrame {
         MenuJabatanAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuJabatanAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuJabatanAdmin.setText("Jabatan");
+        MenuJabatanAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuJabatanAdminMouseClicked(evt);
+            }
+        });
 
         MenuShiftAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuShiftAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        MenuShiftAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuShiftAdmin.setText("Shift");
+        MenuShiftAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuShiftAdminMouseClicked(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(179, 201, 208));
         jLabel3.setForeground(new java.awt.Color(179, 201, 208));
         jLabel3.setText("TRANSAKSI");
 
         MenuPerubahanShift.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuPerubahanShift.setForeground(new java.awt.Color(179, 201, 208));
+        MenuPerubahanShift.setForeground(new java.awt.Color(255, 255, 255));
         MenuPerubahanShift.setText("Perubahan Shift");
 
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -121,38 +131,42 @@ public class masterShift_Admin extends javax.swing.JFrame {
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
         MenuLogout.setText("Logout");
+        MenuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuLogoutMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout sideBarLayout = new javax.swing.GroupLayout(sideBar);
         sideBar.setLayout(sideBarLayout);
         sideBarLayout.setHorizontalGroup(
             sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideBarLayout.createSequentialGroup()
+            .addGroup(sideBarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, sideBarLayout.createSequentialGroup()
+                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(sideBarLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MenuJabatanAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenupegawaiAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenuShiftAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenuDatapegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenuPerubahanShift, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenuShiftpegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenuGajipegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MenuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(sideBarLayout.createSequentialGroup()
+                                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(sideBarLayout.createSequentialGroup()
                         .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2)
                                 .addComponent(MenuDashboardAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, sideBarLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(MenuDatapegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuPerubahanShift, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuPenggajianAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuJabatanAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenupegawaiAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuShiftAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(sideBarLayout.createSequentialGroup()
-                                .addGroup(sideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(MenuShiftpegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuGajipegawaiAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MenuLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         sideBarLayout.setVerticalGroup(
@@ -173,8 +187,6 @@ public class masterShift_Admin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MenuPenggajianAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MenuPerubahanShift)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
@@ -186,14 +198,14 @@ public class masterShift_Admin extends javax.swing.JFrame {
                 .addComponent(MenuGajipegawaiAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(MenuLogout)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         headerAdmin.setBackground(new java.awt.Color(255, 255, 255));
         headerAdmin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         headerAdmin.setPreferredSize(new java.awt.Dimension(800, 86));
 
-        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel.png"))); // NOI18N
+        btmCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cancel.png"))); // NOI18N
         btmCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btmCancelMouseClicked(evt);
@@ -278,10 +290,38 @@ public class masterShift_Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btmCancelMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        pn_utama_masterShift.add(new form_masterShift());
+        pn_utama_masterShift.add(new form_transaksiPerubahanShift());
         pn_utama_masterShift.repaint();
         pn_utama_masterShift.revalidate();
     }//GEN-LAST:event_formWindowOpened
+
+    private void MenupegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenupegawaiAdminMouseClicked
+        masterPegawai_Admin masterPegawai = new masterPegawai_Admin(); // Membuat objek form tujuan
+        masterPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenupegawaiAdminMouseClicked
+
+    private void MenuJabatanAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuJabatanAdminMouseClicked
+        masterJabatan_Admin masterJabatan = new masterJabatan_Admin(); // Membuat objek form tujuan
+        masterJabatan.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuJabatanAdminMouseClicked
+
+    private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLogoutMouseClicked
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?",
+                "Konfirmasi Logout", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm == java.awt.event.KeyEvent.VK_Y || confirm == javax.swing.JOptionPane.YES_OPTION) {
+            loginForm login = new loginForm(); // Membuat objek form tujuan
+            login.setVisible(true); // Menampilkan form tujuan
+            this.dispose(); // Menutup form saat ini
+        }
+    }//GEN-LAST:event_MenuLogoutMouseClicked
+
+    private void MenuShiftAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftAdminMouseClicked
+        masterShift_Admin masterShift = new masterShift_Admin(); // Membuat objek form tujuan
+        masterShift.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();                                  // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuShiftAdminMouseClicked
 
     /**
      * @param args the command line arguments
@@ -300,21 +340,23 @@ public class masterShift_Admin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(masterShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(masterShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(masterShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(masterShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaksiPerubahanShift_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new masterShift_Admin().setVisible(true);
+                new transaksiPerubahanShift_Admin().setVisible(true);
             }
         });
     }
@@ -325,7 +367,6 @@ public class masterShift_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel MenuGajipegawaiAdmin;
     private javax.swing.JLabel MenuJabatanAdmin;
     private javax.swing.JLabel MenuLogout;
-    private javax.swing.JLabel MenuPenggajianAdmin;
     private javax.swing.JLabel MenuPerubahanShift;
     private javax.swing.JLabel MenuShiftAdmin;
     private javax.swing.JLabel MenuShiftpegawaiAdmin;
