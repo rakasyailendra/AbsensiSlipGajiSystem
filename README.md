@@ -1,8 +1,7 @@
 <img src="opening pondok baitul hikmah.gif" alt="GitHub Banner" width="10000%" />
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 <h1 align="center">
-  <img
-    src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=800&height=80&duration=7000&lines=Assalamu'alaikum+Warahmatullahi+Wabarakatuh;+Aplikasi+Absensi+Pegawai+%26+Slip+Gaji📿📊"
+<img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=800&height=80&duration=7000&lines=Assalamu'alaikum+Warahmatullahi+Wabarakatuh;+Aplikasi+Absensi+Pegawai+%26+Slip+Gaji📿📊"
   />
 </h1>
 
@@ -19,27 +18,25 @@ Disusun Oleh:
 3. Ghabriella Auranizza Fransrico 23081020028
 4. Rega Yuancahya Faiz Kristama 23081010033
 5. M. Dicky Haikal Aly 23081010043
-   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
+##
 #### ✨Fitur Utama✨
-
+##
 #### **ADMIN PESANTREN 👨‍💼**
-
-> > > > > > > 072a9a75bdf64ad0141a6af7c8a87517ec14f489
 
 1. **Manajemen Pegawai, Shift, Jabatan** (Tambah/Edit/Hapus)
 2. **Rekap Absensi Harian**
 3. **Perhitungan Honor Otomatis** (Gaji Pokok x Jumlah Masuk)
 4. **Cetak Slip Honor** Format PDF
 5. **Kelola Jadwal Shift** (Pengurus/Pengajar/Penjaga)  
-   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
 #### **PEGAWAI ( Pengurus, Pengajar (Ustadz/Ustadzah), dan Penjaga) 👳🏻‍♀️🧕🏻📿** <br>
 
 1. Melakukan absensi harian chek in dan check out sesuai jabatan <br>
 2. Melihat jadwal shift pesantren<br>
 3. Melihat dan mencetak slip gaji
-   <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
 
 #### **Teknologi yang Digunakan 💻**
 
@@ -55,5 +52,5 @@ Disusun Oleh:
 1. NetBeans IDE<br>
 2. VScode<br>
 3. Github
-   > > > > > > > 072a9a75bdf64ad0141a6af7c8a87517ec14f489
-   > > > > > > > <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
+4. Figma
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="2000">
