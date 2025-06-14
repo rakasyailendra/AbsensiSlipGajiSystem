@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.absence.salary.slip.application.models.ComboItem;
@@ -45,12 +47,28 @@ public class form_masterPegawai extends javax.swing.JPanel {
         populateJabatanComboBox();
         clearForm();
 
+        btn_edit_masterPegawai.setEnabled(false);
+        btn_hapus_masterPegawai.setEnabled(false);
+
+        // Add listener to enable/disable buttons based on selection
+        table_absensiPegawaiHariini.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                if (table_absensiPegawaiHariini.getSelectedRow() >= 0) {
+                    btn_edit_masterPegawai.setEnabled(true);
+                    btn_hapus_masterPegawai.setEnabled(true);
+                } else {
+                    btn_edit_masterPegawai.setEnabled(false);
+                    btn_hapus_masterPegawai.setEnabled(false);
+                    clearForm();
+                }
+            }
+        });
+
         table_absensiPegawaiHariini.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 isiFormDariTabel();
             }
         });
-
     }
 
     private void populateTablePegawai() {
@@ -101,21 +119,21 @@ public class form_masterPegawai extends javax.swing.JPanel {
             if (response.isSuccess()) {
                 Pegawai pegawai = response.getData();
 
-                jText_NIP.setText(pegawai.getNip());
-                jText_nama.setText(pegawai.getNama());
-                jText_tanggalLahir.setText(pegawai.getTanggalLahir().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-                jText_alamat.setText(pegawai.getAlamat());
-                jText_password.setText(pegawai.getPassword());
+                jText_NIP_edit.setText(pegawai.getNip());
+                jText_nama_edit.setText(pegawai.getNama());
+                jText_tanggalLahir_edit.setText(pegawai.getTanggalLahir().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                jText_alamat_edit.setText(pegawai.getAlamat());
+                jText_password_edit.setText(pegawai.getPassword());
 
                 // Cari dan set jabatan pada combo box
                 Response<ArrayList<JabatanPegawai>> jabatanPegawaiResponse = jabatanPegawaiRepository
                         .findByPegawaiId(pegawai.getId());
                 if (jabatanPegawaiResponse.isSuccess() && !jabatanPegawaiResponse.getData().isEmpty()) {
                     Integer idJabatan = jabatanPegawaiResponse.getData().get(0).getIdJabatan();
-                    for (int i = 0; i < jCombo_jabatan.getItemCount(); i++) {
-                        ComboItem item = (ComboItem) jCombo_jabatan.getItemAt(i);
+                    for (int i = 0; i < jCombo_jabatan_edit.getItemCount(); i++) {
+                        ComboItem item = (ComboItem) jCombo_jabatan_edit.getItemAt(i);
                         if (item.getId() != null && item.getId().equals(idJabatan)) {
-                            jCombo_jabatan.setSelectedIndex(i);
+                            jCombo_jabatan_edit.setSelectedIndex(i);
                             break;
                         }
                     }
@@ -135,7 +153,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
             String nip = table_absensiPegawaiHariini.getValueAt(selectedRow, 0).toString();
             Response<Pegawai> response = pegawaiRepository.findByNip(nip);
             if (response.isSuccess()) {
-                int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus pegawai ini?",
+                int confirm = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin menghapus pegawai ini?",
                         "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (confirm == JOptionPane.YES_OPTION) {
                     Pegawai pegawai = response.getData();
@@ -143,48 +161,47 @@ public class form_masterPegawai extends javax.swing.JPanel {
                             .findByPegawaiId(pegawai.getId());
                     if (jabatanPegawaiResponse.isSuccess() && !jabatanPegawaiResponse.getData().isEmpty()) {
                         JabatanPegawai jabatanPegawai = jabatanPegawaiResponse.getData().get(0);
-                        // Hapus relasi JabatanPegawai terlebih dahulu
                         jabatanPegawaiRepository.deleteById(jabatanPegawai.getId());
                     }
                     Response<Boolean> deleteResponse = pegawaiRepository.deleteById(pegawai.getId());
                     if (deleteResponse.isSuccess()) {
-                        System.out.println("Pegawai berhasil dihapus.");
+                        JOptionPane.showMessageDialog(null, "Pegawai berhasil dihapus.");
                         populateTablePegawai();
                     } else {
-                        System.out.println("Gagal menghapus pegawai: " + deleteResponse.getMessage());
+                        JOptionPane.showMessageDialog(null, "Gagal menghapus pegawai: " + deleteResponse.getMessage());
                     }
-                } else {
-                    System.out.println("Gagal mengambil data pegawai: " + response.getMessage());
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Gagal mengambil data pegawai: " + response.getMessage());
             }
         } else {
-            System.out.println("Tidak ada pegawai yang dipilih untuk dihapus.");
+            JOptionPane.showMessageDialog(null, "Tidak ada pegawai yang dipilih untuk dihapus.");
         }
     }
 
-    private void editPegawai() {
+    private boolean editPegawai() {
         if (pegawaiYangDipilih == null) {
-            System.out.println("Tidak ada pegawai yang dipilih.");
-            return;
+            JOptionPane.showMessageDialog(null, "Tidak ada pegawai yang dipilih.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
-        String nama = jText_nama.getText();
-        String tanggalLahir = jText_tanggalLahir.getText();
-        String alamat = jText_alamat.getText();
-        ComboItem selectedJabatan = (ComboItem) jCombo_jabatan.getSelectedItem();
+        String nama = jText_nama_edit.getText();
+        String tanggalLahir = jText_tanggalLahir_edit.getText();
+        String alamat = jText_alamat_edit.getText();
+        ComboItem selectedJabatan = (ComboItem) jCombo_jabatan_edit.getSelectedItem();
         Integer idJabatan = selectedJabatan != null ? selectedJabatan.getId() : null;
-        String password = jText_password.getText();
+        String password = jText_password_edit.getText();
 
         if (nama.isEmpty() || tanggalLahir.isEmpty() || alamat.isEmpty() || idJabatan == null || password.isEmpty()) {
-            System.out.println("Semua field harus diisi.");
-            return;
+            JOptionPane.showMessageDialog(null, "Semua field harus diisi.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
         try {
+            // PERBAIKI formatter dari "mm" menjadi "MM"
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             LocalDate parsedTanggal = LocalDate.parse(tanggalLahir, formatter);
 
-            pegawaiYangDipilih.setId(pegawaiYangDipilih.getId()); // Pastikan ID tetap sama
             pegawaiYangDipilih.setNama(nama);
             pegawaiYangDipilih.setTanggalLahir(parsedTanggal);
             pegawaiYangDipilih.setAlamat(alamat);
@@ -193,27 +210,30 @@ public class form_masterPegawai extends javax.swing.JPanel {
             Response<Pegawai> updateResponse = pegawaiRepository.update(pegawaiYangDipilih);
             if (updateResponse.isSuccess()) {
                 // Perbarui relasi jabatan
-                Response<ArrayList<JabatanPegawai>> existing = jabatanPegawaiRepository
-                        .findByPegawaiId(pegawaiYangDipilih.getId());
+                Response<ArrayList<JabatanPegawai>> existing = jabatanPegawaiRepository.findByPegawaiId(pegawaiYangDipilih.getId());
                 if (existing.isSuccess() && !existing.getData().isEmpty()) {
                     JabatanPegawai jp = existing.getData().get(0);
                     jp.setIdJabatan(idJabatan);
                     jabatanPegawaiRepository.update(jp);
                 }
 
-                System.out.println("Pegawai berhasil diperbarui.");
+                JOptionPane.showMessageDialog(null, "Pegawai berhasil diperbarui.");
                 pegawaiYangDipilih = null;
                 populateTablePegawai();
                 clearForm();
+                return true;
             } else {
-                System.out.println("Gagal update pegawai: " + updateResponse.getMessage());
+                JOptionPane.showMessageDialog(null, "Gagal update pegawai: " + updateResponse.getMessage());
+                return false;
             }
         } catch (DateTimeParseException e) {
-            System.out.println("Format tanggal tidak valid. Gunakan format dd-MM-yyyy.");
+            JOptionPane.showMessageDialog(null, "Format tanggal tidak valid. Gunakan format dd-MM-yyyy.");
+            return false;
         }
     }
 
-    private void tambahPegawai() {
+
+    private boolean tambahPegawai() {
         String nip = jText_NIP.getText();
         String nama = jText_nama.getText();
         String tanggalLahir = jText_tanggalLahir.getText();
@@ -222,10 +242,9 @@ public class form_masterPegawai extends javax.swing.JPanel {
         Integer idJabatan = selectedJabatan != null ? selectedJabatan.getId() : null;
         String password = jText_password.getText();
 
-        if (nip.isEmpty() || nama.isEmpty() || tanggalLahir.isEmpty() || alamat.isEmpty() || idJabatan == null
-                || password.isEmpty()) {
-            System.out.println("Semua field harus diisi.");
-            return;
+        if (nip.isEmpty() || nama.isEmpty() || tanggalLahir.isEmpty() || alamat.isEmpty() || idJabatan == null || password.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Semua field harus diisi.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
         LocalDate parsedTanggalLahir;
@@ -233,8 +252,8 @@ public class form_masterPegawai extends javax.swing.JPanel {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             parsedTanggalLahir = LocalDate.parse(tanggalLahir, formatter);
         } catch (DateTimeParseException e) {
-            System.out.println("Format tanggal tidak valid. Gunakan format dd-MM-yyyy.");
-            return;
+            JOptionPane.showMessageDialog(null, "Format tanggal tidak valid. Gunakan format dd-MM-yyyy.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
         Pegawai pegawai = new Pegawai();
@@ -247,19 +266,21 @@ public class form_masterPegawai extends javax.swing.JPanel {
 
         Response<Pegawai> response = pegawaiRepository.save(pegawai);
         if (response.isSuccess()) {
-            // Simpan relasi ke JabatanPegawai
             JabatanPegawai jabatanPegawai = new JabatanPegawai();
             jabatanPegawai.setIdPegawai(response.getData().getId());
             jabatanPegawai.setIdJabatan(idJabatan);
             jabatanPegawaiRepository.save(jabatanPegawai);
 
-            System.out.println("Pegawai berhasil ditambahkan.");
+            JOptionPane.showMessageDialog(null, "Pegawai berhasil ditambahkan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
             populateTablePegawai();
             clearForm();
+            return true;
         } else {
-            System.out.println("Gagal menambahkan Pegawai: " + response.getMessage());
+            JOptionPane.showMessageDialog(null, "Gagal menambahkan Pegawai: " + response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
+
 
     private void populateJabatanComboBox() {
         Response<ArrayList<Jabatan>> response = jabatanRepository.findAll();
@@ -270,8 +291,15 @@ public class form_masterPegawai extends javax.swing.JPanel {
             for (Jabatan jabatan : jabatanList) {
                 jCombo_jabatan.addItem(new ComboItem(jabatan.getId(), jabatan.getNamaJabatan()));
             }
+            jCombo_jabatan.setSelectedIndex(0); // Reset to default item
+
+            jCombo_jabatan_edit.removeAllItems(); // Clear existing items
+            jCombo_jabatan_edit.addItem(new ComboItem(null, "")); // Add default item
+            for (Jabatan jabatan : jabatanList) {
+                jCombo_jabatan_edit.addItem(new ComboItem(jabatan.getId(), jabatan.getNamaJabatan()));
+            }
         } else {
-            System.out.println("Error fetching Jabatan data: " + response.getMessage());
+            JOptionPane.showMessageDialog(this, "Gagal mengambil data Jabatan: " + response.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -387,6 +415,11 @@ public class form_masterPegawai extends javax.swing.JPanel {
         });
 
         btn_edit_masterPegawai.setText("EDIT");
+        btn_edit_masterPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_edit_masterPegawaiMouseClicked(evt);
+            }
+        });
         btn_edit_masterPegawai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_edit_masterPegawaiActionPerformed(evt);
@@ -795,10 +828,38 @@ public class form_masterPegawai extends javax.swing.JPanel {
         mainPanel.add(editPegawai);
         mainPanel.repaint();
         mainPanel.revalidate();
+        isiFormDariTabel();
     }//GEN-LAST:event_btn_edit_masterPegawaiActionPerformed
 
     private void btn_simpan_masterPegawai2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterPegawai2ActionPerformed
-        // TODO add your handling code here:
+        String nip = jText_NIP_edit.getText();
+        String nama = jText_nama_edit.getText();
+        String tanggalLahir = jText_tanggalLahir_edit.getText();
+        String alamat = jText_alamat_edit.getText();
+        String password = jText_password_edit.getText();
+        ComboItem selectedJabatan = (ComboItem) jCombo_jabatan_edit.getSelectedItem();
+        String namaJabatan = selectedJabatan != null ? selectedJabatan.getName() : "";
+        Integer idJabatan = selectedJabatan != null ? selectedJabatan.getId() : null;
+
+        // Validasi field wajib tidak boleh kosong
+        if (nip.isEmpty() || nama.isEmpty() || tanggalLahir.isEmpty() || alamat.isEmpty() || password.isEmpty() || idJabatan == null) {
+            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lanjut proses simpan
+        boolean berhasil = pegawaiYangDipilih != null ? editPegawai() : tambahPegawai();
+
+        if (!berhasil) return; // jangan lanjut kalau gagal
+
+        pegawaiYangDipilih = null;
+        mainPanel.removeAll();
+        mainPanel.add(dataPegawai);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        populateTablePegawai();
+        clearForm();
+
     }//GEN-LAST:event_btn_simpan_masterPegawai2ActionPerformed
 
     private void btn_batal_masterPegawai3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterPegawai3ActionPerformed
@@ -819,6 +880,14 @@ public class form_masterPegawai extends javax.swing.JPanel {
     private void jCombo_jabatan_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_jabatan_editActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCombo_jabatan_editActionPerformed
+
+    private void btn_edit_masterPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_edit_masterPegawaiMouseClicked
+        // mainPanel.removeAll();
+        // mainPanel.repaint();
+        // mainPanel.revalidate();
+        // mainPanel.add(editPegawai);
+        // isiFormDariTabel();
+    }//GEN-LAST:event_btn_edit_masterPegawaiMouseClicked
 
     private void btn_batal_masterPegawaiActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_batal_masterPegawaiActionPerformed
         // TODO add your handling code here:
@@ -845,21 +914,32 @@ public class form_masterPegawai extends javax.swing.JPanel {
     }// GEN-LAST:event_btn_tambah_masterPegawaiActionPerformed
 
     private void btn_simpan_masterPegawai1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_simpan_masterPegawai1ActionPerformed
-        if (pegawaiYangDipilih != null) {
-            // Jika ada pegawai yang dipilih, lakukan update
-            editPegawai();
-        } else {
-            // Jika tidak ada pegawai yang dipilih, lakukan penambahan
-            tambahPegawai();
-        }
+        // Ambil data dari form
+        String nip, nama, tanggalLahir, alamat, password;
+        Integer idJabatan;
+            // Mode tambah
+            nip = jText_NIP.getText();
+            nama = jText_nama.getText();
+            tanggalLahir = jText_tanggalLahir.getText();
+            alamat = jText_alamat.getText();
+            password = jText_password.getText();
+            ComboItem selectedJabatan = (ComboItem) jCombo_jabatan.getSelectedItem();
+        idJabatan = selectedJabatan != null ? selectedJabatan.getId() : null;
 
+        // Khusus mode tambah
+        boolean berhasil = tambahPegawai();
+        if (!berhasil) return; // jangan pindah panel kalau gagal
+
+        // Reset pegawai yang dipilih
+        pegawaiYangDipilih = null;
         mainPanel.removeAll();
         mainPanel.add(dataPegawai);
         mainPanel.repaint();
         mainPanel.revalidate();
         populateTablePegawai();
-        clearForm();
-    }// GEN-LAST:event_btn_simpan_masterPegawai1ActionPerformed
+
+    }
+
 
     private void btn_batal_masterPegawai2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_batal_masterPegawai2ActionPerformed
         mainPanel.removeAll();

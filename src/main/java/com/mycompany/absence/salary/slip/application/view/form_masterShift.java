@@ -39,14 +39,101 @@ public class form_masterShift extends javax.swing.JPanel {
         mainPanel.repaint();
         mainPanel.revalidate();
 
+        btn_edit_masterShift.setEnabled(false);
+        btn_hapus_masterShift.setEnabled(false);
+
         populateTableShift();
         clearInputFields();
+
+        // Add listener to enable/disable buttons based on selection
+        table_dataShift.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                if (table_dataShift.getSelectedRow() >= 0) {
+                    btn_edit_masterShift.setEnabled(true);
+                    btn_hapus_masterShift.setEnabled(true);
+                } else {
+                    btn_edit_masterShift.setEnabled(false);
+                    btn_hapus_masterShift.setEnabled(false);
+                    clearForm();
+                }
+            }
+        });
+    }
+    
+    /**
+     * Method untuk mengisi form edit shift dari data yang dipilih di tabel.
+     * Mengambil data dari tabel dan mengisi otomatis form edit shift.
+     */
+    private void isiFormDariTabel() {
+        int selectedRow = table_dataShift.getSelectedRow();
+        if (selectedRow >= 0) {
+            int shiftId = (int) table_dataShift.getValueAt(selectedRow, 0);
+            Shift shift = shiftRepository.findById(shiftId).getData();
+
+            jText_namaShift1.setText(shift.getNamaShift());
+            jText_jamMasuk1.setText(shift.getJamMasuk().toString());
+            jText_jamKeluar1.setText(shift.getJamKeluar().toString());
+
+            mainPanel.removeAll();
+            mainPanel.repaint();
+            mainPanel.revalidate();
+
+            mainPanel.add(editShift);
+            mainPanel.repaint();
+            mainPanel.revalidate();
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih shift yang ingin diedit");
+            clearForm();
+            mainPanel.removeAll();
+            mainPanel.add(dataShift);
+            mainPanel.repaint();
+            mainPanel.revalidate();
+            btn_edit_masterShift.setEnabled(false);
+            btn_hapus_masterShift.setEnabled(false);
+            return; // No row selected, exit the method
+        }
     }
 
+    /**
+     * Method untuk mengedit shift yang dipilih dari tabel.
+     * Mengambil data dari form edit dan mengirimkan ke repository untuk diperbarui.
+     */
+    private void editShift() {
+        int selectedRow = table_dataShift.getSelectedRow();
+        if (selectedRow >= 0) {
+            int shiftId = (int) table_dataShift.getValueAt(selectedRow, 0);
+            String namaShift = jText_namaShift1.getText();
+            String jamMasuk = jText_jamMasuk1.getText();
+            String jamKeluar = jText_jamKeluar1.getText();
+
+            // Konversi dari String ke LocalTime jika diperlukan
+            LocalTime jamMasukTime = LocalTime.parse(jamMasuk);
+            LocalTime jamKeluarTime = LocalTime.parse(jamKeluar);
+
+            Shift shift = new Shift(namaShift, jamMasukTime, jamKeluarTime);
+            shift.setId(shiftId); // Set the ID if a setter is available
+            Response<Shift> response = shiftRepository.update(shift);
+
+            if (response.isSuccess()) {
+                JOptionPane.showMessageDialog(this, "Shift berhasil diperbarui");
+                clearForm();
+                initializeComponents();
+            } else {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat memperbarui shift: " + response.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Silakan pilih shift yang ingin diedit");
+        }
+    }
+
+    /**
+     * Method untuk menghapus shift yang dipilih dari tabel.
+     * Menggunakan konfirmasi sebelum menghapus.
+     */
     private void hapusShift() {
         int selectedRow = table_dataShift.getSelectedRow();
         if (selectedRow >= 0) {
-            int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this shift?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            int confirmation = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus shift ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
             if (confirmation != JOptionPane.YES_OPTION) {
                 return; // User chose not to delete
             }
@@ -55,13 +142,13 @@ public class form_masterShift extends javax.swing.JPanel {
             Response<Boolean> response = shiftRepository.deleteById(shiftId);
 
             if (response.isSuccess()) {
-                JOptionPane.showMessageDialog(this, "Shift deleted successfully");
+                JOptionPane.showMessageDialog(this, "Shift berhasil dihapus");
                 populateTableShift();
             } else {
-                JOptionPane.showMessageDialog(this, "Error deleting shift: " + response.getMessage());
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menghapus shift: " + response.getMessage());
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Please select a shift to delete");
+            JOptionPane.showMessageDialog(this, "Silakan pilih shift yang ingin dihapus");
         }
     }
 
@@ -70,18 +157,18 @@ public class form_masterShift extends javax.swing.JPanel {
         String jamMasuk = jText_jamMasuk.getText();
         String jamKeluar = jText_jamKeluar.getText();
 
-        // Convert from String to local time if necessary
+        // Konversi dari String ke LocalTime jika diperlukan
         LocalTime jamMasukTime = LocalTime.parse(jamMasuk);
         LocalTime jamKeluarTime = LocalTime.parse(jamKeluar);
 
         Shift shift = new Shift(namaShift, jamMasukTime, jamKeluarTime);
         Response<Shift> response = shiftRepository.save(shift);
-
         if (response.isSuccess()) {
-            JOptionPane.showMessageDialog(this, "Shift added successfully");
+            JOptionPane.showMessageDialog(this, "Shift berhasil ditambahkan");
+            clearInputFields();
             initializeComponents();
         } else {
-            JOptionPane.showMessageDialog(this, "Error adding shift: " + response.getMessage());
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menambahkan shift: " + response.getMessage());
         }
     }
 
@@ -296,12 +383,12 @@ public class form_masterShift extends javax.swing.JPanel {
         jText_namaShift.setText("jTextField1");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Jam Masuk");
+        jLabel9.setText("Jam Masuk (00:00)");
 
         jText_jamMasuk.setText("jTextField1");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setText("Jam Keluar");
+        jLabel10.setText("Jam Keluar (00:00)");
 
         jText_jamKeluar.setText("jTextField1");
 
@@ -314,10 +401,10 @@ public class form_masterShift extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jText_namaShift, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel9)
                     .addComponent(jText_jamMasuk, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel10)
-                    .addComponent(jText_jamKeluar, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE))
+                    .addComponent(jText_jamKeluar, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -546,7 +633,27 @@ public class form_masterShift extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_hapus_masterShiftActionPerformed
 
     private void btn_simpan_masterShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterShiftActionPerformed
+        // Validasi field tidak boleh kosong
+        String namaShift = jText_namaShift.getText().trim();
+        String jamMasuk = jText_jamMasuk.getText().trim();
+        String jamKeluar = jText_jamKeluar.getText().trim();
+
+        if (namaShift.isEmpty() || jamMasuk.isEmpty() || jamKeluar.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama Shift, Jam Masuk, dan Jam Keluar tidak boleh kosong.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Validasi format jam masuk dan jam keluar
+        try {
+            LocalTime.parse(jamMasuk);
+            LocalTime.parse(jamKeluar);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Format Jam Masuk dan Jam Keluar harus benar (misal: 08:00).", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         tambahShift();
+        
         initializeComponents();
     }//GEN-LAST:event_btn_simpan_masterShiftActionPerformed
 
@@ -559,6 +666,12 @@ public class form_masterShift extends javax.swing.JPanel {
 
     private void btn_simpan_masterShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterShift1ActionPerformed
         // TODO add your handling code here:
+        editShift();
+        mainPanel.removeAll();
+        mainPanel.add(dataShift);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        populateTableShift();
     }//GEN-LAST:event_btn_simpan_masterShift1ActionPerformed
 
     private void btn_batal_masterShift2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterShift2ActionPerformed
@@ -576,8 +689,18 @@ public class form_masterShift extends javax.swing.JPanel {
         mainPanel.add(editShift);
         mainPanel.repaint();
         mainPanel.revalidate();
+        isiFormDariTabel();
     }//GEN-LAST:event_btn_edit_masterShiftActionPerformed
 
+
+    /**
+     * Method untuk membersihkan form edit shift.
+     */
+    private void clearForm() {
+        jText_namaShift1.setText("");
+        jText_jamMasuk1.setText("");
+        jText_jamKeluar1.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal_masterShift1;

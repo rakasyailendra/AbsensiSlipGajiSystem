@@ -6,6 +6,7 @@ package com.mycompany.absence.salary.slip.application.view;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.absence.salary.slip.application.models.Jabatan;
@@ -40,23 +41,98 @@ public class form_masterJabatan extends javax.swing.JPanel {
 
         populateTableJabatan();
         resetForm();
+
+        btn_edit_masterJabatan.setEnabled(false);
+        btn_hapus_masterJabatan.setEnabled(false);
+
+        // Add listener to enable/disable buttons based on selection
+        table_dataJabatan.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+                if (table_dataJabatan.getSelectedRow() >= 0) {
+                btn_edit_masterJabatan.setEnabled(true);
+                btn_hapus_masterJabatan.setEnabled(true);
+                } else {
+                btn_edit_masterJabatan.setEnabled(false);
+                btn_hapus_masterJabatan.setEnabled(false);
+                resetForm();
+                }
+        }
+        });
+    }
+
+    private void isiFormDariTabel() {
+        int selectedRow = table_dataJabatan.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data jabatan di tabel.", "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int jabatanId = (int) table_dataJabatan.getValueAt(selectedRow, 0);
+        Jabatan jabatan = jabatanRepository.findById(jabatanId).getData();
+
+        if (jabatan != null) {
+            jText_Edit_Jabatan.setText(jabatan.getNamaJabatan());
+            jText_Edit_Gaji.setText(String.valueOf(jabatan.getGajiPokok()));
+        } else {
+            JOptionPane.showMessageDialog(this, "Data jabatan tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void editJabatan() {
         int selectedRow = table_dataJabatan.getSelectedRow();
-        if (selectedRow != -1) {
-            // Get the ID of the selected jabatan
-            int jabatanId = (int) table_dataJabatan.getValueAt(selectedRow, 0); // Ambil ID dari kolom tersembunyi
-            Jabatan jabatan = jabatanRepository.findById(jabatanId).getData();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Silakan pilih data jabatan di tabel.", "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-            if (jabatan != null) {
-                jText_Jabatan.setText(jabatan.getNamaJabatan());
-                jText_Gaji.setText(String.valueOf(jabatan.getGajiPokok()));
+        String namaJabatanBaru = jText_Edit_Jabatan.getText().trim();
+        String gajiPokokStr = jText_Edit_Gaji.getText().trim();
+
+        if (namaJabatanBaru.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama jabatan tidak boleh kosong.", "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (gajiPokokStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Gaji pokok tidak boleh kosong.", "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double gajiPokokBaru;
+        try {
+            gajiPokokBaru = Double.parseDouble(gajiPokokStr);
+            if (gajiPokokBaru < 0) {
+                JOptionPane.showMessageDialog(this, "Gaji pokok harus lebih dari atau sama dengan 0.", "Peringatan",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Gaji pokok harus berupa angka.", "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int jabatanId = (int) table_dataJabatan.getValueAt(selectedRow, 0);
+        Jabatan jabatan = jabatanRepository.findById(jabatanId).getData();
+
+        if (jabatan != null) {
+            jabatan.setNamaJabatan(namaJabatanBaru);
+            jabatan.setGajiPokok(gajiPokokBaru);
+
+            Response<Jabatan> response = jabatanRepository.update(jabatan);
+            if (response.isSuccess()) {
+                JOptionPane.showMessageDialog(this, "Data jabatan berhasil diperbarui.", "Sukses",
+                        JOptionPane.INFORMATION_MESSAGE);
+                initializeComponents();
             } else {
-                System.out.println("Jabatan not found.");
+                JOptionPane.showMessageDialog(this, "Gagal memperbarui data: " + response.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            System.out.println("No row selected for editing.");
+            JOptionPane.showMessageDialog(this, "Data jabatan tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -65,7 +141,7 @@ public class form_masterJabatan extends javax.swing.JPanel {
         String gajiPokok = jText_Gaji.getText();
 
         if (namaJabatan.isEmpty() || gajiPokok.isEmpty()) {
-            System.out.println("Nama Jabatan dan Gaji Pokok tidak boleh kosong.");
+            JOptionPane.showMessageDialog(null, "Semua field harus diisi.", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -147,7 +223,8 @@ public class form_masterJabatan extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
@@ -186,23 +263,22 @@ public class form_masterJabatan extends javax.swing.JPanel {
 
         table_dataJabatan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
         table_dataJabatan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Jabatan", "Gaji"
-            }
-        ));
+                new Object[][] {
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null },
+                        { null, null }
+                },
+                new String[] {
+                        "Jabatan", "Gaji"
+                }));
         jScrollPane1.setViewportView(table_dataJabatan);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -231,62 +307,68 @@ public class form_masterJabatan extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout panelUtama_masterJabatan_AdminLayout = new javax.swing.GroupLayout(panelUtama_masterJabatan_Admin);
+        javax.swing.GroupLayout panelUtama_masterJabatan_AdminLayout = new javax.swing.GroupLayout(
+                panelUtama_masterJabatan_Admin);
         panelUtama_masterJabatan_Admin.setLayout(panelUtama_masterJabatan_AdminLayout);
         panelUtama_masterJabatan_AdminLayout.setHorizontalGroup(
-            panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
-                    .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                        .addComponent(btn_tambah_masterJabatan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_edit_masterJabatan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_hapus_masterJabatan)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
+                panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(panelUtama_masterJabatan_AdminLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870,
+                                                        Short.MAX_VALUE)
+                                                .addGap(12, 12, 12))
+                                        .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
+                                                .addComponent(btn_tambah_masterJabatan)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btn_edit_masterJabatan)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(btn_hapus_masterJabatan)
+                                                .addGap(0, 0, Short.MAX_VALUE)))));
         panelUtama_masterJabatan_AdminLayout.setVerticalGroup(
-            panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(37, 37, 37)
-                .addGroup(panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_tambah_masterJabatan)
-                    .addComponent(btn_hapus_masterJabatan)
-                    .addComponent(btn_edit_masterJabatan))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
-        );
+                panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4)
+                                .addGap(37, 37, 37)
+                                .addGroup(panelUtama_masterJabatan_AdminLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btn_tambah_masterJabatan)
+                                        .addComponent(btn_hapus_masterJabatan)
+                                        .addComponent(btn_edit_masterJabatan))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(177, Short.MAX_VALUE)));
 
         javax.swing.GroupLayout dataJabatanLayout = new javax.swing.GroupLayout(dataJabatan);
         dataJabatan.setLayout(dataJabatanLayout);
         dataJabatanLayout.setHorizontalGroup(
-            dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
-            .addGroup(dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataJabatanLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+                dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 900, Short.MAX_VALUE)
+                        .addGroup(dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(dataJabatanLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(panelUtama_masterJabatan_Admin,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addContainerGap())));
         dataJabatanLayout.setVerticalGroup(
-            dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
-            .addGroup(dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataJabatanLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+                dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 525, Short.MAX_VALUE)
+                        .addGroup(dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(dataJabatanLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(panelUtama_masterJabatan_Admin,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addContainerGap())));
 
         mainPanel.add(dataJabatan, "card2");
 
@@ -321,79 +403,89 @@ public class form_masterJabatan extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jText_Jabatan, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel9)
-                    .addComponent(jText_Gaji, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel1Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jText_Jabatan, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
+                                                Short.MAX_VALUE)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jText_Gaji, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
+                                                Short.MAX_VALUE))
+                                .addContainerGap(16, Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jText_Jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jText_Gaji, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(277, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jText_Jabatan, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jText_Gaji, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(277, Short.MAX_VALUE)));
 
-        javax.swing.GroupLayout panelKedua_masterJabatan_AdminLayout = new javax.swing.GroupLayout(panelKedua_masterJabatan_Admin);
+        javax.swing.GroupLayout panelKedua_masterJabatan_AdminLayout = new javax.swing.GroupLayout(
+                panelKedua_masterJabatan_Admin);
         panelKedua_masterJabatan_Admin.setLayout(panelKedua_masterJabatan_AdminLayout);
         panelKedua_masterJabatan_AdminLayout.setHorizontalGroup(
-            panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
-                                .addComponent(btn_simpan_masterJabatan)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_batal_masterJabatan1))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+                panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(panelKedua_masterJabatan_AdminLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addGroup(panelKedua_masterJabatan_AdminLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(panelKedua_masterJabatan_AdminLayout
+                                                                .createSequentialGroup()
+                                                                .addComponent(btn_simpan_masterJabatan)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(btn_batal_masterJabatan1))
+                                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(0, 500, Short.MAX_VALUE)))
+                                .addContainerGap()));
         panelKedua_masterJabatan_AdminLayout.setVerticalGroup(
-            panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(37, 37, 37)
-                .addGroup(panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_simpan_masterJabatan)
-                    .addComponent(btn_batal_masterJabatan1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
-        );
+                panelKedua_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelKedua_masterJabatan_AdminLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5)
+                                .addGap(37, 37, 37)
+                                .addGroup(panelKedua_masterJabatan_AdminLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btn_simpan_masterJabatan)
+                                        .addComponent(btn_batal_masterJabatan1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(12, 12, 12)));
 
         javax.swing.GroupLayout tambahJabatanLayout = new javax.swing.GroupLayout(tambahJabatan);
         tambahJabatan.setLayout(tambahJabatanLayout);
         tambahJabatanLayout.setHorizontalGroup(
-            tambahJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahJabatanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelKedua_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                tambahJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tambahJabatanLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(panelKedua_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
         tambahJabatanLayout.setVerticalGroup(
-            tambahJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tambahJabatanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelKedua_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                tambahJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tambahJabatanLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(panelKedua_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
 
         mainPanel.add(tambahJabatan, "card2");
 
@@ -428,116 +520,130 @@ public class form_masterJabatan extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jText_Edit_Jabatan, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel10)
-                    .addComponent(jText_Edit_Gaji, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(jPanel2Layout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jText_Edit_Jabatan, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
+                                                Short.MAX_VALUE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jText_Edit_Gaji, javax.swing.GroupLayout.DEFAULT_SIZE, 845,
+                                                Short.MAX_VALUE))
+                                .addContainerGap(16, Short.MAX_VALUE)));
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jText_Edit_Jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jText_Edit_Gaji, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(277, Short.MAX_VALUE))
-        );
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jText_Edit_Jabatan, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jText_Edit_Gaji, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(277, Short.MAX_VALUE)));
 
-        javax.swing.GroupLayout panelKetiga_masterJabatan_AdminLayout = new javax.swing.GroupLayout(panelKetiga_masterJabatan_Admin);
+        javax.swing.GroupLayout panelKetiga_masterJabatan_AdminLayout = new javax.swing.GroupLayout(
+                panelKetiga_masterJabatan_Admin);
         panelKetiga_masterJabatan_Admin.setLayout(panelKetiga_masterJabatan_AdminLayout);
         panelKetiga_masterJabatan_AdminLayout.setHorizontalGroup(
-            panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
-                                .addComponent(btn_simpan_masterJabatan1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_batal_masterJabatan2))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+                panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(panelKetiga_masterJabatan_AdminLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addGroup(panelKetiga_masterJabatan_AdminLayout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(panelKetiga_masterJabatan_AdminLayout
+                                                                .createSequentialGroup()
+                                                                .addComponent(btn_simpan_masterJabatan1)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(btn_batal_masterJabatan2))
+                                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(0, 500, Short.MAX_VALUE)))
+                                .addContainerGap()));
         panelKetiga_masterJabatan_AdminLayout.setVerticalGroup(
-            panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6)
-                .addGap(37, 37, 37)
-                .addGroup(panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_simpan_masterJabatan1)
-                    .addComponent(btn_batal_masterJabatan2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
-        );
+                panelKetiga_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelKetiga_masterJabatan_AdminLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6)
+                                .addGap(37, 37, 37)
+                                .addGroup(panelKetiga_masterJabatan_AdminLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btn_simpan_masterJabatan1)
+                                        .addComponent(btn_batal_masterJabatan2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(12, 12, 12)));
 
         javax.swing.GroupLayout editJabatanLayout = new javax.swing.GroupLayout(editJabatan);
         editJabatan.setLayout(editJabatanLayout);
         editJabatanLayout.setHorizontalGroup(
-            editJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editJabatanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelKetiga_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                editJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(editJabatanLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(panelKetiga_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
         editJabatanLayout.setVerticalGroup(
-            editJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editJabatanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelKetiga_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                editJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(editJabatanLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(panelKetiga_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()));
 
         mainPanel.add(editJabatan, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 900, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 525, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_simpan_masterJabatan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_masterJabatan1ActionPerformed
+    private void btn_simpan_masterJabatan1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_simpan_masterJabatan1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_simpan_masterJabatan1ActionPerformed
+        editJabatan();
+        initializeComponents();
+    }// GEN-LAST:event_btn_simpan_masterJabatan1ActionPerformed
 
-    private void btn_batal_masterJabatan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_masterJabatan2ActionPerformed
+    private void btn_batal_masterJabatan2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_batal_masterJabatan2ActionPerformed
         mainPanel.removeAll();
         mainPanel.add(dataJabatan);
         mainPanel.repaint();
         mainPanel.revalidate();
-    }//GEN-LAST:event_btn_batal_masterJabatan2ActionPerformed
+    }// GEN-LAST:event_btn_batal_masterJabatan2ActionPerformed
 
-    private void btn_edit_masterJabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_masterJabatanActionPerformed
+    private void btn_edit_masterJabatanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_edit_masterJabatanActionPerformed
         mainPanel.removeAll();
         mainPanel.repaint();
         mainPanel.revalidate();
@@ -545,7 +651,8 @@ public class form_masterJabatan extends javax.swing.JPanel {
         mainPanel.add(editJabatan);
         mainPanel.repaint();
         mainPanel.revalidate();
-    }//GEN-LAST:event_btn_edit_masterJabatanActionPerformed
+        isiFormDariTabel();
+    }// GEN-LAST:event_btn_edit_masterJabatanActionPerformed
 
     private void btn_tambah_masterJabatanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_tambah_masterJabatanActionPerformed
         mainPanel.removeAll();
@@ -573,20 +680,34 @@ public class form_masterJabatan extends javax.swing.JPanel {
     }// GEN-LAST:event_btn_batal_masterJabatanActionPerformed
 
     private void btn_simpan_masterJabatanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_simpan_masterJabatanActionPerformed
-        // TODO add your handling code here:
-        if (jText_Jabatan.getText().isEmpty() || jText_Gaji.getText().isEmpty()) {
-            System.out.println("Nama Jabatan dan Gaji Pokok tidak boleh kosong.");
-            return;
+        String namaJabatan = jText_Jabatan.getText().trim();
+        String gajiStr = jText_Gaji.getText().trim();
+
+        // Validasi field tidak boleh kosong
+        if (namaJabatan.isEmpty() || gajiStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nama Jabatan dan Gaji Pokok tidak boleh kosong.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
         }
 
-        if (table_dataJabatan.getSelectedRow() != -1) {
-            editJabatan();
-        } else {
-            tambahJabatan();
+        // Validasi Gaji harus angka
+        double gajiPokok = 0;
+        try {
+                gajiPokok = Double.parseDouble(gajiStr);
+                if (gajiPokok < 0) {
+                JOptionPane.showMessageDialog(this, "Gaji Pokok tidak boleh negatif.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
+                }
+        } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Gaji Pokok harus berupa angka.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                return;
         }
+
+        // Mode tambah saja
+        tambahJabatan();
 
         initializeComponents();
     }// GEN-LAST:event_btn_simpan_masterJabatanActionPerformed
+
 
     private void btn_batal_masterJabatan1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_batal_masterPegawai2ActionPerformed
         mainPanel.removeAll();

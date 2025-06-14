@@ -298,6 +298,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gaji Pegawai"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuGajipegawaiAdminMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="MenuLogout">
               <Properties>
