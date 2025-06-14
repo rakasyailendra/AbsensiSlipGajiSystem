@@ -208,6 +208,7 @@
                     <Property name="text" type="java.lang.String" value="EDIT"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_edit_masterPegawaiMouseClicked"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_edit_masterPegawaiActionPerformed"/>
                   </Events>
                 </Component>

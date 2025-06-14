@@ -4,9 +4,26 @@
  */
 package com.mycompany.absence.salary.slip.application.view;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.swing.table.DefaultTableModel;
 
+import com.mycompany.absence.salary.slip.application.models.Absen;
+import com.mycompany.absence.salary.slip.application.models.Jabatan;
+import com.mycompany.absence.salary.slip.application.models.JabatanPegawai;
 import com.mycompany.absence.salary.slip.application.models.Pegawai;
+import com.mycompany.absence.salary.slip.application.repositories.AbsenRepository;
+import com.mycompany.absence.salary.slip.application.repositories.JabatanPegawaiRepository;
+import com.mycompany.absence.salary.slip.application.repositories.JabatanRepository;
+import com.mycompany.absence.salary.slip.application.repositories.PegawaiRepository;
+import com.mycompany.absence.salary.slip.application.repositories.ShiftPegawaiRepository;
+import com.mycompany.absence.salary.slip.application.utils.Response;
 import com.mycompany.absence.salary.slip.application.utils.SessionManager;
 
 /**
@@ -20,21 +37,161 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
      */
     public menuGajiku_Pegawai() {
         initComponents();
+        initializeComponents();
     }
+
+    AbsenRepository absenRepository = new AbsenRepository();
+    ShiftPegawaiRepository shiftPegawaiRepository = new ShiftPegawaiRepository();
+    JabatanPegawaiRepository jabatanPegawaiRepository = new JabatanPegawaiRepository();
+    JabatanRepository jabatanRepository = new JabatanRepository();
 
     Pegawai currentUser = SessionManager.getInstance().getCurrentUser();
-    
-    private void initializeComponents() {
-        haloNamaPegawai_isiOtomatis.setText(currentUser.getNama());
+
+    // Tambahkan di atas (misal, sebagai class field atau constant)
+    private static final String[] MONTHS_ID = {
+            "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
+            "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
+    };
+
+    // Mapping dari bulan Indonesia ke enum Month Java (untuk logic filter)
+    private String indoToEnglishMonth(String indoMonth) {
+        switch (indoMonth.toUpperCase()) {
+            case "JANUARI":
+                return "JANUARY";
+            case "FEBRUARI":
+                return "FEBRUARY";
+            case "MARET":
+                return "MARCH";
+            case "APRIL":
+                return "APRIL";
+            case "MEI":
+                return "MAY";
+            case "JUNI":
+                return "JUNE";
+            case "JULI":
+                return "JULY";
+            case "AGUSTUS":
+                return "AUGUST";
+            case "SEPTEMBER":
+                return "SEPTEMBER";
+            case "OKTOBER":
+                return "OCTOBER";
+            case "NOVEMBER":
+                return "NOVEMBER";
+            case "DESEMBER":
+                return "DECEMBER";
+            default:
+                return null;
+        }
     }
 
-    private void initializeTable() {
-        
+    private void initializeComponents() {
+        haloNamaPegawai_isiOtomatis.setText(currentUser.getNama());
+        populateComboBox();
+        populateTableGaji();
+
+        // Update table on year/month selection change
+        jCombo_Tahun.addActionListener(evt -> populateTableGaji());
+        jCombo_Bulan.addActionListener(evt -> populateTableGaji());
+    }
+
+    private void populateComboBox() {
+        Response<ArrayList<Absen>> absenResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        Set<Integer> availableYears = new LinkedHashSet<>();
+
+        // Ambil tahun dari data absen
+        if (absenResponse != null && absenResponse.getData() != null) {
+            for (Absen absen : absenResponse.getData()) {
+                int year = absen.getTanggal().getYear();
+                availableYears.add(year);
+            }
+        }
+
+        List<Integer> sortedYears = new ArrayList<>(availableYears);
+        Collections.sort(sortedYears);
+
+        jCombo_Tahun.removeAllItems();
+        for (Integer year : sortedYears) {
+            jCombo_Tahun.addItem(String.valueOf(year));
+        }
+        jCombo_Tahun.setSelectedIndex(-1);
+
+        // --- ComboBox bulan: selalu pakai urutan bulan Indonesia ---
+        jCombo_Bulan.removeAllItems();
+        for (String bulan : MONTHS_ID) {
+            jCombo_Bulan.addItem(bulan);
+        }
+        jCombo_Bulan.setSelectedIndex(-1);
     }
 
     private void populateTableGaji() {
-        String[] columnNames = {"Nama Pegawai", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        String[] columnNames = { "Nama Pegawai", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji" };
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table_shiftkuPegawai_isiOtomatis.setModel(model);
+
+        // Fetch jabatanPegawai
+        Response<ArrayList<JabatanPegawai>> jabatanPegawaiResponse = jabatanPegawaiRepository
+                .findByPegawaiId(currentUser.getId());
+        JabatanPegawai jabatanPegawai = (jabatanPegawaiResponse != null && jabatanPegawaiResponse.getData() != null
+                && !jabatanPegawaiResponse.getData().isEmpty())
+                        ? jabatanPegawaiResponse.getData().get(0)
+                        : null;
+
+        // Fetch jabatan
+        Jabatan jabatanData = null;
+        if (jabatanPegawai != null) {
+            Response<Jabatan> jabatanResponse = jabatanRepository.findById(jabatanPegawai.getIdJabatan());
+            jabatanData = (jabatanResponse != null && jabatanResponse.getData() != null) ? jabatanResponse.getData()
+                    : null;
+        }
+
+        // Attendance - filter by selected month and year
+        Response<ArrayList<Absen>> absenResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        int jumlahMasuk = 0;
+        if (absenResponse != null && absenResponse.getData() != null) {
+            // Get selected year and month
+            String selectedYearStr = (String) jCombo_Tahun.getSelectedItem();
+            String selectedMonthStr = (String) jCombo_Bulan.getSelectedItem();
+            Integer selectedYear = null;
+            Month selectedMonth = null;
+
+            if (selectedYearStr != null && !selectedYearStr.isEmpty()) {
+                selectedYear = Integer.parseInt(selectedYearStr);
+            }
+            if (selectedMonthStr != null && !selectedMonthStr.isEmpty()) {
+                String monthEnglish = indoToEnglishMonth(selectedMonthStr);
+                if (monthEnglish != null) {
+                    selectedMonth = Month.valueOf(monthEnglish);
+                }
+            }
+
+            for (Absen absen : absenResponse.getData()) {
+                LocalDate tanggal = absen.getTanggal();
+                boolean yearMatch = (selectedYear == null) || (tanggal.getYear() == selectedYear);
+                boolean monthMatch = (selectedMonth == null) || (tanggal.getMonth() == selectedMonth);
+
+                if (yearMatch && monthMatch) {
+                    jumlahMasuk++;
+                }
+            }
+        }
+
+        // Salary calculation
+        double gajiPokok = (jabatanData != null && jabatanData.getGajiPokok() != null) ? jabatanData.getGajiPokok() : 0;
+        double totalGaji = jumlahMasuk * gajiPokok;
+
+        model.addRow(new Object[] {
+                currentUser.getNama(),
+                jabatanData != null ? jabatanData.getNamaJabatan() : "",
+                gajiPokok,
+                jumlahMasuk,
+                totalGaji
+        });
     }
 
     /**
@@ -43,6 +200,8 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -230,8 +389,6 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(table_shiftkuPegawai_isiOtomatis);
 
-        jCombo_Tahun.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2024", "2023" }));
-
         jLabel8.setText("Bulan :");
 
         jLabel9.setText("Tahun :");
@@ -243,7 +400,6 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
             }
         });
 
-        jCombo_Bulan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
         jCombo_Bulan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCombo_BulanActionPerformed(evt);
@@ -260,13 +416,13 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_shiftkuPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(panelUtama_shiftkuPegawaiLayout.createSequentialGroup()
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jCombo_Bulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jCombo_Tahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jCombo_Bulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_cetakGajiku))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -315,7 +471,11 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLogoutMouseClicked
+    private void btn_cetakGajikuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakGajikuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cetakGajikuActionPerformed
+
+    private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuLogoutMouseClicked
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?",
                 "Konfirmasi Logout", javax.swing.JOptionPane.YES_NO_OPTION);
         if (confirm == java.awt.event.KeyEvent.VK_Y || confirm == javax.swing.JOptionPane.YES_OPTION) {
@@ -324,47 +484,47 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
             login.setVisible(true); // Menampilkan form tujuan
             this.dispose(); // Menutup form saat ini
         }
-    }//GEN-LAST:event_MenuLogoutMouseClicked
+    }// GEN-LAST:event_MenuLogoutMouseClicked
 
-    private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btmCancelMouseClicked
+    private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
-    }//GEN-LAST:event_btmCancelMouseClicked
+    }// GEN-LAST:event_btmCancelMouseClicked
 
-    private void jCombo_BulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_BulanActionPerformed
+    private void jCombo_BulanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jCombo_BulanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCombo_BulanActionPerformed
+    }// GEN-LAST:event_jCombo_BulanActionPerformed
 
-    private void MenuGajikuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuGajikuPegawaiMouseClicked
+    private void MenuGajikuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuGajikuPegawaiMouseClicked
         menuShiftku_Pegawai shiftkuPegawai = new menuShiftku_Pegawai();
         shiftkuPegawai.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_MenuGajikuPegawaiMouseClicked
+    }// GEN-LAST:event_MenuGajikuPegawaiMouseClicked
 
-    private void MenuShiftkuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftkuPegawaiMouseClicked
+    private void MenuShiftkuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuShiftkuPegawaiMouseClicked
         // TODO add your handling code here:
         menuShiftku_Pegawai shiftkuPegawai = new menuShiftku_Pegawai();
         shiftkuPegawai.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_MenuShiftkuPegawaiMouseClicked
+    }// GEN-LAST:event_MenuShiftkuPegawaiMouseClicked
 
-    private void MenuDashboardPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardPegawaiMouseClicked
+    private void MenuDashboardPegawaiMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuDashboardPegawaiMouseClicked
         dashboardPegawai dashboardPegawai = new dashboardPegawai();
         dashboardPegawai.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_MenuDashboardPegawaiMouseClicked
-
-    private void btn_cetakGajikuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakGajikuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_cetakGajikuActionPerformed
+    }// GEN-LAST:event_MenuDashboardPegawaiMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -374,22 +534,26 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menuGajiku_Pegawai.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

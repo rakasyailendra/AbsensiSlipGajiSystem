@@ -10,7 +10,15 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.mycompany.absence.salary.slip.application.models.Jabatan;
+import com.mycompany.absence.salary.slip.application.models.JabatanPegawai;
+import com.mycompany.absence.salary.slip.application.models.Pegawai;
 import com.mycompany.absence.salary.slip.application.models.Shift;
+import com.mycompany.absence.salary.slip.application.models.ShiftPegawai;
+import com.mycompany.absence.salary.slip.application.repositories.JabatanPegawaiRepository;
+import com.mycompany.absence.salary.slip.application.repositories.JabatanRepository;
+import com.mycompany.absence.salary.slip.application.repositories.PegawaiRepository;
+import com.mycompany.absence.salary.slip.application.repositories.ShiftPegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.ShiftRepository;
 import com.mycompany.absence.salary.slip.application.utils.Response;
 
@@ -28,96 +36,70 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         initializeComponents();
     }
 
+    ShiftPegawaiRepository shiftPegawaiRepository = new ShiftPegawaiRepository();
+    PegawaiRepository pegawaiRepository = new PegawaiRepository();
+    JabatanPegawaiRepository jabatanPegawaiRepository = new JabatanPegawaiRepository();
+    JabatanRepository jabatanRepository = new JabatanRepository();
     ShiftRepository shiftRepository = new ShiftRepository();
 
     private void initializeComponents() {
-        mainPanel.removeAll();
-        mainPanel.repaint();
-        mainPanel.revalidate();
-
-        mainPanel.add(dataPerubahanShift);
-        mainPanel.repaint();
-        mainPanel.revalidate();
-
-        populateTableShift();
-        clearInputFields();
+        populateTableDataPerubahanShift();
     }
 
-    private void hapusShift() {
-        int selectedRow = table_dataPerubahanShift.getSelectedRow();
-        if (selectedRow >= 0) {
-            int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this shift?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-            if (confirmation != JOptionPane.YES_OPTION) {
-                return; // User chose not to delete
-            }
-
-            int shiftId = (int) table_dataPerubahanShift.getValueAt(selectedRow, 0);
-            Response<Boolean> response = shiftRepository.deleteById(shiftId);
-
-            if (response.isSuccess()) {
-                JOptionPane.showMessageDialog(this, "Shift deleted successfully");
-                populateTableShift();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error deleting shift: " + response.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Please select a shift to delete");
-        }
-    }
-
-    private void tambahShift() {
-        String namaShift = (String) jCombo_namaShift.getSelectedItem();
-        String jamMasuk = jText_jamMasuk.getText();
-        String jamKeluar = jText_jamKeluar.getText();
-
-        // Convert from String to local time if necessary
-        LocalTime jamMasukTime = LocalTime.parse(jamMasuk);
-        LocalTime jamKeluarTime = LocalTime.parse(jamKeluar);
-
-        Shift shift = new Shift(namaShift, jamMasukTime, jamKeluarTime);
-        Response<Shift> response = shiftRepository.save(shift);
-
-        if (response.isSuccess()) {
-            JOptionPane.showMessageDialog(this, "Shift added successfully");
-            initializeComponents();
-        } else {
-            JOptionPane.showMessageDialog(this, "Error adding shift: " + response.getMessage());
-        }
-    }
-
-    private void clearInputFields() {
-        // jText_namaPerubahanShift.setText(""); // Removed because it does not exist
-        jText_jamMasuk.setText("");
-        jText_jamKeluar.setText("");
-    }
-
-    private void populateTableShift() {
-        String[] columnNames = { "Id", "NIP", "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0){
+    private void populateTableDataPerubahanShift() {
+        String[] columnNames = { "NIP", "Nama Pegawai", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Pulang" };
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Prevent editing of cells
+                return false;
             }
         };
 
-        table_dataPerubahanShift.setModel(model);
+        Response<ArrayList<ShiftPegawai>> response = shiftPegawaiRepository.findAll();
+        if (response.isSuccess() && response.getData() != null) {
+            for (ShiftPegawai sp : response.getData()) {
+                // Ambil pegawai
+                Pegawai pegawai = null;
+                Response<Pegawai> pegawaiResp = pegawaiRepository.findById(sp.getIdPegawai());
+                if (pegawaiResp != null && pegawaiResp.isSuccess()) {
+                    pegawai = pegawaiResp.getData();
+                }
 
-        Response<ArrayList<Shift>> response = shiftRepository.findAll();
-        if (response.isSuccess()) {
-            ArrayList<Shift> shifts = response.getData();
-            for (Shift shift : shifts) {
-                Object[] row = {shift.getId(), shift.getNamaShift(), shift.getJamMasuk(), shift.getJamKeluar()};
-                model.addRow(row);
+                // Ambil jabatan
+                Jabatan jabatan = null;
+                Response<ArrayList<JabatanPegawai>> jpResponse = jabatanPegawaiRepository.findByPegawaiId(sp.getIdPegawai());
+                if (jpResponse != null && jpResponse.isSuccess() && !jpResponse.getData().isEmpty()) {
+                    JabatanPegawai jp = jpResponse.getData().get(0);
+                    Response<Jabatan> jResponse = jabatanRepository.findById(jp.getIdJabatan());
+                    if (jResponse != null && jResponse.isSuccess()) {
+                        jabatan = jResponse.getData();
+                    }
+                }
+
+                // Ambil shift
+                Shift shift = null;
+                Response<Shift> shiftResp = shiftRepository.findById(sp.getIdShift());
+                if (shiftResp != null && shiftResp.isSuccess()) {
+                    shift = shiftResp.getData();
+                }
+
+                // Validasi sebelum ditambahkan
+                if (pegawai != null && shift != null) {
+                    model.addRow(new Object[] {
+                        pegawai.getNip(),
+                        pegawai.getNama(),
+                        (jabatan != null) ? jabatan.getNamaJabatan() : "-",
+                        shift.getNamaShift(),
+                        shift.getJamMasuk(),
+                        shift.getJamKeluar()
+                    });
+                }
             }
-        } else {
-            System.out.println("Error: " + response.getMessage());
         }
 
-        // Sembunyikan kolom pertama (ID)
-        table_dataPerubahanShift.getColumnModel().getColumn(0).setMinWidth(0);
-        table_dataPerubahanShift.getColumnModel().getColumn(0).setMaxWidth(0);
-        table_dataPerubahanShift.getColumnModel().getColumn(0).setWidth(0);
+        table_dataPerubahanShift.setModel(model);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,12 +113,12 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         mainPanel = new javax.swing.JPanel();
         dataPerubahanShift = new javax.swing.JPanel();
         panelUtama_transaksiPerubahanShift_Admin = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_dataPerubahanShift = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         btn_tambah_transaksiPerubahanShift = new javax.swing.JButton();
         btn_hapus_transaksiPerubahanShift = new javax.swing.JButton();
         btn_edit_transaksiPerubahanShift = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table_dataPerubahanShift = new javax.swing.JTable();
         tambahPerubahanShift = new javax.swing.JPanel();
         panelKedua_transaksiPerubahanShift_Admin = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -178,27 +160,6 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        table_dataPerubahanShift.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(118, 158, 169)));
-        table_dataPerubahanShift.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "NIP", "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"
-            }
-        ));
-        jScrollPane1.setViewportView(table_dataPerubahanShift);
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
         jLabel4.setText("Data Perubahan Shift");
@@ -225,6 +186,21 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
             }
         });
 
+        table_dataPerubahanShift.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "NIP", "Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"
+            }
+        ));
+        jScrollPane2.setViewportView(table_dataPerubahanShift);
+
         javax.swing.GroupLayout panelUtama_transaksiPerubahanShift_AdminLayout = new javax.swing.GroupLayout(panelUtama_transaksiPerubahanShift_Admin);
         panelUtama_transaksiPerubahanShift_Admin.setLayout(panelUtama_transaksiPerubahanShift_AdminLayout);
         panelUtama_transaksiPerubahanShift_AdminLayout.setHorizontalGroup(
@@ -233,18 +209,19 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
-                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                         .addComponent(btn_tambah_transaksiPerubahanShift)
                         .addGap(12, 12, 12)
                         .addComponent(btn_edit_transaksiPerubahanShift)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_transaksiPerubahanShift)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
+                        .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 514, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         panelUtama_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
             panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,8 +234,8 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                     .addComponent(btn_hapus_transaksiPerubahanShift)
                     .addComponent(btn_edit_transaksiPerubahanShift))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(342, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataPerubahanShiftLayout = new javax.swing.GroupLayout(dataPerubahanShift);
@@ -274,7 +251,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         );
         dataPerubahanShiftLayout.setVerticalGroup(
             dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
+            .addGap(0, 616, Short.MAX_VALUE)
             .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(dataPerubahanShiftLayout.createSequentialGroup()
                     .addContainerGap()
@@ -390,7 +367,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jText_jamKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelKedua_transaksiPerubahanShift_AdminLayout = new javax.swing.GroupLayout(panelKedua_transaksiPerubahanShift_Admin);
@@ -551,7 +528,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jText_jamKeluar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelKetiga_transaksiPerubahanShift_Admin1Layout = new javax.swing.GroupLayout(panelKetiga_transaksiPerubahanShift_Admin1);
@@ -619,7 +596,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 591, Short.MAX_VALUE)
+            .addGap(0, 616, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -639,12 +616,10 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_tambah_transaksiPerubahanShiftActionPerformed
 
     private void btn_hapus_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_transaksiPerubahanShiftActionPerformed
-        hapusShift();
         initializeComponents();
     }//GEN-LAST:event_btn_hapus_transaksiPerubahanShiftActionPerformed
 
     private void btn_simpan_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_transaksiPerubahanShiftActionPerformed
-        tambahShift();
         initializeComponents();
     }//GEN-LAST:event_btn_simpan_transaksiPerubahanShiftActionPerformed
 
@@ -724,7 +699,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jText_jabatanPerubahanShift;
     private javax.swing.JTextField jText_jabatanPerubahanShift1;
     private javax.swing.JTextField jText_jamKeluar;

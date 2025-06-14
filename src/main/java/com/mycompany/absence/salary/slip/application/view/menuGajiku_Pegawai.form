@@ -310,13 +310,13 @@
                           <Component id="jLabel4" alignment="0" min="-2" pref="424" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel8" min="-2" pref="43" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jCombo_Bulan" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel9" min="-2" pref="44" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jCombo_Tahun" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" pref="43" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCombo_Bulan" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="btn_cetakGajiku" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -421,15 +421,6 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JComboBox" name="jCombo_Tahun">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
-                    <StringItem index="0" value="2025"/>
-                    <StringItem index="1" value="2024"/>
-                    <StringItem index="2" value="2023"/>
-                  </StringArray>
-                </Property>
-              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -453,24 +444,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jCombo_Bulan">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="12">
-                    <StringItem index="0" value="Januari"/>
-                    <StringItem index="1" value="Februari"/>
-                    <StringItem index="2" value="Maret"/>
-                    <StringItem index="3" value="April"/>
-                    <StringItem index="4" value="Mei"/>
-                    <StringItem index="5" value="Juni"/>
-                    <StringItem index="6" value="Juli"/>
-                    <StringItem index="7" value="Agustus"/>
-                    <StringItem index="8" value="September"/>
-                    <StringItem index="9" value="Oktober"/>
-                    <StringItem index="10" value="November"/>
-                    <StringItem index="11" value="Desember"/>
-                  </StringArray>
-                </Property>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCombo_BulanActionPerformed"/>
               </Events>
