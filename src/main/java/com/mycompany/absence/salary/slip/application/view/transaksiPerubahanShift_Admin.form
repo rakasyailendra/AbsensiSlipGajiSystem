@@ -265,6 +265,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Data Pegawai"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuDatapegawaiAdminMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="MenuShiftpegawaiAdmin">
               <Properties>
@@ -276,6 +279,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Shift Pegawai"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuShiftpegawaiAdminMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>

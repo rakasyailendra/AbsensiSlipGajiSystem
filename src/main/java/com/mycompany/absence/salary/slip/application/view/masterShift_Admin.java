@@ -115,10 +115,20 @@ public class masterShift_Admin extends javax.swing.JFrame {
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDatapegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuDatapegawaiAdmin.setText("Data Pegawai");
+        MenuDatapegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuDatapegawaiAdminMouseClicked(evt);
+            }
+        });
 
         MenuShiftpegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuShiftpegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuShiftpegawaiAdmin.setText("Shift Pegawai");
+        MenuShiftpegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuShiftpegawaiAdminMouseClicked(evt);
+            }
+        });
 
         jLabel6.setBackground(new java.awt.Color(179, 201, 208));
         jLabel6.setForeground(new java.awt.Color(179, 201, 208));
@@ -333,6 +343,18 @@ public class masterShift_Admin extends javax.swing.JFrame {
         laporanGajiPegawai.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();                                  // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenuGajipegawaiAdminMouseClicked
+
+    private void MenuDatapegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDatapegawaiAdminMouseClicked
+        laporanDataPegawai_Admin laporanDataPegawai = new laporanDataPegawai_Admin(); // Membuat objek form tujuan
+        laporanDataPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();
+    }//GEN-LAST:event_MenuDatapegawaiAdminMouseClicked
+
+    private void MenuShiftpegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftpegawaiAdminMouseClicked
+        laporanShiftPegawai_Admin laporanShiftPegawai = new laporanShiftPegawai_Admin(); // Membuat objek form tujuan
+        laporanShiftPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();
+    }//GEN-LAST:event_MenuShiftpegawaiAdminMouseClicked
 
     /**
      * @param args the command line arguments
