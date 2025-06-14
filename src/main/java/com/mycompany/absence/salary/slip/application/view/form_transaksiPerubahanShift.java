@@ -296,27 +296,22 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         panelUtama_transaksiPerubahanShift_AdminLayout.setHorizontalGroup(
             panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
                         .addComponent(btn_tambah_transaksiPerubahanShift)
                         .addGap(12, 12, 12)
                         .addComponent(btn_edit_transaksiPerubahanShift)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_hapus_transaksiPerubahanShift)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                        .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 514, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addComponent(btn_hapus_transaksiPerubahanShift))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         panelUtama_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
             panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -325,7 +320,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                     .addComponent(btn_edit_transaksiPerubahanShift))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addContainerGap(325, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataPerubahanShiftLayout = new javax.swing.GroupLayout(dataPerubahanShift);
@@ -336,8 +331,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
             .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(dataPerubahanShiftLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         dataPerubahanShiftLayout.setVerticalGroup(
             dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -265,7 +265,6 @@ public class form_masterShift extends javax.swing.JPanel {
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -305,26 +304,22 @@ public class form_masterShift extends javax.swing.JPanel {
         panelUtama_masterShift_AdminLayout.setHorizontalGroup(
             panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
                         .addComponent(btn_tambah_masterShift)
                         .addGap(12, 12, 12)
                         .addComponent(btn_edit_masterShift)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_hapus_masterShift)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btn_hapus_masterShift))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 872, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         panelUtama_masterShift_AdminLayout.setVerticalGroup(
             panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -332,29 +327,23 @@ public class form_masterShift extends javax.swing.JPanel {
                     .addComponent(btn_hapus_masterShift)
                     .addComponent(btn_edit_masterShift))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataShiftLayout = new javax.swing.GroupLayout(dataShift);
         dataShift.setLayout(dataShiftLayout);
         dataShiftLayout.setHorizontalGroup(
             dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 903, Short.MAX_VALUE)
             .addGroup(dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataShiftLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(panelUtama_masterShift_Admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dataShiftLayout.setVerticalGroup(
             dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 591, Short.MAX_VALUE)
             .addGroup(dataShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataShiftLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(panelUtama_masterShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.add(dataShift, "card2");
@@ -405,7 +394,7 @@ public class form_masterShift extends javax.swing.JPanel {
                     .addComponent(jLabel10)
                     .addComponent(jText_jamKeluar, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,7 +430,7 @@ public class form_masterShift extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_masterShift1))
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
+                        .addGap(0, 503, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelKedua_masterShift_AdminLayout.setVerticalGroup(
@@ -523,7 +512,7 @@ public class form_masterShift extends javax.swing.JPanel {
                     .addComponent(jText_jamMasuk1, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel12)
                     .addComponent(jText_jamKeluar1, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -559,7 +548,7 @@ public class form_masterShift extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_masterShift2))
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
+                        .addGap(0, 503, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelKetiga_masterShift_AdminLayout.setVerticalGroup(
@@ -599,7 +588,7 @@ public class form_masterShift extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 903, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)

@@ -432,9 +432,6 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         table_shiftkuPegawai_isiOtomatis.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
@@ -485,7 +482,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         panelUtama_shiftkuPegawaiLayout.setVerticalGroup(
             panelUtama_shiftkuPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_shiftkuPegawaiLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(36, 36, 36)
                 .addGroup(panelUtama_shiftkuPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -495,7 +492,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
                     .addComponent(jCombo_Tahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cetakGajiku))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

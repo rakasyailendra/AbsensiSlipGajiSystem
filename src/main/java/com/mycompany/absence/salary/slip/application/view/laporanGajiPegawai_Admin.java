@@ -9,6 +9,15 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Document;
 import com.mycompany.absence.salary.slip.application.models.Absen;
 import com.mycompany.absence.salary.slip.application.models.Jabatan;
 import com.mycompany.absence.salary.slip.application.models.JabatanPegawai;
@@ -20,6 +29,7 @@ import com.mycompany.absence.salary.slip.application.repositories.JabatanReposit
 import com.mycompany.absence.salary.slip.application.repositories.PegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.ShiftRepository;
 import com.mycompany.absence.salary.slip.application.utils.Response;
+import com.itextpdf.text.Element;
 
 /**
  *
@@ -28,11 +38,65 @@ import com.mycompany.absence.salary.slip.application.utils.Response;
 public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
     int xx, xy;
 
+    PegawaiRepository pegawaiRepository = new PegawaiRepository();
+    JabatanPegawaiRepository jabatanPegawaiRepository = new JabatanPegawaiRepository();
+    JabatanRepository jabatanRepository = new JabatanRepository();
+    AbsenRepository absenRepository = new AbsenRepository();
+
+    private java.util.List<String> getAvailableMonthsForYear(int year) {
+        java.util.Set<Integer> monthSet = new java.util.LinkedHashSet<>();
+        Response<ArrayList<Pegawai>> pegawaiResp = pegawaiRepository.findAll();
+        if (pegawaiResp.isSuccess()) {
+            for (Pegawai p : pegawaiResp.getData()) {
+                Response<ArrayList<Absen>> absenResp = absenRepository.findByIdPegawai(p.getId());
+                if (absenResp.isSuccess()) {
+                    for (Absen absen : absenResp.getData()) {
+                        java.time.LocalDate tgl = absen.getTanggal();
+                        if (tgl.getYear() == year) {
+                            monthSet.add(tgl.getMonthValue());
+                        }
+                    }
+                }
+            }
+        }
+        // Konversi angka bulan ke nama Indonesia
+        java.util.List<String> monthNames = new java.util.ArrayList<>();
+        String[] indMonths = {"Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"};
+        for (Integer i : monthSet) {
+            if (i >= 1 && i <= 12) {
+                monthNames.add(indMonths[i-1]);
+            }
+        }
+        return monthNames;
+    }
+
+    // Tambahkan method ini untuk mengembalikan daftar tahun yang tersedia dari data absensi
+    private java.util.List<Integer> getAvailableYears() {
+        java.util.Set<Integer> yearSet = new java.util.TreeSet<>();
+        Response<ArrayList<Pegawai>> pegawaiResp = pegawaiRepository.findAll();
+        if (pegawaiResp.isSuccess()) {
+            for (Pegawai p : pegawaiResp.getData()) {
+                Response<ArrayList<Absen>> absenResp = absenRepository.findByIdPegawai(p.getId());
+                if (absenResp.isSuccess()) {
+                    for (Absen absen : absenResp.getData()) {
+                        java.time.LocalDate tgl = absen.getTanggal();
+                        yearSet.add(tgl.getYear());
+                    }
+                }
+            }
+        }
+        return new java.util.ArrayList<>(yearSet);
+    }
+
+
     /**
      * Creates new form dashboardAdmin
      */
     public laporanGajiPegawai_Admin() {
         initComponents();
+
+        jComboBox1.addActionListener(evt -> updateGajiTables());
+        jButton1.addActionListener(evt -> updateGajiTables());
     }
 
     /**
@@ -77,6 +141,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1200, 640));
         setUndecorated(true);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -255,7 +320,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 .addComponent(MenuGajipegawaiAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(MenuLogout)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         headerAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -298,7 +363,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        panelUtama_dashboardAdmin.setPreferredSize(new java.awt.Dimension(900, 499));
+        panelUtama_dashboardAdmin.setPreferredSize(new java.awt.Dimension(900, 525));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
@@ -306,13 +371,21 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
 
         jLabel7.setText("Bulan :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
-
         jLabel9.setText("Tahun :");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2024", "2023" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("CETAK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -352,30 +425,29 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         panelUtama_dashboardAdmin.setLayout(panelUtama_dashboardAdminLayout);
         panelUtama_dashboardAdminLayout.setHorizontalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUtama_dashboardAdminLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(544, 544, 544)
-                            .addComponent(jButton1))
-                        .addComponent(jScrollPane2)
-                        .addComponent(jScrollPane1)))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelUtama_dashboardAdminLayout.setVerticalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -390,7 +462,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -402,9 +474,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,6 +484,8 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
         );
+
+        panelUtama_dashboardAdmin.getAccessibleContext().setAccessibleDescription("");
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
 
@@ -444,6 +516,189 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         dashboard.setVisible(true); // Menampilkan form tujuan
         this.dispose(); // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenuDashboardAdminMouseClicked
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        String selectedYearStr = (String) jComboBox2.getSelectedItem();
+        if (selectedYearStr == null || selectedYearStr.equals("-- Pilih Tahun --")) {
+            jComboBox1.removeAllItems();
+            jComboBox1.addItem("-- Pilih Bulan --");
+            jComboBox1.setSelectedIndex(0);
+            return;
+        }
+        int year = Integer.parseInt(selectedYearStr);
+
+        java.util.List<String> availableMonths = getAvailableMonthsForYear(year);
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("-- Pilih Bulan --");
+        for (String month : availableMonths) {
+            jComboBox1.addItem(month);
+        }
+        jComboBox1.setSelectedIndex(0); 
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Ambil periode
+        String bulan = (String) jComboBox1.getSelectedItem();
+        String tahun = (String) jComboBox2.getSelectedItem();
+
+        if (bulan == null || tahun == null
+                || bulan.equals("-- Pilih Bulan --") || tahun.equals("-- Pilih Tahun --")) {
+            JOptionPane.showMessageDialog(this, "Silakan pilih tahun dan bulan terlebih dahulu!");
+            return;
+        }
+
+        String namaFile = "Laporan_Gaji_" + bulan + "_" + tahun + ".pdf";
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Simpan Laporan Gaji sebagai PDF");
+        fileChooser.setSelectedFile(new java.io.File(namaFile));
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new java.io.FileOutputStream(fileToSave));
+                document.open();
+                
+                // 1. Header
+                try {
+                    java.net.URL logoUrl = getClass().getResource("/img/logoMahadBesar.png");
+                    if (logoUrl != null) {
+                        com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance(logoUrl);
+                        logo.scaleAbsolute(60, 60); // atur ukuran logo
+                        logo.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                        document.add(logo);
+                    }
+                } catch (Exception e) {
+                    // Jika gagal load logo, lanjutkan tanpa logo
+                }
+
+                com.itextpdf.text.Font fontTitle = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Paragraph title = new com.itextpdf.text.Paragraph("Pondok Pesantren Baitul Hikmah", fontTitle);
+                title.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                document.add(title);
+
+                com.itextpdf.text.Font fontSub = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.Paragraph alamat = new com.itextpdf.text.Paragraph(
+                    "JL. Medokan Asri Tengah, Medokan Ayu, Kec. Rungkut, Kota Surabaya\nHP: 089616194482", fontSub);
+                alamat.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                document.add(alamat);
+
+                com.itextpdf.text.pdf.draw.LineSeparator ls = new com.itextpdf.text.pdf.draw.LineSeparator();
+                document.add(new com.itextpdf.text.Chunk(ls));
+
+                // 1. Info Admin
+                com.itextpdf.text.Font fontNormal = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.pdf.PdfPTable infoTable = new com.itextpdf.text.pdf.PdfPTable(new float[]{1, 3, 3});
+                infoTable.setWidthPercentage(100);
+                infoTable.getDefaultCell().setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+
+                // BARIS 1
+                infoTable.addCell(getCell("Nama", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": Admin", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(new java.text.SimpleDateFormat("EEEE, dd MMMM yyyy").format(new java.util.Date()), fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                // BARIS 2
+                infoTable.addCell(getCell("Jabatan", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": Owner Pesantren", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                document.add(infoTable);
+
+                // BARIS 3
+                com.itextpdf.text.pdf.PdfPTable periodeTable = new com.itextpdf.text.pdf.PdfPTable(new float[]{1, 3});
+                periodeTable.setWidthPercentage(60);
+                periodeTable.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_LEFT);
+                periodeTable.getDefaultCell().setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+
+                periodeTable.addCell(getCell("Periode", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                periodeTable.addCell(getCell(": " + bulan + "" + tahun, fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+
+                document.add(periodeTable);
+                document.add(new Paragraph(" ")); // spasi
+
+                // 3. Judul dan Tabel Gaji Pegawai
+                Font fontTableTitle = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.BLACK);
+                Paragraph judulTabel1 = new Paragraph("Tabel Gaji Pegawai", fontTableTitle);
+                judulTabel1.setSpacingBefore(10f);
+                document.add(judulTabel1);
+                addTableToPdf(document, jTable1.getModel());
+
+                // 4. Judul dan Tabel Total Gaji
+                Paragraph judulTabel2 = new Paragraph("Rekap Total Gaji Bulan Ini", fontTableTitle);
+                judulTabel2.setSpacingBefore(16f);
+                document.add(judulTabel2);
+                addTableToPdf(document, jTable2.getModel());
+
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "Laporan berhasil dicetak ke PDF:\n" + fileToSave.getAbsolutePath());
+                if (java.awt.Desktop.isDesktopSupported()) {
+                    java.awt.Desktop.getDesktop().open(fileToSave);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Gagal mencetak ke PDF: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    // Helper untuk cell info (tanpa border)
+    private com.itextpdf.text.pdf.PdfPCell getCell(String text, com.itextpdf.text.Font font, int alignment) {
+        com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(text, font));
+        cell.setPadding(5f);
+        cell.setHorizontalAlignment(alignment);
+        cell.setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+        return cell;
+    }
+
+    // Helper untuk menambah tabel dari TableModel ke PDF
+    private void addTableToPdf(com.itextpdf.text.Document document, javax.swing.table.TableModel model) throws com.itextpdf.text.DocumentException {
+        com.itextpdf.text.Font headerFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE);
+        com.itextpdf.text.Font cellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 11, com.itextpdf.text.Font.NORMAL, com.itextpdf.text.BaseColor.BLACK);
+
+        com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(model.getColumnCount());
+        pdfTable.setWidthPercentage(100);
+        pdfTable.setSpacingBefore(10f);   // jarak atas tabel
+        pdfTable.setSpacingAfter(15f);    // jarak bawah tabel
+
+        // Add table header
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            com.itextpdf.text.pdf.PdfPCell headerCell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(model.getColumnName(i), headerFont));
+            headerCell.setBackgroundColor(new com.itextpdf.text.BaseColor(2, 84, 106));
+            headerCell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+            headerCell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+            headerCell.setPaddingTop(8f);
+            headerCell.setPaddingBottom(8f);
+            headerCell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+            pdfTable.addCell(headerCell);
+        }
+
+        // Add table rows
+        for (int rows = 0; rows < model.getRowCount(); rows++) {
+            for (int cols = 0; cols < model.getColumnCount(); cols++) {
+                Object value = model.getValueAt(rows, cols);
+                String displayValue = value == null ? "" : value.toString();
+                // Untuk kolom Nama Shift (biasanya index 2)
+                if (cols == 2) {
+                    displayValue = displayValue.replace("\n", " ").replace("\r", " ");
+                }
+                com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(displayValue, cellFont));
+                cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+                cell.setPaddingTop(6f);
+                cell.setPaddingBottom(6f);
+                // Alternating row color
+                if (rows % 2 == 0) {
+                    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(232, 245, 251));
+                } else {
+                    cell.setBackgroundColor(com.itextpdf.text.BaseColor.WHITE);
+                }
+                cell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+                pdfTable.addCell(cell);
+            }
+        }
+        document.add(pdfTable);
+    }
 
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
@@ -480,9 +735,26 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         }
     }// GEN-LAST:event_MenuLogoutMouseClicked
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-    }// GEN-LAST:event_formWindowOpened
+private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
+    // ISI COMBOBOX TAHUN dengan Dummy Option
+    java.util.List<Integer> tahunList = getAvailableYears();
+    jComboBox2.removeAllItems();
+    jComboBox2.addItem("-- Pilih Tahun --");
+    for (Integer th : tahunList) {
+        jComboBox2.addItem(th.toString());
+    }
+    jComboBox2.setSelectedIndex(0);
+
+    // ISI COMBOBOX BULAN dengan Dummy Option (kosong dulu)
+    jComboBox1.removeAllItems();
+    jComboBox1.addItem("-- Pilih Bulan --");
+    jComboBox1.setSelectedIndex(0);
+
+    // PASANG LISTENER
+    jComboBox2.addActionListener(e -> jComboBox2ActionPerformed(null)); // saat tahun dipilih
+    jComboBox1.addActionListener(e -> updateGajiTables());              // saat bulan dipilih
+    jButton1.addActionListener(e -> updateGajiTables());                // tombol cetak
+}// GEN-LAST:event_formWindowOpened
 
     private void MenuJabatanAdminMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuJabatanAdminMouseClicked
         masterJabatan_Admin dashboard = new masterJabatan_Admin(); // Membuat objek form tujuan
@@ -495,6 +767,157 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         dashboard.setVisible(true); // Menampilkan form tujuan
         this.dispose(); // Menutup form saat ini (opsional)
     }// GEN-LAST:event_MenuShiftAdminMouseClicked
+
+    private void updateGajiTables() {
+        String selectedYearStr = (String) jComboBox2.getSelectedItem();
+        String selectedMonthStr = (String) jComboBox1.getSelectedItem();
+
+        if (selectedYearStr == null || selectedMonthStr == null
+            || selectedYearStr.equals("-- Pilih Tahun --")
+            || selectedMonthStr.equals("-- Pilih Bulan --")) {
+            // Bersihkan tabel
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new String[]{"Nama", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"}, 0));
+            jTable2.setModel(new javax.swing.table.DefaultTableModel(
+                new String[]{"Bulan", "Tahun", "Total Gaji Bulan Ini"}, 0));
+            return;
+        }
+
+        int year = Integer.parseInt(selectedYearStr);
+        int month = -1;
+        String[] indMonths = {"Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"};
+        for (int i = 0; i < indMonths.length; i++) {
+            if (indMonths[i].equalsIgnoreCase(selectedMonthStr)) {
+                month = i+1; break;
+            }
+        }
+        if (month == -1) return;
+
+        // ====== Table 1: Laporan Per Pegawai ======
+        String[] columnNames = {"Nama", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"};
+        DefaultTableModel modelPegawai = new DefaultTableModel(columnNames, 0);
+
+        Response<ArrayList<Pegawai>> pegawaiResp = pegawaiRepository.findAll();
+        double totalAll = 0;
+        if (pegawaiResp.isSuccess()) {
+            for (Pegawai p : pegawaiResp.getData()) {
+                if (p.getIsAdmin()) continue;
+                // Cari jabatan
+                Response<ArrayList<JabatanPegawai>> jpResp = jabatanPegawaiRepository.findByPegawaiId(p.getId());
+                String jabatanNama = "";
+                double gajiPokok = 0;
+                if (jpResp.isSuccess() && !jpResp.getData().isEmpty()) {
+                    JabatanPegawai jp = jpResp.getData().get(0);
+                    Response<Jabatan> jbtResp = jabatanRepository.findById(jp.getIdJabatan());
+                    if (jbtResp.isSuccess()) {
+                        Jabatan j = jbtResp.getData();
+                        jabatanNama = j.getNamaJabatan();
+                        if (j.getGajiPokok() != null) gajiPokok = j.getGajiPokok();
+                    }
+                }
+                // Hitung absensi di bulan & tahun tsb
+                int jumlahMasuk = 0;
+                Response<ArrayList<Absen>> absenResp = absenRepository.findByIdPegawai(p.getId());
+                if (absenResp.isSuccess()) {
+                    for (Absen ab : absenResp.getData()) {
+                        java.time.LocalDate tgl = ab.getTanggal();
+                        if (tgl.getYear() == year && tgl.getMonthValue() == month) {
+                            jumlahMasuk++;
+                        }
+                    }
+                }
+                double totalGaji = jumlahMasuk * gajiPokok;
+                totalAll += totalGaji;
+
+                modelPegawai.addRow(new Object[]{
+                    p.getNama(),
+                    jabatanNama,
+                    gajiPokok,
+                    jumlahMasuk,
+                    totalGaji
+                });
+            }
+        }
+        jTable1.setModel(modelPegawai);
+
+        // ====== Table 2: Rekap Total Gaji Bulan Ini ======
+        String[] colTotal = {"Bulan", "Tahun", "Total Gaji Bulan Ini"};
+        DefaultTableModel modelTotal = new DefaultTableModel(colTotal, 0);
+        modelTotal.addRow(new Object[]{selectedMonthStr, selectedYearStr, totalAll});
+        jTable2.setModel(modelTotal);
+    }
+
+
+
+    private void populateGajiTable() {
+        String selectedMonth = (String) jComboBox1.getSelectedItem(); // Bulan (ID)
+        String selectedYear = (String) jComboBox2.getSelectedItem(); // Tahun
+
+        if (selectedMonth == null || selectedYear == null) return;
+
+        int tahun = Integer.parseInt(selectedYear);
+        int bulanIndex = jComboBox1.getSelectedIndex() + 1; // bulan 1-12
+
+        PegawaiRepository pegawaiRepo = new PegawaiRepository();
+        JabatanPegawaiRepository jpRepo = new JabatanPegawaiRepository();
+        JabatanRepository jabatanRepo = new JabatanRepository();
+        AbsenRepository absenRepo = new AbsenRepository();
+
+        Response<ArrayList<Pegawai>> pegawaiResp = pegawaiRepo.findAll();
+        if (!pegawaiResp.isSuccess()) return;
+
+        DefaultTableModel model = new DefaultTableModel(new String[]{
+            "Nama", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"
+        }, 0);
+
+        double totalGajiSeluruhPegawai = 0;
+
+        for (Pegawai p : pegawaiResp.getData()) {
+            if (p.getIsAdmin()) continue;
+
+            // Jabatan
+            String namaJabatan = "-";
+            double gajiPokok = 0;
+            Response<ArrayList<JabatanPegawai>> jpResp = jpRepo.findByPegawaiId(p.getId());
+            if (jpResp.isSuccess() && !jpResp.getData().isEmpty()) {
+                JabatanPegawai jp = jpResp.getData().get(0);
+                Response<Jabatan> jResp = jabatanRepo.findById(jp.getIdJabatan());
+                if (jResp.isSuccess()) {
+                    namaJabatan = jResp.getData().getNamaJabatan();
+                    gajiPokok = jResp.getData().getGajiPokok() != null ? jResp.getData().getGajiPokok() : 0;
+                }
+            }
+
+            // Absen
+            int jumlahMasuk = 0;
+            Response<ArrayList<Absen>> absenResp = absenRepo.findByIdPegawai(p.getId());
+            if (absenResp.isSuccess()) {
+                for (Absen ab : absenResp.getData()) {
+                    if (ab.getTanggal().getYear() == tahun && ab.getTanggal().getMonthValue() == bulanIndex) {
+                        jumlahMasuk++;
+                    }
+                }
+            }
+
+            double totalGaji = gajiPokok * jumlahMasuk;
+            totalGajiSeluruhPegawai += totalGaji;
+
+            model.addRow(new Object[]{
+                p.getNama(), namaJabatan, gajiPokok, jumlahMasuk, totalGaji
+            });
+        }
+
+        jTable1.setModel(model);
+
+        // Set total rekap ke jTable2
+        DefaultTableModel totalModel = new DefaultTableModel(new String[]{
+            "Bulan", "Tahun", "Total Gaji Bulan Ini"
+        }, 0);
+        totalModel.addRow(new Object[]{
+            selectedMonth, selectedYear, totalGajiSeluruhPegawai
+        });
+        jTable2.setModel(totalModel);
+    }
 
     
     /**
