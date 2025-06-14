@@ -44,6 +44,30 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
 
     private void initializeComponents() {
         populateTableDataPerubahanShift();
+
+        populateNamaComboBox();
+        populateShiftComboBoxTambah();
+        populateShiftComboBoxEdit();
+
+        jText_nipPerubahanShift.setEditable(false);
+        jText_jabatanPerubahanShift.setEditable(false);
+        jText_jamMasuk.setEditable(false);
+        jText_jamKeluar.setEditable(false);
+        
+        jText_nipPerubahanShift1.setEditable(false);
+        jText_jabatanPerubahanShift1.setEditable(false);
+        jText_jamMasuk2.setEditable(false);
+        jText_jamKeluar2.setEditable(false);
+
+        btn_hapus_transaksiPerubahanShift.setEnabled(false); // default: nonaktif
+        
+        table_dataPerubahanShift.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = table_dataPerubahanShift.getSelectedRow();
+                btn_hapus_transaksiPerubahanShift.setEnabled(selectedRow >= 0);
+            }
+        });
+
     }
 
     private void populateTableDataPerubahanShift() {
@@ -98,6 +122,70 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         }
 
         table_dataPerubahanShift.setModel(model);
+    }
+
+    private void populateNamaComboBox() {
+        jCombo_nama.removeAllItems();
+
+        Response<ArrayList<Pegawai>> pegawaiResponse = pegawaiRepository.findAll();
+        if (!pegawaiResponse.isSuccess()) return;
+
+        for (Pegawai pegawai : pegawaiResponse.getData()) {
+            // skip admin
+            if (pegawai.getIsAdmin()) continue;
+
+            // skip jika sudah punya shift
+            Response<ArrayList<ShiftPegawai>> shiftPegawaiResp = shiftPegawaiRepository.findByPegawaiId(pegawai.getId());
+            if (shiftPegawaiResp.isSuccess() && !shiftPegawaiResp.getData().isEmpty()) {
+                continue; // Pegawai sudah punya shift
+            }
+
+            // hanya pegawai yang belum punya shift
+            jCombo_nama.addItem(pegawai.getNama());
+        }
+    }
+
+    private void populateNamaComboBoxEdit() {
+        jCombo_nama1.removeAllItems();
+
+        Response<ArrayList<Pegawai>> pegawaiResponse = pegawaiRepository.findAll();
+        if (!pegawaiResponse.isSuccess()) return;
+
+        for (Pegawai pegawai : pegawaiResponse.getData()) {
+            if (pegawai.getIsAdmin()) continue;
+
+            Response<ArrayList<ShiftPegawai>> shiftPegawaiResp = shiftPegawaiRepository.findByPegawaiId(pegawai.getId());
+            if (shiftPegawaiResp.isSuccess() && !shiftPegawaiResp.getData().isEmpty()) {
+                // ✅ Pegawai punya shift, boleh diedit
+                jCombo_nama1.addItem(pegawai.getNama());
+            }
+        }
+
+        if (jCombo_nama1.getItemCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Belum ada pegawai yang memiliki shift untuk diedit.", 
+                "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+
+    private void populateShiftComboBoxTambah() {
+        jCombo_namaShift.removeAllItems();
+        Response<ArrayList<Shift>> response = shiftRepository.findAll();
+        if (response.isSuccess()) {
+            for (Shift s : response.getData()) {
+                jCombo_namaShift.addItem(s.getNamaShift());
+            }
+        }
+    }
+    
+    private void populateShiftComboBoxEdit() {
+        jCombo_namaShift1.removeAllItems();
+        Response<ArrayList<Shift>> response = shiftRepository.findAll();
+        if (response.isSuccess()) {
+            for (Shift s : response.getData()) {
+                jCombo_namaShift1.addItem(s.getNamaShift());
+            }
+        }
     }
 
 
@@ -318,6 +406,11 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         });
 
         jCombo_namaShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCombo_namaShift.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCombo_namaShiftActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -613,6 +706,9 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         mainPanel.add(tambahPerubahanShift);
         mainPanel.repaint();
         mainPanel.revalidate();
+
+        populateNamaComboBox();
+        populateShiftComboBoxTambah();
     }//GEN-LAST:event_btn_tambah_transaksiPerubahanShiftActionPerformed
 
     private void btn_hapus_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_transaksiPerubahanShiftActionPerformed
@@ -620,7 +716,77 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_hapus_transaksiPerubahanShiftActionPerformed
 
     private void btn_simpan_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_transaksiPerubahanShiftActionPerformed
-        initializeComponents();
+        String nama = (String) jCombo_nama.getSelectedItem();
+        String shiftNama = (String) jCombo_namaShift.getSelectedItem();
+
+        // Validasi awal: combo box
+        if (nama == null || shiftNama == null) {
+            JOptionPane.showMessageDialog(this, "Nama pegawai dan shift harus dipilih.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // ✅ Tambahkan validasi field auto disini:
+        if (jText_nipPerubahanShift.getText().isEmpty() || 
+            jText_jabatanPerubahanShift.getText().isEmpty() || 
+            jText_jamMasuk.getText().isEmpty() || 
+            jText_jamKeluar.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, 
+                "Pastikan semua data otomatis (NIP, jabatan, jam masuk, jam keluar) sudah terisi.\n" +
+                "Kemungkinan pegawai belum memiliki jabatan atau shift belum memiliki jam lengkap.", 
+                "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lanjut cari pegawai dan shift → SIMPAN
+        Pegawai selectedPegawai = null;
+        Response<ArrayList<Pegawai>> responsePegawai = pegawaiRepository.findAll();
+        if (responsePegawai.isSuccess()) {
+            for (Pegawai p : responsePegawai.getData()) {
+                if (p.getNama().equals(nama)) {
+                    selectedPegawai = p;
+                    break;
+                }
+            }
+        }
+
+        if (selectedPegawai == null) {
+            JOptionPane.showMessageDialog(this, "Data pegawai tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Shift selectedShift = null;
+        Response<ArrayList<Shift>> responseShift = shiftRepository.findAll();
+        if (responseShift.isSuccess()) {
+            for (Shift s : responseShift.getData()) {
+                if (s.getNamaShift().equals(shiftNama)) {
+                    selectedShift = s;
+                    break;
+                }
+            }
+        }
+
+        if (selectedShift == null) {
+            JOptionPane.showMessageDialog(this, "Data shift tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Simpan ke ShiftPegawai
+        ShiftPegawai newEntry = new ShiftPegawai();
+        newEntry.setIdPegawai(selectedPegawai.getId());
+        newEntry.setIdShift(selectedShift.getId());
+
+        Response<ShiftPegawai> saveResp = shiftPegawaiRepository.save(newEntry);
+        if (saveResp.isSuccess()) {
+            JOptionPane.showMessageDialog(this, "Perubahan shift berhasil disimpan.");
+            mainPanel.removeAll();
+            mainPanel.add(dataPerubahanShift);
+            mainPanel.repaint();
+            mainPanel.revalidate();
+            populateTableDataPerubahanShift(); // refresh tabel
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan shift: " + saveResp.getMessage());
+        }
     }//GEN-LAST:event_btn_simpan_transaksiPerubahanShiftActionPerformed
 
     private void btn_batal_transaksiPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batal_transaksiPerubahanShiftActionPerformed
@@ -638,6 +804,9 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         mainPanel.add(editPerubahanShift);
         mainPanel.repaint();
         mainPanel.revalidate();
+
+        populateNamaComboBoxEdit();   // ✅ panggil di sini
+        populateShiftComboBoxEdit();  // jika perlu, untuk jCombo_namaShift1
     }//GEN-LAST:event_btn_edit_transaksiPerubahanShiftActionPerformed
 
     private void jText_nipPerubahanShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_nipPerubahanShiftActionPerformed
@@ -645,7 +814,61 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
     }//GEN-LAST:event_jText_nipPerubahanShiftActionPerformed
 
     private void jCombo_namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_namaActionPerformed
-        // TODO add your handling code here:
+        String selectedNama = (String) jCombo_nama.getSelectedItem();
+        if (selectedNama == null) return;
+
+        // Kosongkan field otomatis
+        jText_nipPerubahanShift.setText("");
+        jText_jabatanPerubahanShift.setText("");
+        jText_jamMasuk.setText("");
+        jText_jamKeluar.setText("");
+
+        Response<ArrayList<Pegawai>> response = pegawaiRepository.findAll();
+        if (response.isSuccess()) {
+            for (Pegawai p : response.getData()) {
+                if (p.getNama().equals(selectedNama)) {
+                    jText_nipPerubahanShift.setText(p.getNip());
+
+                    // Isi jabatan
+                    Response<ArrayList<JabatanPegawai>> jpResp = jabatanPegawaiRepository.findByPegawaiId(p.getId());
+                    if (jpResp.isSuccess() && !jpResp.getData().isEmpty()) {
+                        JabatanPegawai jp = jpResp.getData().get(0);
+                        Response<Jabatan> jabatanResp = jabatanRepository.findById(jp.getIdJabatan());
+                        if (jabatanResp.isSuccess()) {
+                            jText_jabatanPerubahanShift.setText(jabatanResp.getData().getNamaJabatan());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Pegawai ini belum memiliki jabatan. Tidak bisa diproses.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+
+                    // Jika sudah punya shift, isi otomatis
+                    Response<ArrayList<ShiftPegawai>> shiftPegawaiResponse = shiftPegawaiRepository.findByPegawaiId(p.getId());
+                    if (shiftPegawaiResponse.isSuccess() && !shiftPegawaiResponse.getData().isEmpty()) {
+                        ShiftPegawai currentShiftPegawai = shiftPegawaiResponse.getData().get(0);
+                        Response<Shift> shiftResp = shiftRepository.findById(currentShiftPegawai.getIdShift());
+                        if (shiftResp.isSuccess()) {
+                            Shift s = shiftResp.getData();
+
+                            // Set combo shift
+                            for (int i = 0; i < jCombo_namaShift.getItemCount(); i++) {
+                                String shiftName = jCombo_namaShift.getItemAt(i);
+                                if (shiftName.equals(s.getNamaShift())) {
+                                    jCombo_namaShift.setSelectedIndex(i);
+                                    break;
+                                }
+                            }
+
+                            // Set jam
+                            jText_jamMasuk.setText(s.getJamMasuk().toString());
+                            jText_jamKeluar.setText(s.getJamKeluar().toString());
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
     }//GEN-LAST:event_jCombo_namaActionPerformed
 
     private void btn_simpan_transaksiPerubahanShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpan_transaksiPerubahanShift1ActionPerformed
@@ -664,8 +887,84 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
     }//GEN-LAST:event_jText_nipPerubahanShift1ActionPerformed
 
     private void jCombo_nama1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_nama1ActionPerformed
-        // TODO add your handling code here:
+            String selectedNama = (String) jCombo_nama1.getSelectedItem();
+        if (selectedNama == null) return;
+
+        // Kosongkan field otomatis
+        jText_nipPerubahanShift1.setText("");
+        jText_jabatanPerubahanShift1.setText("");
+        jText_jamMasuk2.setText("");
+        jText_jamKeluar2.setText("");
+
+        Response<ArrayList<Pegawai>> pegawaiResp = pegawaiRepository.findAll();
+        if (!pegawaiResp.isSuccess()) return;
+
+        for (Pegawai p : pegawaiResp.getData()) {
+            if (p.getNama().equals(selectedNama)) {
+
+                // Set NIP
+                jText_nipPerubahanShift1.setText(p.getNip());
+
+                // Set jabatan
+                Response<ArrayList<JabatanPegawai>> jpResp = jabatanPegawaiRepository.findByPegawaiId(p.getId());
+                if (jpResp.isSuccess() && !jpResp.getData().isEmpty()) {
+                    JabatanPegawai jp = jpResp.getData().get(0);
+                    Response<Jabatan> jResp = jabatanRepository.findById(jp.getIdJabatan());
+                    if (jResp.isSuccess()) {
+                        jText_jabatanPerubahanShift1.setText(jResp.getData().getNamaJabatan());
+                    }
+                }
+
+                // Set shift aktif
+                Response<ArrayList<ShiftPegawai>> spResp = shiftPegawaiRepository.findByPegawaiId(p.getId());
+                if (spResp.isSuccess() && !spResp.getData().isEmpty()) {
+                    ShiftPegawai sp = spResp.getData().get(0);
+                    Response<Shift> shiftResp = shiftRepository.findById(sp.getIdShift());
+                    if (shiftResp.isSuccess()) {
+                        Shift s = shiftResp.getData();
+
+                        // Pilih shift di combo box
+                        for (int i = 0; i < jCombo_namaShift1.getItemCount(); i++) {
+                            String shiftName = jCombo_namaShift1.getItemAt(i);
+                            if (shiftName.equals(s.getNamaShift())) {
+                                jCombo_namaShift1.setSelectedIndex(i);
+                                break;
+                            }
+                        }
+
+                        // Set jam otomatis
+                        jText_jamMasuk2.setText(s.getJamMasuk().toString());
+                        jText_jamKeluar2.setText(s.getJamKeluar().toString());
+                    }
+                }
+
+                break;
+            }
+        }
     }//GEN-LAST:event_jCombo_nama1ActionPerformed
+
+    private void jCombo_namaShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCombo_namaShiftActionPerformed
+        String selectedShift = (String) jCombo_namaShift.getSelectedItem();
+        jText_jamMasuk.setText("");
+        jText_jamKeluar.setText("");
+
+        if (selectedShift == null) return;
+
+        Response<ArrayList<Shift>> response = shiftRepository.findAll();
+        if (response.isSuccess()) {
+            for (Shift s : response.getData()) {
+                if (s.getNamaShift().equals(selectedShift)) {
+                    if (s.getJamMasuk() != null && s.getJamKeluar() != null) {
+                        jText_jamMasuk.setText(s.getJamMasuk().toString());
+                        jText_jamKeluar.setText(s.getJamKeluar().toString());
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Shift belum memiliki jam masuk/keluar yang lengkap.");
+                    }
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_jCombo_namaShiftActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
