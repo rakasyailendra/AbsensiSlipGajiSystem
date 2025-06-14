@@ -386,7 +386,6 @@ public class form_masterPegawai extends javax.swing.JPanel {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
@@ -431,26 +430,22 @@ public class form_masterPegawai extends javax.swing.JPanel {
         panelUtama_masterPegawai_AdminLayout.setHorizontalGroup(
             panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
                         .addComponent(btn_tambah_masterPegawai)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_edit_masterPegawai)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_hapus_masterPegawai)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btn_hapus_masterPegawai))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         panelUtama_masterPegawai_AdminLayout.setVerticalGroup(
             panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(19, 19, 19)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -458,8 +453,8 @@ public class form_masterPegawai extends javax.swing.JPanel {
                     .addComponent(btn_hapus_masterPegawai)
                     .addComponent(btn_edit_masterPegawai))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         btn_hapus_masterPegawai.getAccessibleContext().setAccessibleName("btn_hapusPegawai");
@@ -470,19 +465,15 @@ public class form_masterPegawai extends javax.swing.JPanel {
             dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 900, Short.MAX_VALUE)
             .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataPegawaiLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dataPegawaiLayout.setVerticalGroup(
             dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 525, Short.MAX_VALUE)
             .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataPegawaiLayout.createSequentialGroup()
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dataPegawaiLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         mainPanel.add(dataPegawai, "card2");

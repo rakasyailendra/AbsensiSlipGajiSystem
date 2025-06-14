@@ -238,7 +238,7 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerAdminLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(haloAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 749, Short.MAX_VALUE)
                 .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -262,8 +262,8 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
         pn_content_masterJabatanLayout.setHorizontalGroup(
             pn_content_masterJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_content_masterJabatanLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pn_utama_masterJabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 971, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pn_utama_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pn_content_masterJabatanLayout.setVerticalGroup(
             pn_content_masterJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +280,7 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pn_content_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
+                        .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
