@@ -495,6 +495,11 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
                 infoTable.addCell(getCell(": " + currentUser.getNip(), fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
                 infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT)); // cell kosong biar tetap 3 kolom
 
+                // BARIS 3
+                infoTable.addCell(getCell("Jabatan", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": " + modelAnda.getValueAt(0, 1), fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
                 document.add(infoTable);
 
                 document.add(new com.itextpdf.text.Paragraph(" ")); // spasi

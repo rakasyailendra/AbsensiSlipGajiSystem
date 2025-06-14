@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.absence.salary.slip.application.models.Absen;
@@ -32,6 +33,12 @@ import com.mycompany.absence.salary.slip.application.utils.SessionManager;
  */
 public class menuGajiku_Pegawai extends javax.swing.JFrame {
 
+    // Daftar nama bulan dalam Bahasa Indonesia
+    private static final String[] MONTHS_ID = {
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    };
+
     /**
      * Creates new form shiftkuPegawai1
      */
@@ -47,41 +54,50 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
 
     Pegawai currentUser = SessionManager.getInstance().getCurrentUser();
 
-    // Tambahkan di atas (misal, sebagai class field atau constant)
-    private static final String[] MONTHS_ID = {
-            "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
-            "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
-    };
+    private void populateComboBoxBulanBerdasarkanTahun(int tahunTerpilih) {
+        jCombo_Bulan.removeAllItems();
+
+        // Ambil semua absen untuk pegawai ini
+        Response<ArrayList<Absen>> absenResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        Set<Month> bulanUnik = new LinkedHashSet<>();
+
+        if (absenResponse.isSuccess()) {
+            for (Absen absen : absenResponse.getData()) {
+                LocalDate tanggal = absen.getTanggal();
+                if (tanggal.getYear() == tahunTerpilih) {
+                    bulanUnik.add(tanggal.getMonth());
+                }
+            }
+        }
+
+        // Sort dan masukkan ke combo (pakai format Indonesia)
+        List<Month> bulanSorted = new ArrayList<>(bulanUnik);
+        Collections.sort(bulanSorted);
+
+        for (Month bulan : bulanSorted) {
+            String namaBulanIndonesia = getBulanIndonesia(bulan);
+            jCombo_Bulan.addItem(namaBulanIndonesia);
+        }
+
+        jCombo_Bulan.setSelectedIndex(-1); // Tidak otomatis pilih, biarkan user pilih
+    }
 
     // Mapping dari bulan Indonesia ke enum Month Java (untuk logic filter)
-    private String indoToEnglishMonth(String indoMonth) {
-        switch (indoMonth.toUpperCase()) {
-            case "JANUARI":
-                return "JANUARY";
-            case "FEBRUARI":
-                return "FEBRUARY";
-            case "MARET":
-                return "MARCH";
-            case "APRIL":
-                return "APRIL";
-            case "MEI":
-                return "MAY";
-            case "JUNI":
-                return "JUNE";
-            case "JULI":
-                return "JULY";
-            case "AGUSTUS":
-                return "AUGUST";
-            case "SEPTEMBER":
-                return "SEPTEMBER";
-            case "OKTOBER":
-                return "OCTOBER";
-            case "NOVEMBER":
-                return "NOVEMBER";
-            case "DESEMBER":
-                return "DECEMBER";
-            default:
-                return null;
+    private String getBulanIndonesia(Month month) {
+        switch (month) {
+            case JANUARY: return "Januari";
+            case FEBRUARY: return "Februari";
+            case MARCH: return "Maret";
+            case APRIL: return "April";
+            case MAY: return "Mei";
+            case JUNE: return "Juni";
+            case JULY: return "Juli";
+            case AUGUST: return "Agustus";
+            case SEPTEMBER: return "September";
+            case OCTOBER: return "Oktober";
+            case NOVEMBER: return "November";
+            case DECEMBER: return "Desember";
+            default: return "";
         }
     }
 
@@ -93,13 +109,23 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         // Update table on year/month selection change
         jCombo_Tahun.addActionListener(evt -> populateTableGaji());
         jCombo_Bulan.addActionListener(evt -> populateTableGaji());
+
+        jCombo_Tahun.addActionListener(evt -> {
+        String selectedYearStr = (String) jCombo_Tahun.getSelectedItem();
+            if (selectedYearStr != null && !selectedYearStr.contains("Pilih")) {
+                int tahun = Integer.parseInt(selectedYearStr);
+                populateComboBoxBulanBerdasarkanTahun(tahun); // 🟢 isi bulan berdasarkan tahun
+                populateTableGaji(); // Tampilkan data langsung jika perlu
+            }
+        });
+
+        jCombo_Bulan.addActionListener(evt -> populateTableGaji());
     }
 
     private void populateComboBox() {
         Response<ArrayList<Absen>> absenResponse = absenRepository.findByIdPegawai(currentUser.getId());
         Set<Integer> availableYears = new LinkedHashSet<>();
 
-        // Ambil tahun dari data absen
         if (absenResponse != null && absenResponse.getData() != null) {
             for (Absen absen : absenResponse.getData()) {
                 int year = absen.getTanggal().getYear();
@@ -111,69 +137,91 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         Collections.sort(sortedYears);
 
         jCombo_Tahun.removeAllItems();
+        jCombo_Tahun.addItem("-- Pilih Tahun --");
         for (Integer year : sortedYears) {
             jCombo_Tahun.addItem(String.valueOf(year));
         }
-        jCombo_Tahun.setSelectedIndex(-1);
+        jCombo_Tahun.setSelectedIndex(0);
 
-        // --- ComboBox bulan: selalu pakai urutan bulan Indonesia ---
         jCombo_Bulan.removeAllItems();
+        jCombo_Bulan.addItem("-- Pilih Bulan --");
         for (String bulan : MONTHS_ID) {
             jCombo_Bulan.addItem(bulan);
         }
-        jCombo_Bulan.setSelectedIndex(-1);
+        jCombo_Bulan.setSelectedIndex(0);
     }
 
     private void populateTableGaji() {
-        String[] columnNames = { "Nama Pegawai", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji" };
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        table_shiftkuPegawai_isiOtomatis.setModel(model);
+        String selectedYearStr = (String) jCombo_Tahun.getSelectedItem();
+        String selectedMonthStr = (String) jCombo_Bulan.getSelectedItem();
 
-        // Fetch jabatanPegawai
-        Response<ArrayList<JabatanPegawai>> jabatanPegawaiResponse = jabatanPegawaiRepository
-                .findByPegawaiId(currentUser.getId());
+        // Validasi tahun wajib
+        if (selectedYearStr == null || selectedYearStr.isEmpty() || selectedYearStr.contains("Pilih")) {
+            DefaultTableModel emptyModel = new DefaultTableModel(new String[] {
+                "Nama Pegawai", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"
+            }, 0);
+            emptyModel.addRow(new Object[] { "Silakan pilih tahun dan bulan terlebih dahulu", "", "", "", "" });
+            table_shiftkuPegawai_isiOtomatis.setModel(emptyModel);
+            return;
+        }
+
+        Integer selectedYear = Integer.parseInt(selectedYearStr);
+        Month selectedMonth = null;
+
+        // Validasi bulan wajib juga (tapi hanya jika combo sudah diaktifkan)
+        if (selectedMonthStr == null || selectedMonthStr.isEmpty() || selectedMonthStr.contains("Pilih")) {
+            // Jika belum pilih bulan, munculkan tetap tapi dari data 1 tahun penuh
+            // Catatan: kalau kamu ingin strict bulan wajib, bisa tambahkan return disini
+        } else {
+            String monthEnglish = null;
+            switch (selectedMonthStr) {
+                case "Januari": monthEnglish = "JANUARY"; break;
+                case "Februari": monthEnglish = "FEBRUARY"; break;
+                case "Maret": monthEnglish = "MARCH"; break;
+                case "April": monthEnglish = "APRIL"; break;
+                case "Mei": monthEnglish = "MAY"; break;
+                case "Juni": monthEnglish = "JUNE"; break;
+                case "Juli": monthEnglish = "JULY"; break;
+                case "Agustus": monthEnglish = "AUGUST"; break;
+                case "September": monthEnglish = "SEPTEMBER"; break;
+                case "Oktober": monthEnglish = "OCTOBER"; break;
+                case "November": monthEnglish = "NOVEMBER"; break;
+                case "Desember": monthEnglish = "DECEMBER"; break;
+            }
+            if (monthEnglish != null) {
+                selectedMonth = Month.valueOf(monthEnglish);
+            }
+        }
+
+        // Ambil jabatan pegawai
+        Response<ArrayList<JabatanPegawai>> jabatanPegawaiResponse = jabatanPegawaiRepository.findByPegawaiId(currentUser.getId());
         JabatanPegawai jabatanPegawai = (jabatanPegawaiResponse != null && jabatanPegawaiResponse.getData() != null
                 && !jabatanPegawaiResponse.getData().isEmpty())
-                        ? jabatanPegawaiResponse.getData().get(0)
-                        : null;
+                ? jabatanPegawaiResponse.getData().get(0)
+                : null;
 
-        // Fetch jabatan
+        // Ambil data jabatan
         Jabatan jabatanData = null;
         if (jabatanPegawai != null) {
             Response<Jabatan> jabatanResponse = jabatanRepository.findById(jabatanPegawai.getIdJabatan());
-            jabatanData = (jabatanResponse != null && jabatanResponse.getData() != null) ? jabatanResponse.getData()
-                    : null;
+            if (jabatanResponse != null && jabatanResponse.isSuccess()) {
+                jabatanData = jabatanResponse.getData();
+            }
         }
 
-        // Attendance - filter by selected month and year
-        Response<ArrayList<Absen>> absenResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        if (jabatanData == null) {
+            JOptionPane.showMessageDialog(this, "Anda belum memiliki jabatan, tidak dapat menampilkan slip gaji.");
+            return;
+        }
+
+        // Hitung absen
         int jumlahMasuk = 0;
-        if (absenResponse != null && absenResponse.getData() != null) {
-            // Get selected year and month
-            String selectedYearStr = (String) jCombo_Tahun.getSelectedItem();
-            String selectedMonthStr = (String) jCombo_Bulan.getSelectedItem();
-            Integer selectedYear = null;
-            Month selectedMonth = null;
-
-            if (selectedYearStr != null && !selectedYearStr.isEmpty()) {
-                selectedYear = Integer.parseInt(selectedYearStr);
-            }
-            if (selectedMonthStr != null && !selectedMonthStr.isEmpty()) {
-                String monthEnglish = indoToEnglishMonth(selectedMonthStr);
-                if (monthEnglish != null) {
-                    selectedMonth = Month.valueOf(monthEnglish);
-                }
-            }
-
+        Response<ArrayList<Absen>> absenResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        if (absenResponse.isSuccess()) {
             for (Absen absen : absenResponse.getData()) {
                 LocalDate tanggal = absen.getTanggal();
-                boolean yearMatch = (selectedYear == null) || (tanggal.getYear() == selectedYear);
-                boolean monthMatch = (selectedMonth == null) || (tanggal.getMonth() == selectedMonth);
+                boolean yearMatch = tanggal.getYear() == selectedYear;
+                boolean monthMatch = selectedMonth == null || tanggal.getMonth() == selectedMonth;
 
                 if (yearMatch && monthMatch) {
                     jumlahMasuk++;
@@ -181,18 +229,24 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
             }
         }
 
-        // Salary calculation
-        double gajiPokok = (jabatanData != null && jabatanData.getGajiPokok() != null) ? jabatanData.getGajiPokok() : 0;
+        double gajiPokok = jabatanData.getGajiPokok() != null ? jabatanData.getGajiPokok() : 0;
         double totalGaji = jumlahMasuk * gajiPokok;
 
+        DefaultTableModel model = new DefaultTableModel(new String[] {
+            "Nama Pegawai", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"
+        }, 0);
+
         model.addRow(new Object[] {
-                currentUser.getNama(),
-                jabatanData != null ? jabatanData.getNamaJabatan() : "",
-                gajiPokok,
-                jumlahMasuk,
-                totalGaji
+            currentUser.getNama(),
+            jabatanData.getNamaJabatan(),
+            gajiPokok,
+            jumlahMasuk,
+            totalGaji
         });
+
+        table_shiftkuPegawai_isiOtomatis.setModel(model);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -472,8 +526,162 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cetakGajikuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakGajikuActionPerformed
-        // TODO add your handling code here:
+        javax.swing.JTable tableAnda = table_shiftkuPegawai_isiOtomatis;
+        javax.swing.table.TableModel modelAnda = tableAnda.getModel();
+
+        String namaPegawai = haloNamaPegawai_isiOtomatis.getText().trim();
+        String namaFile = "Slip_Gaji_" + namaPegawai.replace(" ", "_") + ".pdf";
+
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Simpan Slip Gaji sebagai PDF");
+        fileChooser.setSelectedFile(new java.io.File(namaFile));
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            try {
+                com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+                com.itextpdf.text.pdf.PdfWriter.getInstance(document, new java.io.FileOutputStream(fileToSave));
+                document.open();
+
+                // Logo & Header
+                try {
+                    java.net.URL logoUrl = getClass().getResource("/img/logoMahadBesar.png");
+                    if (logoUrl != null) {
+                        com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance(logoUrl);
+                        logo.scaleAbsolute(60, 60);
+                        logo.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                        document.add(logo);
+                    }
+                } catch (Exception e) {}
+
+                com.itextpdf.text.Font fontTitle = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Paragraph title = new com.itextpdf.text.Paragraph("Pondok Pesantren Baitul Hikmah", fontTitle);
+                title.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                document.add(title);
+
+                com.itextpdf.text.Font fontSub = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.Paragraph alamat = new com.itextpdf.text.Paragraph("JL. Medokan Asri Tengah, Medokan Ayu, Kec. Rungkut, Kota Surabaya\nHP: 089616194482", fontSub);
+                alamat.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                document.add(alamat);
+
+                document.add(new com.itextpdf.text.Chunk(new com.itextpdf.text.pdf.draw.LineSeparator()));
+
+                // Info Pegawai
+                com.itextpdf.text.Font fontNormal = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.pdf.PdfPTable infoTable = new com.itextpdf.text.pdf.PdfPTable(new float[]{1, 3, 3});
+                infoTable.setWidthPercentage(100);
+                infoTable.getDefaultCell().setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+
+                String periode = "";
+                if (jCombo_Bulan.getSelectedItem() != null && jCombo_Tahun.getSelectedItem() != null) {
+                    periode = jCombo_Bulan.getSelectedItem().toString() + " " + jCombo_Tahun.getSelectedItem().toString();
+                }
+
+                // Baris 1
+                infoTable.addCell(getCell("Nama", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": " + currentUser.getNama(), fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(new java.text.SimpleDateFormat("EEEE, dd MMMM yyyy").format(new java.util.Date()), fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                // Baris 2
+                infoTable.addCell(getCell("NIP", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": " + currentUser.getNip(), fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                // Baris 3
+                infoTable.addCell(getCell("Jabatan", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": " + modelAnda.getValueAt(0, 1), fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                // Baris 4
+                infoTable.addCell(getCell("Periode", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": " + periode, fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                document.add(infoTable);
+
+                document.add(new com.itextpdf.text.Paragraph(" ")); // spasi
+
+                // Judul Tabel Slip Gaji
+                com.itextpdf.text.Font fontTableTitle = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 13, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Paragraph tableTitle = new com.itextpdf.text.Paragraph("Slip Gaji Anda", fontTableTitle);
+                tableTitle.setAlignment(com.itextpdf.text.Element.ALIGN_LEFT);
+                document.add(tableTitle);
+
+                // Tabel Gaji
+                addTableToPdf(document, modelAnda);
+
+                document.close();
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Slip Gaji berhasil dicetak:\n" + fileToSave.getAbsolutePath());
+
+                if (java.awt.Desktop.isDesktopSupported()) {
+                    java.awt.Desktop.getDesktop().open(fileToSave);
+                }
+
+            } catch (Exception ex) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gagal mencetak Slip Gaji: " + ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btn_cetakGajikuActionPerformed
+
+    // Helper untuk cell info (tanpa border)
+    private com.itextpdf.text.pdf.PdfPCell getCell(String text, com.itextpdf.text.Font font, int alignment) {
+        com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(text, font));
+        cell.setPadding(5f);
+        cell.setHorizontalAlignment(alignment);
+        cell.setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+        return cell;
+    }
+
+    // Helper untuk menambah tabel dari TableModel ke PDF
+    private void addTableToPdf(com.itextpdf.text.Document document, javax.swing.table.TableModel model) throws com.itextpdf.text.DocumentException {
+        com.itextpdf.text.Font headerFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE);
+        com.itextpdf.text.Font cellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 11, com.itextpdf.text.Font.NORMAL, com.itextpdf.text.BaseColor.BLACK);
+
+        com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(model.getColumnCount());
+        pdfTable.setWidthPercentage(100);
+        pdfTable.setSpacingBefore(10f);   // jarak atas tabel
+        pdfTable.setSpacingAfter(15f);    // jarak bawah tabel
+
+        // Add table header
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            com.itextpdf.text.pdf.PdfPCell headerCell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(model.getColumnName(i), headerFont));
+            headerCell.setBackgroundColor(new com.itextpdf.text.BaseColor(2, 84, 106));
+            headerCell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+            headerCell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+            headerCell.setPaddingTop(8f);
+            headerCell.setPaddingBottom(8f);
+            headerCell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+            pdfTable.addCell(headerCell);
+        }
+
+        // Add table rows
+        for (int rows = 0; rows < model.getRowCount(); rows++) {
+            for (int cols = 0; cols < model.getColumnCount(); cols++) {
+                Object value = model.getValueAt(rows, cols);
+                String displayValue = value == null ? "" : value.toString();
+                // Untuk kolom Nama Shift (biasanya index 2)
+                if (cols == 2) {
+                    displayValue = displayValue.replace("\n", " ").replace("\r", " ");
+                }
+                com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(displayValue, cellFont));
+                cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+                cell.setPaddingTop(6f);
+                cell.setPaddingBottom(6f);
+                // Alternating row color
+                if (rows % 2 == 0) {
+                    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(232, 245, 251));
+                } else {
+                    cell.setBackgroundColor(com.itextpdf.text.BaseColor.WHITE);
+                }
+                cell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+                pdfTable.addCell(cell);
+            }
+        }
+        document.add(pdfTable);
+    }
 
     private void MenuLogoutMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuLogoutMouseClicked
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout?",

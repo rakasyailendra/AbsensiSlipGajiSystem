@@ -324,8 +324,8 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                     .addComponent(btn_hapus_transaksiPerubahanShift)
                     .addComponent(btn_edit_transaksiPerubahanShift))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(342, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(337, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataPerubahanShiftLayout = new javax.swing.GroupLayout(dataPerubahanShift);

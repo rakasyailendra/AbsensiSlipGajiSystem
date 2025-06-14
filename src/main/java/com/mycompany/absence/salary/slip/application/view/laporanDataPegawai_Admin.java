@@ -25,13 +25,13 @@ import com.mycompany.absence.salary.slip.application.utils.Response;
  *
  * @author User
  */
-public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
+public class laporanDataPegawai_Admin extends javax.swing.JFrame {
     int xx, xy;
 
     /**
      * Creates new form dashboardAdmin
      */
-    public laporanGajiPegawai_Admin() {
+    public laporanDataPegawai_Admin() {
         initComponents();
     }
 
@@ -72,9 +72,6 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -106,6 +103,11 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         MenuDashboardAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDashboardAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuDashboardAdmin.setText("Dashboard");
+        MenuDashboardAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuDashboardAdminMouseClicked(evt);
+            }
+        });
 
         MenupegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenupegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
@@ -152,20 +154,30 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         });
 
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuDatapegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
+        MenuDatapegawaiAdmin.setForeground(new java.awt.Color(255, 255, 255));
         MenuDatapegawaiAdmin.setText("Data Pegawai");
 
         MenuShiftpegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuShiftpegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuShiftpegawaiAdmin.setText("Shift Pegawai");
+        MenuShiftpegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuShiftpegawaiAdminMouseClicked(evt);
+            }
+        });
 
         jLabel6.setBackground(new java.awt.Color(179, 201, 208));
         jLabel6.setForeground(new java.awt.Color(179, 201, 208));
         jLabel6.setText("LAPORAN");
 
         MenuGajipegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        MenuGajipegawaiAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        MenuGajipegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuGajipegawaiAdmin.setText("Gaji Pegawai");
+        MenuGajipegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuGajipegawaiAdminMouseClicked(evt);
+            }
+        });
 
         MenuLogout.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuLogout.setForeground(new java.awt.Color(179, 201, 208));
@@ -240,7 +252,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 .addComponent(MenuGajipegawaiAdmin)
                 .addGap(18, 18, 18)
                 .addComponent(MenuLogout)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         headerAdmin.setBackground(new java.awt.Color(255, 255, 255));
@@ -287,7 +299,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel4.setText("Laporan Gaji Pegawai");
+        jLabel4.setText("Laporan Data Pegawai");
 
         jLabel7.setText("Bulan :");
 
@@ -319,43 +331,26 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(2, 84, 106));
-        jLabel5.setText("Total Gaji Bulanan Pegawai");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null}
-            },
-            new String [] {
-                "Bulan", "Tahun", "Total Gaji Bulan Ini"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable2);
-
         javax.swing.GroupLayout panelUtama_dashboardAdminLayout = new javax.swing.GroupLayout(panelUtama_dashboardAdmin);
         panelUtama_dashboardAdmin.setLayout(panelUtama_dashboardAdminLayout);
         panelUtama_dashboardAdminLayout.setHorizontalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(544, 544, 544)
-                            .addComponent(jButton1))
-                        .addComponent(jScrollPane2)
-                        .addComponent(jScrollPane1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(544, 544, 544)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane2))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         panelUtama_dashboardAdminLayout.setVerticalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,11 +366,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -411,6 +402,24 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         transaksiPerubahanShift.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();                                  // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenuPerubahanShiftMouseClicked
+
+    private void MenuGajipegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuGajipegawaiAdminMouseClicked
+        laporanGajiPegawai_Admin laporanGajiPegawai = new laporanGajiPegawai_Admin(); // Membuat objek form tujuan
+        laporanGajiPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose(); 
+    }//GEN-LAST:event_MenuGajipegawaiAdminMouseClicked
+
+    private void MenuShiftpegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuShiftpegawaiAdminMouseClicked
+        laporanShiftPegawai_Admin laporanShiftPegawai = new laporanShiftPegawai_Admin(); // Membuat objek form tujuan
+        laporanShiftPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose(); 
+    }//GEN-LAST:event_MenuShiftpegawaiAdminMouseClicked
+
+    private void MenuDashboardAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDashboardAdminMouseClicked
+        dashboardAdmin dashboard = new dashboardAdmin(); // Membuat objek form tujuan
+        dashboard.setVisible(true); // Menampilkan form tujuan
+        this.dispose(); // Menutup form saat ini (opsional)
+    }//GEN-LAST:event_MenuDashboardAdminMouseClicked
 
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
@@ -485,18 +494,26 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanDataPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanDataPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanDataPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(laporanGajiPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
+            java.util.logging.Logger.getLogger(laporanDataPegawai_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         }
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
+        // </editor-fold>
         // </editor-fold>
         // </editor-fold>
         // </editor-fold>
@@ -509,7 +526,7 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new laporanGajiPegawai_Admin().setVisible(true);
+                new laporanDataPegawai_Admin().setVisible(true);
             }
         });
     }
@@ -534,15 +551,12 @@ public class laporanGajiPegawai_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel panelUtama_dashboardAdmin;
     private javax.swing.JPanel sideBar;
     // End of variables declaration//GEN-END:variables
