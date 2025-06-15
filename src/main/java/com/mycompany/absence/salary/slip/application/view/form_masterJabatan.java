@@ -307,7 +307,7 @@ public class form_masterJabatan extends javax.swing.JPanel {
         panelUtama_masterJabatan_AdminLayout.setHorizontalGroup(
             panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(12, 12, 12)
                 .addGroup(panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
                         .addComponent(btn_tambah_masterJabatan)
@@ -317,12 +317,12 @@ public class form_masterJabatan extends javax.swing.JPanel {
                         .addComponent(btn_hapus_masterJabatan))
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         panelUtama_masterJabatan_AdminLayout.setVerticalGroup(
             panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -331,7 +331,7 @@ public class form_masterJabatan extends javax.swing.JPanel {
                     .addComponent(btn_edit_masterJabatan))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataJabatanLayout = new javax.swing.GroupLayout(dataJabatan);

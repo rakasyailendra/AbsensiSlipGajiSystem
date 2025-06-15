@@ -300,7 +300,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         panelUtama_transaksiPerubahanShift_AdminLayout.setHorizontalGroup(
             panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(17, 17, 17)
                 .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
@@ -310,7 +310,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_transaksiPerubahanShift))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         panelUtama_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
             panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +331,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         dataPerubahanShift.setLayout(dataPerubahanShiftLayout);
         dataPerubahanShiftLayout.setHorizontalGroup(
             dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 903, Short.MAX_VALUE)
             .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -474,7 +474,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_transaksiPerubahanShift))
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
+                        .addGap(0, 503, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelKedua_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
@@ -640,7 +640,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_transaksiPerubahanShift1))
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
+                        .addGap(0, 503, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelKetiga_transaksiPerubahanShift_Admin1Layout.setVerticalGroup(
@@ -680,7 +680,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 903, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
