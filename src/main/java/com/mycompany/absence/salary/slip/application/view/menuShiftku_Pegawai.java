@@ -46,6 +46,30 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
         haloNamaPegawai_isiOtomatis.setText(currentUser.getNama());
         initializeTable();
         initializeTablePesantren();
+
+                        // Set style for jamLabel
+        jamLabel1.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22));
+        jamLabel1.setForeground(new java.awt.Color(0, 123, 255));
+        jamLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        // Add shadow effect (simple workaround)
+        jamLabel1.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createEmptyBorder(2, 10, 2, 10),
+            javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(2, 84, 106))
+        ));
+
+        // Timer for updating time with date
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.time.LocalDate today = java.time.LocalDate.now();
+            java.time.LocalTime now = java.time.LocalTime.now();
+            java.time.format.DateTimeFormatter dateFmt = java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy");
+            java.time.format.DateTimeFormatter timeFmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss");
+            jamLabel1.setText("<html><div style='text-align:right;'>" +
+            "<span style='font-size:10px;color:#02546A;'>" + today.format(dateFmt) + "</span><br>" +
+            "<span style='font-size:14px;color:#007bff;'>" + now.format(timeFmt) + "</span></div></html>");
+        });
+        timer.setInitialDelay(0);
+        timer.start();
     }
 
     private void initializeTable() {
@@ -95,7 +119,7 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
         table_shiftkuPegawai_isiOtomatis.setModel(model); // pastikan 'tabelShiftku' adalah JTable Anda
     }
     
-     private void initializeTablePesantren() {
+    private void initializeTablePesantren() {
         Response<ArrayList<ShiftPegawai>> response = shiftPegawaiRepository.findAll();
         if (response.isSuccess()) {
             ArrayList<Object[]> rowDataList = new ArrayList<>();
@@ -163,6 +187,7 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
         btmCancel = new javax.swing.JLabel();
         halo = new javax.swing.JLabel();
         haloNamaPegawai_isiOtomatis = new javax.swing.JLabel();
+        jamLabel1 = new javax.swing.JLabel();
         panelUtama_shiftkuPegawai = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -279,6 +304,18 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
         haloNamaPegawai_isiOtomatis.setForeground(new java.awt.Color(2, 84, 106));
         haloNamaPegawai_isiOtomatis.setText("Nama Pegawai");
 
+        jamLabel1.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        jamLabel1.setText("Tanggal, jam");
+        jamLabel1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jamLabel1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         javax.swing.GroupLayout headerPegawaiLayout = new javax.swing.GroupLayout(headerPegawai);
         headerPegawai.setLayout(headerPegawaiLayout);
         headerPegawaiLayout.setHorizontalGroup(
@@ -289,6 +326,8 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(haloNamaPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jamLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -303,7 +342,8 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
                             .addComponent(haloNamaPegawai_isiOtomatis)))
                     .addGroup(headerPegawaiLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jamLabel1))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -426,6 +466,10 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
     private void table_shiftPesantren_isiOtomatisAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_table_shiftPesantren_isiOtomatisAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_table_shiftPesantren_isiOtomatisAncestorAdded
+
+    private void jamLabel1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jamLabel1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jamLabel1AncestorAdded
 
     private void btn_cetakShiftkuActionPerformed(java.awt.event.ActionEvent evt) {
         // Data pribadi
@@ -689,6 +733,7 @@ public class menuShiftku_Pegawai extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jamLabel1;
     private javax.swing.JPanel panelUtama_shiftkuPegawai;
     private javax.swing.JPanel sideBar;
     private javax.swing.JTable table_shiftPesantren_isiOtomatis;

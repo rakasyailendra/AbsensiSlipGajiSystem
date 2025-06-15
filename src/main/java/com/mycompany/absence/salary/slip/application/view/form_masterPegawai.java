@@ -430,7 +430,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
         panelUtama_masterPegawai_AdminLayout.setHorizontalGroup(
             panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(35, 35, 35)
                 .addGroup(panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelUtama_masterPegawai_AdminLayout.createSequentialGroup()
@@ -440,7 +440,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_masterPegawai))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelUtama_masterPegawai_AdminLayout.setVerticalGroup(
             panelUtama_masterPegawai_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,7 +463,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
         dataPegawai.setLayout(dataPegawaiLayout);
         dataPegawaiLayout.setHorizontalGroup(
             dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addGap(0, 908, Short.MAX_VALUE)
             .addGroup(dataPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(panelUtama_masterPegawai_Admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -557,7 +557,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
                     .addComponent(jLabel12)
                     .addComponent(jText_password, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -605,7 +605,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_masterPegawai2))
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
+                        .addGap(0, 508, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelKedua_masterPegawai_Admin1Layout.setVerticalGroup(
@@ -722,7 +722,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
                     .addComponent(jLabel17)
                     .addComponent(jText_password_edit, javax.swing.GroupLayout.DEFAULT_SIZE, 845, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -770,7 +770,7 @@ public class form_masterPegawai extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_batal_masterPegawai3))
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 500, Short.MAX_VALUE)))
+                        .addGap(0, 508, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelKedua_masterPegawai_Admin2Layout.setVerticalGroup(
