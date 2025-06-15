@@ -54,10 +54,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="pn_content_masterJabatan" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="headerAdmin" pref="956" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="headerAdmin" pref="962" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -271,6 +268,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Data Pegawai"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuDatapegawaiAdminMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="MenuShiftpegawaiAdmin">
               <Properties>
@@ -348,7 +348,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="haloAdmin" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="749" max="32767" attributes="0"/>
+                      <EmptySpace pref="755" max="32767" attributes="0"/>
                       <Component id="btmCancel" min="-2" pref="24" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -401,10 +401,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="pn_utama_masterJabatan" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="pn_utama_masterJabatan" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">

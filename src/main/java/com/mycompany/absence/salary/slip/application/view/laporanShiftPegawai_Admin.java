@@ -4,6 +4,13 @@
  */
 package com.mycompany.absence.salary.slip.application.view;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -14,12 +21,17 @@ import com.mycompany.absence.salary.slip.application.models.Jabatan;
 import com.mycompany.absence.salary.slip.application.models.JabatanPegawai;
 import com.mycompany.absence.salary.slip.application.models.Pegawai;
 import com.mycompany.absence.salary.slip.application.models.Shift;
+import com.mycompany.absence.salary.slip.application.models.ShiftPegawai;
 import com.mycompany.absence.salary.slip.application.repositories.AbsenRepository;
 import com.mycompany.absence.salary.slip.application.repositories.JabatanPegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.JabatanRepository;
 import com.mycompany.absence.salary.slip.application.repositories.PegawaiRepository;
+import com.mycompany.absence.salary.slip.application.repositories.ShiftPegawaiRepository;
 import com.mycompany.absence.salary.slip.application.repositories.ShiftRepository;
 import com.mycompany.absence.salary.slip.application.utils.Response;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 /**
  *
@@ -65,10 +77,6 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
         haloAdmin = new javax.swing.JLabel();
         panelUtama_dashboardAdmin = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -296,24 +304,15 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
         jLabel4.setText("Laporan Shift Pegawai");
 
-        jLabel7.setText("Bulan :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
-
-        jLabel9.setText("Tahun :");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2024", "2023" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("CETAK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        jButton1.setText("CETAK");
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -341,19 +340,12 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
                     .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUtama_dashboardAdminLayout.createSequentialGroup()
                         .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelUtama_dashboardAdminLayout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)))
+                            .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton1))
+                            .addComponent(jScrollPane2))
                         .addGap(30, 30, 30))))
         );
         panelUtama_dashboardAdminLayout.setVerticalGroup(
@@ -361,15 +353,10 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(37, 37, 37)
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -382,9 +369,7 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,15 +386,12 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void MenuPerubahanShiftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPerubahanShiftMouseClicked
         transaksiPerubahanShift_Admin transaksiPerubahanShift = new transaksiPerubahanShift_Admin(); // Membuat objek form tujuan
         transaksiPerubahanShift.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();                                  // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenuPerubahanShiftMouseClicked
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void MenuGajipegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuGajipegawaiAdminMouseClicked
         laporanGajiPegawai_Admin laporanGajiPegawai = new laporanGajiPegawai_Admin(); // Membuat objek form tujuan
@@ -423,6 +405,159 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_MenuDatapegawaiAdminMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Ambil bulan & tahun dari tanggal sekarang
+        LocalDate now = LocalDate.now();
+        String bulan = now.getMonth().getDisplayName(TextStyle.FULL, new Locale("id", "ID"));
+        String tahun = String.valueOf(now.getYear());
+
+        String namaFile = "Laporan_Shift_Pegawai_" + bulan + "_" + tahun + ".pdf";
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Simpan Laporan Shift sebagai PDF");
+        fileChooser.setSelectedFile(new java.io.File(namaFile));
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new java.io.FileOutputStream(fileToSave));
+                document.open();
+
+                // HEADER DAN LOGO
+                try {
+                    java.net.URL logoUrl = getClass().getResource("/img/logoMahadBesar.png");
+                    if (logoUrl != null) {
+                        com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance(logoUrl);
+                        logo.scaleAbsolute(60, 60);
+                        logo.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                        document.add(logo);
+                    }
+                } catch (Exception e) {}
+
+                Font fontTitle = new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD);
+                Paragraph title = new Paragraph("Pondok Pesantren Baitul Hikmah", fontTitle);
+                title.setAlignment(Element.ALIGN_CENTER);
+                document.add(title);
+
+                Font fontSub = new Font(Font.FontFamily.HELVETICA, 12);
+                Paragraph alamat = new Paragraph("JL. Medokan Asri Tengah, Medokan Ayu, Kec. Rungkut, Kota Surabaya\nHP: 089616194482", fontSub);
+                alamat.setAlignment(Element.ALIGN_CENTER);
+                document.add(alamat);
+
+                com.itextpdf.text.pdf.draw.LineSeparator ls = new com.itextpdf.text.pdf.draw.LineSeparator();
+                document.add(new Chunk(ls));
+
+                // PERIODE DAN KETERANGAN
+
+                                // 1. Info Admin
+                com.itextpdf.text.Font fontNormal = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.pdf.PdfPTable infoTable = new com.itextpdf.text.pdf.PdfPTable(new float[]{1, 3, 3});
+                infoTable.setWidthPercentage(100);
+                infoTable.getDefaultCell().setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+
+                // BARIS 1
+                infoTable.addCell(getCell("Periode", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": " + bulan + " " + tahun, fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(new java.text.SimpleDateFormat("EEEE, dd MMMM yyyy").format(new java.util.Date()), fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+                document.add(infoTable);
+
+                //spasi
+                document.add(new Paragraph("\n"));
+
+                Paragraph keterangan = new Paragraph();
+                keterangan.setAlignment(Element.ALIGN_JUSTIFIED);
+                keterangan.setSpacingAfter(10f);
+                keterangan.setFont(fontNormal);
+
+                keterangan.add("Dokumen ini merupakan laporan data shift pegawai Pondok Pesantren Baitul Hikmah untuk periode ");
+                keterangan.add(new Chunk(bulan + " " + tahun, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                keterangan.add(".\n\nSeluruh data shift yang tercantum merupakan jadwal aktif masing-masing pegawai sesuai sistem pada periode (" + bulan + " " + tahun + "). "
+                        + "Laporan ini disusun sebagai bahan dokumentasi dan evaluasi administrasi kepegawaian.");
+
+                document.add(keterangan);
+
+                // JUDUL TABEL
+                Font fontTableTitle = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD, BaseColor.BLACK);
+                // Gabungkan judul dengan bulan dan tahun
+                String judul = "Tabel Shift Pegawai (" + bulan + " " + tahun + ")";
+                Paragraph judulTabel = new Paragraph(judul, fontTableTitle);
+                judulTabel.setSpacingBefore(10f);
+                document.add(judulTabel);
+
+                // TABEL
+                addTableToPdf(document, jTable1.getModel());
+
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "Laporan berhasil dicetak ke PDF:\n" + fileToSave.getAbsolutePath());
+                if (java.awt.Desktop.isDesktopSupported()) {
+                    java.awt.Desktop.getDesktop().open(fileToSave);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Gagal mencetak ke PDF: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    // Helper untuk cell info (tanpa border)
+    private com.itextpdf.text.pdf.PdfPCell getCell(String text, com.itextpdf.text.Font font, int alignment) {
+        com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(text, font));
+        cell.setPadding(5f);
+        cell.setHorizontalAlignment(alignment);
+        cell.setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+        return cell;
+    }
+
+    // Helper untuk menambah tabel dari TableModel ke PDF
+    private void addTableToPdf(com.itextpdf.text.Document document, javax.swing.table.TableModel model) throws com.itextpdf.text.DocumentException {
+        com.itextpdf.text.Font headerFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE);
+        com.itextpdf.text.Font cellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 11, com.itextpdf.text.Font.NORMAL, com.itextpdf.text.BaseColor.BLACK);
+
+        com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(model.getColumnCount());
+        pdfTable.setWidthPercentage(100);
+        pdfTable.setSpacingBefore(10f);   // jarak atas tabel
+        pdfTable.setSpacingAfter(15f);    // jarak bawah tabel
+
+        // Add table header
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            com.itextpdf.text.pdf.PdfPCell headerCell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(model.getColumnName(i), headerFont));
+            headerCell.setBackgroundColor(new com.itextpdf.text.BaseColor(2, 84, 106));
+            headerCell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+            headerCell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+            headerCell.setPaddingTop(8f);
+            headerCell.setPaddingBottom(8f);
+            headerCell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+            pdfTable.addCell(headerCell);
+        }
+
+        // Add table rows
+        for (int rows = 0; rows < model.getRowCount(); rows++) {
+            for (int cols = 0; cols < model.getColumnCount(); cols++) {
+                Object value = model.getValueAt(rows, cols);
+                String displayValue = value == null ? "" : value.toString();
+                // Untuk kolom Nama Shift (biasanya index 2)
+                if (cols == 2) {
+                    displayValue = displayValue.replace("\n", " ").replace("\r", " ");
+                }
+                com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(displayValue, cellFont));
+                cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+                cell.setPaddingTop(6f);
+                cell.setPaddingBottom(6f);
+                // Alternating row color
+                if (rows % 2 == 0) {
+                    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(232, 245, 251));
+                } else {
+                    cell.setBackgroundColor(com.itextpdf.text.BaseColor.WHITE);
+                }
+                cell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+                pdfTable.addCell(cell);
+            }
+        }
+        document.add(pdfTable);
+    }
+    
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
     }// GEN-LAST:event_btmCancelMouseClicked
@@ -459,7 +594,38 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
     }// GEN-LAST:event_MenuLogoutMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+        ShiftPegawaiRepository shiftPegawaiRepository = new ShiftPegawaiRepository();
+        PegawaiRepository pegawaiRepository = new PegawaiRepository();
+        ShiftRepository shiftRepository = new ShiftRepository();
+        JabatanPegawaiRepository jabatanPegawaiRepo = new JabatanPegawaiRepository();
+        JabatanRepository jabatanRepository = new JabatanRepository();
+
+        Response<ArrayList<ShiftPegawai>> response = shiftPegawaiRepository.findAll();
+        DefaultTableModel model = new DefaultTableModel(
+            new String[]{"Nama", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar"}, 0);
+
+        if (response.isSuccess()) {
+            for (ShiftPegawai shiftPegawai : response.getData()) {
+                Pegawai pegawai = pegawaiRepository.findById(shiftPegawai.getIdPegawai()).getData();
+                Shift shift = shiftRepository.findById(shiftPegawai.getIdShift()).getData();
+                // Jabatan Pegawai
+                Response<ArrayList<JabatanPegawai>> jpResp = jabatanPegawaiRepo.findByPegawaiId(pegawai.getId());
+                Integer idJabatan = null;
+                if (jpResp.isSuccess() && jpResp.getData() != null && !jpResp.getData().isEmpty()) {
+                    idJabatan = jpResp.getData().get(0).getIdJabatan();
+                }
+                Jabatan jabatan = jabatanRepository.findById(idJabatan).getData();
+
+                model.addRow(new Object[]{
+                    pegawai.getNama(),
+                    jabatan != null ? jabatan.getNamaJabatan() : "-",
+                    shift != null ? shift.getNamaShift() : "-",
+                    shift != null && shift.getJamMasuk() != null ? shift.getJamMasuk().toString() : "-",
+                    shift != null && shift.getJamKeluar() != null ? shift.getJamKeluar().toString() : "-"
+                });
+            }
+        }
+        jTable1.setModel(model);
     }// GEN-LAST:event_formWindowOpened
 
     private void MenuJabatanAdminMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuJabatanAdminMouseClicked
@@ -547,15 +713,11 @@ public class laporanShiftPegawai_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel haloAdmin;
     private javax.swing.JPanel headerAdmin;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

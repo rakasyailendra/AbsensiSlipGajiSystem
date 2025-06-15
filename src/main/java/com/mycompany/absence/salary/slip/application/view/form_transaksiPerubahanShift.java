@@ -283,6 +283,10 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
             new String [] {
@@ -306,12 +310,12 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_transaksiPerubahanShift))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         panelUtama_transaksiPerubahanShift_AdminLayout.setVerticalGroup(
             panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_transaksiPerubahanShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -319,8 +323,8 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
                     .addComponent(btn_hapus_transaksiPerubahanShift)
                     .addComponent(btn_edit_transaksiPerubahanShift))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(262, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataPerubahanShiftLayout = new javax.swing.GroupLayout(dataPerubahanShift);
@@ -329,18 +333,13 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
             dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 900, Short.MAX_VALUE)
             .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataPerubahanShiftLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dataPerubahanShiftLayout.setVerticalGroup(
             dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 616, Short.MAX_VALUE)
             .addGroup(dataPerubahanShiftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataPerubahanShiftLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(panelUtama_transaksiPerubahanShift_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.add(dataPerubahanShift, "card2");

@@ -319,7 +319,7 @@ public class form_masterShift extends javax.swing.JPanel {
         panelUtama_masterShift_AdminLayout.setVerticalGroup(
             panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterShift_AdminLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_masterShift_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,8 +327,8 @@ public class form_masterShift extends javax.swing.JPanel {
                     .addComponent(btn_hapus_masterShift)
                     .addComponent(btn_edit_masterShift))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataShiftLayout = new javax.swing.GroupLayout(dataShift);
