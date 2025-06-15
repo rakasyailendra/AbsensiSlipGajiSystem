@@ -4,6 +4,10 @@
  */
 package com.mycompany.absence.salary.slip.application.view;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -65,10 +69,6 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
         haloAdmin = new javax.swing.JLabel();
         panelUtama_dashboardAdmin = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -301,15 +301,12 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
         jLabel4.setText("Laporan Data Pegawai");
 
-        jLabel7.setText("Bulan :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
-
-        jLabel9.setText("Tahun :");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2024", "2023" }));
-
         jButton1.setText("CETAK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -322,11 +319,10 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
-                "Nama", "Jabatan", "Gaji Pokok", "Jumlah Masuk", "Total Gaji"
+                "NIP", "Nama", "Tanggal Lahir", "Alamat", "Jabatan"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
@@ -337,35 +333,21 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(544, 544, 544)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane2))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelUtama_dashboardAdminLayout.setVerticalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(37, 37, 37)
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -397,6 +379,50 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateTablePegawai() {
+        // Implementasi untuk mengisi tabel pegawai
+        PegawaiRepository pegawaiRepo = new PegawaiRepository();
+        JabatanPegawaiRepository jpRepo = new JabatanPegawaiRepository();
+        JabatanRepository jabatanRepo = new JabatanRepository();
+
+        Response<ArrayList<Pegawai>> pegawaiResp = pegawaiRepo.findAll();
+        DefaultTableModel model = new DefaultTableModel(
+            new String[]{"NIP", "Nama", "Tanggal Lahir", "Alamat", "Jabatan"}, 0);
+
+        if (pegawaiResp.isSuccess()) {
+            for (Pegawai p : pegawaiResp.getData()) {
+                // Lewati admin jika perlu
+                if (p.getIsAdmin() != null && p.getIsAdmin()) continue;
+                
+                // Ambil jabatan dari relasi
+                String jabatan = "-";
+                Response<ArrayList<JabatanPegawai>> jpResp = jpRepo.findByPegawaiId(p.getId());
+                if (jpResp.isSuccess() && !jpResp.getData().isEmpty()) {
+                    JabatanPegawai jp = jpResp.getData().get(0);
+                    Response<Jabatan> jbtResp = jabatanRepo.findById(jp.getIdJabatan());
+                    if (jbtResp.isSuccess() && jbtResp.getData() != null) {
+                        jabatan = jbtResp.getData().getNamaJabatan();
+                    }
+                }
+
+                // Format tanggal lahir
+                String tglLahir = "-";
+                if (p.getTanggalLahir() != null) {
+                    tglLahir = p.getTanggalLahir().toString(); // atau pakai format date lain
+                }
+                
+                model.addRow(new Object[]{
+                    p.getNip(),            // NIP
+                    p.getNama(),           // Nama
+                    tglLahir,              // Tanggal Lahir
+                    p.getAlamat(),         // Alamat
+                    jabatan                // Jabatan
+                });
+            }
+        }
+        jTable1.setModel(model);
+    }
+
     private void MenuPerubahanShiftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuPerubahanShiftMouseClicked
         transaksiPerubahanShift_Admin transaksiPerubahanShift = new transaksiPerubahanShift_Admin(); // Membuat objek form tujuan
         transaksiPerubahanShift.setVisible(true);                      // Menampilkan form tujuan
@@ -421,6 +447,147 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
         this.dispose(); // Menutup form saat ini (opsional)
     }//GEN-LAST:event_MenuDashboardAdminMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String namaFile = "Laporan_Data_Pegawai.pdf";
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Simpan Laporan Data Pegawai sebagai PDF");
+        fileChooser.setSelectedFile(new java.io.File(namaFile));
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new java.io.FileOutputStream(fileToSave));
+                document.open();
+
+                // 1. Header (Logo, Nama, Alamat)
+                try {
+                    java.net.URL logoUrl = getClass().getResource("/img/logoMahadBesar.png");
+                    if (logoUrl != null) {
+                        com.itextpdf.text.Image logo = com.itextpdf.text.Image.getInstance(logoUrl);
+                        logo.scaleAbsolute(60, 60);
+                        logo.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                        document.add(logo);
+                    }
+                } catch (Exception e) {}
+
+                com.itextpdf.text.Font fontTitle = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Paragraph title = new com.itextpdf.text.Paragraph("Pondok Pesantren Baitul Hikmah", fontTitle);
+                title.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                document.add(title);
+
+                com.itextpdf.text.Font fontSub = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.Paragraph alamat = new com.itextpdf.text.Paragraph(
+                    "JL. Medokan Asri Tengah, Medokan Ayu, Kec. Rungkut, Kota Surabaya\nHP: 089616194482", fontSub);
+                alamat.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                document.add(alamat);
+
+                document.add(new com.itextpdf.text.Chunk(new com.itextpdf.text.pdf.draw.LineSeparator()));
+
+                // Info Admin
+                com.itextpdf.text.Font fontNormal = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12);
+                com.itextpdf.text.pdf.PdfPTable infoTable = new com.itextpdf.text.pdf.PdfPTable(new float[]{1, 3, 3});
+                infoTable.setWidthPercentage(100);
+                infoTable.getDefaultCell().setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+
+                infoTable.addCell(getCell("Nama", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": Admin", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(new java.text.SimpleDateFormat("EEEE, dd MMMM yyyy").format(new java.util.Date()), fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                infoTable.addCell(getCell("Jabatan", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell(": Owner Pesantren", fontNormal, com.itextpdf.text.Element.ALIGN_LEFT));
+                infoTable.addCell(getCell("", fontNormal, com.itextpdf.text.Element.ALIGN_RIGHT));
+
+                document.add(infoTable);
+                document.add(new Paragraph(" "));
+
+                // Judul Tabel
+                com.itextpdf.text.Font fontTableTitle = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 14, com.itextpdf.text.Font.BOLD, BaseColor.BLACK);
+                com.itextpdf.text.Paragraph judulTabel = new com.itextpdf.text.Paragraph("Tabel Data Pegawai", fontTableTitle);
+                judulTabel.setSpacingBefore(10f);
+                document.add(judulTabel);
+
+                // Tabel Data Pegawai
+                addTableToPdf(document, jTable1.getModel());
+
+                // Jumlah Pegawai
+                int totalPegawai = jTable1.getRowCount();
+                com.itextpdf.text.Font fontBold = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Paragraph totalPeg = new com.itextpdf.text.Paragraph("Jumlah Pegawai: " + totalPegawai + " orang", fontBold);
+                totalPeg.setAlignment(com.itextpdf.text.Element.ALIGN_LEFT);
+                document.add(totalPeg);
+
+                document.close();
+
+                JOptionPane.showMessageDialog(this, "Laporan berhasil dicetak ke PDF:\n" + fileToSave.getAbsolutePath());
+                if (java.awt.Desktop.isDesktopSupported()) {
+                    java.awt.Desktop.getDesktop().open(fileToSave);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Gagal mencetak ke PDF: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    // Helper untuk cell info (tanpa border)
+    private com.itextpdf.text.pdf.PdfPCell getCell(String text, com.itextpdf.text.Font font, int alignment) {
+        com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(text, font));
+        cell.setPadding(5f);
+        cell.setHorizontalAlignment(alignment);
+        cell.setBorder(com.itextpdf.text.Rectangle.NO_BORDER);
+        return cell;
+    }
+
+    // Helper untuk menambah tabel dari TableModel ke PDF
+    private void addTableToPdf(com.itextpdf.text.Document document, javax.swing.table.TableModel model) throws com.itextpdf.text.DocumentException {
+        com.itextpdf.text.Font headerFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.BOLD, com.itextpdf.text.BaseColor.WHITE);
+        com.itextpdf.text.Font cellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 11, com.itextpdf.text.Font.NORMAL, com.itextpdf.text.BaseColor.BLACK);
+
+        com.itextpdf.text.pdf.PdfPTable pdfTable = new com.itextpdf.text.pdf.PdfPTable(model.getColumnCount());
+        pdfTable.setWidthPercentage(100);
+        pdfTable.setSpacingBefore(10f);   // jarak atas tabel
+        pdfTable.setSpacingAfter(15f);    // jarak bawah tabel
+
+        // Add table header
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            com.itextpdf.text.pdf.PdfPCell headerCell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(model.getColumnName(i), headerFont));
+            headerCell.setBackgroundColor(new com.itextpdf.text.BaseColor(2, 84, 106));
+            headerCell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+            headerCell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+            headerCell.setPaddingTop(8f);
+            headerCell.setPaddingBottom(8f);
+            headerCell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+            pdfTable.addCell(headerCell);
+        }
+
+        // Add table rows
+        for (int rows = 0; rows < model.getRowCount(); rows++) {
+            for (int cols = 0; cols < model.getColumnCount(); cols++) {
+                Object value = model.getValueAt(rows, cols);
+                String displayValue = value == null ? "" : value.toString();
+                // Untuk kolom Nama Shift (biasanya index 2)
+                if (cols == 2) {
+                    displayValue = displayValue.replace("\n", " ").replace("\r", " ");
+                }
+                com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(displayValue, cellFont));
+                cell.setHorizontalAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(com.itextpdf.text.Element.ALIGN_MIDDLE);
+                cell.setPaddingTop(6f);
+                cell.setPaddingBottom(6f);
+                // Alternating row color
+                if (rows % 2 == 0) {
+                    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(232, 245, 251));
+                } else {
+                    cell.setBackgroundColor(com.itextpdf.text.BaseColor.WHITE);
+                }
+                cell.setBorderColor(new com.itextpdf.text.BaseColor(118, 158, 169));
+                pdfTable.addCell(cell);
+            }
+        }
+        document.add(pdfTable);
+    }
+    
     private void btmCancelMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btmCancelMouseClicked
         dispose();
     }// GEN-LAST:event_btmCancelMouseClicked
@@ -457,7 +624,7 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
     }// GEN-LAST:event_MenuLogoutMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+        populateTablePegawai();
     }// GEN-LAST:event_formWindowOpened
 
     private void MenuJabatanAdminMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuJabatanAdminMouseClicked
@@ -545,15 +712,11 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel haloAdmin;
     private javax.swing.JPanel headerAdmin;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

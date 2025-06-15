@@ -120,6 +120,11 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
         MenuDatapegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuDatapegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
         MenuDatapegawaiAdmin.setText("Data Pegawai");
+        MenuDatapegawaiAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuDatapegawaiAdminMouseClicked(evt);
+            }
+        });
 
         MenuShiftpegawaiAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         MenuShiftpegawaiAdmin.setForeground(new java.awt.Color(179, 201, 208));
@@ -238,7 +243,7 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerAdminLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(haloAdmin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 749, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 755, Short.MAX_VALUE)
                 .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -261,9 +266,7 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
         pn_content_masterJabatan.setLayout(pn_content_masterJabatanLayout);
         pn_content_masterJabatanLayout.setHorizontalGroup(
             pn_content_masterJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_content_masterJabatanLayout.createSequentialGroup()
-                .addComponent(pn_utama_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pn_utama_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pn_content_masterJabatanLayout.setVerticalGroup(
             pn_content_masterJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,9 +282,7 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pn_content_masterJabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,6 +360,12 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
         laporanShiftPegawai.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();
     }//GEN-LAST:event_MenuShiftpegawaiAdminMouseClicked
+
+    private void MenuDatapegawaiAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuDatapegawaiAdminMouseClicked
+        laporanDataPegawai_Admin laporanDataPegawai = new laporanDataPegawai_Admin(); // Membuat objek form tujuan
+        laporanDataPegawai.setVisible(true);                      // Menampilkan form tujuan
+        this.dispose();
+    }//GEN-LAST:event_MenuDatapegawaiAdminMouseClicked
 
     /**
      * @param args the command line arguments

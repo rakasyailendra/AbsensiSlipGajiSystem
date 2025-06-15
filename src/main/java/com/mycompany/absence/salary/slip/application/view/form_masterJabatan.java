@@ -316,13 +316,13 @@ public class form_masterJabatan extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_hapus_masterJabatan))
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 863, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         panelUtama_masterJabatan_AdminLayout.setVerticalGroup(
             panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_masterJabatan_AdminLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel4)
                 .addGap(37, 37, 37)
                 .addGroup(panelUtama_masterJabatan_AdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -330,8 +330,8 @@ public class form_masterJabatan extends javax.swing.JPanel {
                     .addComponent(btn_hapus_masterJabatan)
                     .addComponent(btn_edit_masterJabatan))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dataJabatanLayout = new javax.swing.GroupLayout(dataJabatan);
@@ -340,18 +340,13 @@ public class form_masterJabatan extends javax.swing.JPanel {
             dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 900, Short.MAX_VALUE)
             .addGroup(dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataJabatanLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(panelUtama_masterJabatan_Admin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dataJabatanLayout.setVerticalGroup(
             dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 525, Short.MAX_VALUE)
             .addGroup(dataJabatanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(dataJabatanLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelUtama_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(panelUtama_masterJabatan_Admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.add(dataJabatan, "card2");

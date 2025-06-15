@@ -114,7 +114,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         String selectedYearStr = (String) jCombo_Tahun.getSelectedItem();
             if (selectedYearStr != null && !selectedYearStr.contains("Pilih")) {
                 int tahun = Integer.parseInt(selectedYearStr);
-                populateComboBoxBulanBerdasarkanTahun(tahun); // 🟢 isi bulan berdasarkan tahun
+                populateComboBoxBulanBerdasarkanTahun(tahun); //isi bulan berdasarkan tahun
                 populateTableGaji(); // Tampilkan data langsung jika perlu
             }
         });
