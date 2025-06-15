@@ -49,7 +49,62 @@ public class dashboardPegawai extends javax.swing.JFrame {
         haloNamaPegawai_isiOtomatis.setText(currentUser.getNama());
         pegawaiInfo();
 
-        Response<ArrayList<Absen>> absensResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        // Set style for jamLabel
+        jamLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22));
+        jamLabel.setForeground(new java.awt.Color(0, 123, 255));
+        jamLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        // Add shadow effect (simple workaround)
+        jamLabel.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createEmptyBorder(2, 10, 2, 10),
+            javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(2, 84, 106))
+        ));
+
+        // Timer for updating time with date
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.time.LocalDate today = java.time.LocalDate.now();
+            java.time.LocalTime now = java.time.LocalTime.now();
+            java.time.format.DateTimeFormatter dateFmt = java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy");
+            java.time.format.DateTimeFormatter timeFmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss");
+            jamLabel.setText("<html><div style='text-align:right;'>" +
+            "<span style='font-size:10px;color:#02546A;'>" + today.format(dateFmt) + "</span><br>" +
+            "<span style='font-size:14px;color:#007bff;'>" + now.format(timeFmt) + "</span></div></html>");
+        });
+        timer.setInitialDelay(0);
+        timer.start();
+        
+        
+        // --- Tambahan: Logic status tombol Check In/Out ---
+        int pegawaiId = currentUser.getId();
+        LocalDate today = LocalDate.now();
+        Response<ArrayList<Absen>> absensResponse = absenRepository.findByIdPegawai(pegawaiId);
+
+        boolean sudahCheckIn = false;
+        boolean sudahCheckOut = false;
+        if (absensResponse.isSuccess() && absensResponse.getData() != null) {
+            for (Absen absen : absensResponse.getData()) {
+                if (absen.getTanggal().isEqual(today)) {
+                    if (absen.getJamMasuk() != null) sudahCheckIn = true;
+                    if (absen.getJamKeluar() != null) sudahCheckOut = true;
+                }
+            }
+        }
+
+        // Atur enable/disable tombol
+        if (!sudahCheckIn) {
+            buttonCheckIn.setEnabled(true);
+            ButtonCheckOut.setEnabled(false);
+        } else if (sudahCheckIn && !sudahCheckOut) {
+            buttonCheckIn.setEnabled(false);
+            ButtonCheckOut.setEnabled(true);
+        } else if (sudahCheckIn && sudahCheckOut) {
+            buttonCheckIn.setEnabled(false);
+            ButtonCheckOut.setEnabled(false);
+    }
+
+    // Reset toggle state agar tidak kelihatan "ON"
+    buttonCheckIn.setSelected(false);
+    ButtonCheckOut.setSelected(false);
 
         if (absensResponse.isSuccess() && absensResponse.getData() != null) {
             populateTableHistoriAbsensi(absensResponse.getData());
@@ -93,6 +148,18 @@ public class dashboardPegawai extends javax.swing.JFrame {
             }
         } else {
             shiftPegawai_isiOtomatis.setText("Belum diatur");
+        }
+
+        // Isi tabel histori
+        Response<ArrayList<Absen>> absensResponse = absenRepository.findByIdPegawai(currentUser.getId());
+        if (absensResponse.isSuccess() && absensResponse.getData() != null) {
+            populateTableHistoriAbsensi(absensResponse.getData());
+        } else {
+            String message = !absensResponse.isSuccess()
+                    ? "Gagal: " + absensResponse.getMessage()
+                    : "Data null atau kosong";
+            JOptionPane.showMessageDialog(this, "Gagal memuat histori absensi.\n" + message);
+            System.err.println("Histori Absen Error: " + message);
         }
     }
 
@@ -142,12 +209,25 @@ public class dashboardPegawai extends javax.swing.JFrame {
             return;
         }
 
-        // Pop up keterlambatan check-in
+        // --- LOGIC BARU: Hanya bisa Check In pada window jamMasuk sampai jamMasuk+30menit ---
         LocalTime now = LocalTime.now();
         Integer shift = shiftPegawaiResponse.getData().get(0).getIdShift();
         Response<Shift> shiftResponse = shiftRepository.findById(shift);
-        if (now.isAfter(shiftResponse.getData().getJamMasuk().plusMinutes(30))) {
-            // Jika terlambat lebih dari 30 menit, tampilkan konfirmasi
+        LocalTime jamMasuk = shiftResponse.getData().getJamMasuk();
+
+        if (now.isBefore(jamMasuk)) {
+            JOptionPane.showMessageDialog(this, "Belum waktunya untuk Check In. Silakan absen setelah jam " + jamMasuk);
+            return;
+        }
+        if (now.isAfter(jamMasuk.plusMinutes(60))) {
+            JOptionPane.showMessageDialog(this, "Sudah lewat waktu Check In. Batas check in maksimal 1 jam setelah jam masuk.");
+            return;
+        }
+
+        // LOGIC LAMA, nonaktifkan. Jika terlambat lebih dari 60 menit, masih bisa Check In.
+        /*
+        if (now.isAfter(jamMasuk.plusMinutes(60))) {
+            // Jika terlambat lebih dari 60 menit, tampilkan konfirmasi
             int response = JOptionPane.showConfirmDialog(this,
                     "Anda terlambat Check In. Apakah Anda ingin tetap Check In?",
                     "Konfirmasi Check In",
@@ -157,13 +237,14 @@ public class dashboardPegawai extends javax.swing.JFrame {
                 return; // Keluar jika tidak ingin Check In
             }
         }
+        */
 
-        // Simpan data absen
+        // Hanya lanjut ke sini jika dalam window waktu
         Absen absen = new Absen();
         absen.setIdPegawai(pegawaiId);
         absen.setIdShift(shiftPegawaiResponse.getData().get(0).getIdShift());
         absen.setTanggal(today);
-        absen.setJamMasuk(LocalTime.now());
+        absen.setJamMasuk(now);
 
         Response<Absen> response = absenRepository.save(absen);
         if (response.isSuccess()) {
@@ -214,12 +295,22 @@ public class dashboardPegawai extends javax.swing.JFrame {
 
         LocalTime now = LocalTime.now();
         LocalTime batasCheckOut = shiftResponse.getData().getJamKeluar();
+
+        // --- LOGIC BARU: Check out hanya boleh dari jam keluar sampai 1 jam setelahnya ---
         if (now.isBefore(batasCheckOut)) {
             JOptionPane.showMessageDialog(this,
-                    "Anda belum bisa Check Out. Batas Check Out adalah pukul " + batasCheckOut + ".");
-            // Jika belum waktunya check out, keluar dari method
+                    "Belum waktunya untuk Check Out. Silakan absen setelah jam " + batasCheckOut);
             return;
-        } else if (now.isAfter(batasCheckOut.plusMinutes(60))) {
+        }
+        if (now.isAfter(batasCheckOut.plusMinutes(60))) {
+            JOptionPane.showMessageDialog(this,
+                    "Sudah lewat waktu Check Out. Batas maksimal 1 jam setelah jam keluar.");
+            return;
+        }
+
+        // LOGIC LAMA, nonaktifkan. jika sudah lewat waktu Check Out, masih bisa Check Out
+        /*
+        if (now.isAfter(batasCheckOut.plusMinutes(60))) {
             JOptionPane.showMessageDialog(this,
                     "Anda sudah melewati batas Check Out. Batas Check Out adalah pukul " + batasCheckOut + ".");
 
@@ -231,46 +322,28 @@ public class dashboardPegawai extends javax.swing.JFrame {
             if (response != JOptionPane.YES_OPTION) {
                 return; // Keluar jika tidak ingin Check Out
             }
+            // Simpan data di sini
+        }
+        */
 
-            Absen absen = absenHariIni.getData().stream()
-                    .filter(a -> a.getTanggal().isEqual(today) && a.getJamKeluar() == null)
-                    .findFirst()
-                    .orElse(null);
-            if (absen == null) {
-                JOptionPane.showMessageDialog(this, "Data absensi tidak ditemukan.");
-                return;
-            }
+        // Hanya lanjut ke sini jika dalam window waktu
+        Absen absen = absenHariIni.getData().stream()
+                .filter(a -> a.getTanggal().isEqual(today) && a.getJamKeluar() == null)
+                .findFirst()
+                .orElse(null);
+
+        if (absen != null) {
             absen.setJamKeluar(now);
-            Response<Absen> updateResponse = absenRepository.update(absen);
-            if (updateResponse.isSuccess()) {
+            Response<Absen> response = absenRepository.update(absen);
+            if (response.isSuccess()) {
                 JOptionPane.showMessageDialog(this, "Check Out Berhasil");
                 initializeComponents();
-                return;
             } else {
-                JOptionPane.showMessageDialog(this, "Check Out Gagal: " + updateResponse.getMessage());
-                System.err.println("Error: " + updateResponse.getMessage());
-                return;
+                JOptionPane.showMessageDialog(this, "Check Out Gagal: " + response.getMessage());
+                System.err.println("Error: " + response.getMessage());
             }
         } else {
-            // Simpan jam keluar
-            Absen absen = absenHariIni.getData().stream()
-                    .filter(a -> a.getTanggal().isEqual(today) && a.getJamKeluar() == null)
-                    .findFirst()
-                    .orElse(null);
-
-            if (absen != null) {
-                absen.setJamKeluar(now);
-                Response<Absen> response = absenRepository.update(absen);
-                if (response.isSuccess()) {
-                    JOptionPane.showMessageDialog(this, "Check Out Berhasil");
-                    initializeComponents();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Check Out Gagal: " + response.getMessage());
-                    System.err.println("Error: " + response.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Data absensi tidak ditemukan.");
-            }
+            JOptionPane.showMessageDialog(this, "Data absensi tidak ditemukan.");
         }
     }
 
@@ -300,6 +373,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         btmCancel = new javax.swing.JLabel();
         halo = new javax.swing.JLabel();
         haloNamaPegawai_isiOtomatis = new javax.swing.JLabel();
+        jamLabel = new javax.swing.JLabel();
         panelUtama_dashboardPegawai = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         buttonCheckIn = new javax.swing.JToggleButton();
@@ -437,6 +511,18 @@ public class dashboardPegawai extends javax.swing.JFrame {
         haloNamaPegawai_isiOtomatis.setForeground(new java.awt.Color(2, 84, 106));
         haloNamaPegawai_isiOtomatis.setText("Nama Pegawai");
 
+        jamLabel.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        jamLabel.setText("Tanggal, jam");
+        jamLabel.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jamLabelAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         javax.swing.GroupLayout headerPegawaiLayout = new javax.swing.GroupLayout(headerPegawai);
         headerPegawai.setLayout(headerPegawaiLayout);
         headerPegawaiLayout.setHorizontalGroup(
@@ -447,6 +533,8 @@ public class dashboardPegawai extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(haloNamaPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jamLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -461,7 +549,8 @@ public class dashboardPegawai extends javax.swing.JFrame {
                             .addComponent(haloNamaPegawai_isiOtomatis)))
                     .addGroup(headerPegawaiLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jamLabel))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -538,16 +627,17 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(2, 84, 106), new java.awt.Color(2, 84, 106), null));
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 40));
 
-        namaPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        namaPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         namaPegawai_isiOtomatis.setText("Nama Pegawai");
+        namaPegawai_isiOtomatis.setToolTipText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(namaPegawai_isiOtomatis, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(namaPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -559,7 +649,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(2, 84, 106), new java.awt.Color(2, 84, 106), null));
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 40));
 
-        nipPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nipPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         nipPegawai_isiOtomatis.setText("NIP Pegawai");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -567,8 +657,8 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nipPegawai_isiOtomatis, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(nipPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -580,7 +670,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(2, 84, 106), new java.awt.Color(2, 84, 106), null));
         jPanel4.setPreferredSize(new java.awt.Dimension(100, 40));
 
-        jabatanPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jabatanPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jabatanPegawai_isiOtomatis.setText("Jabatan Pegawai");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -588,8 +678,8 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jabatanPegawai_isiOtomatis, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jabatanPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -601,7 +691,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(2, 84, 106), new java.awt.Color(2, 84, 106), null));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 40));
 
-        shiftPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        shiftPegawai_isiOtomatis.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         shiftPegawai_isiOtomatis.setText("Shift Pegawai");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -609,8 +699,8 @@ public class dashboardPegawai extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(shiftPegawai_isiOtomatis, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(shiftPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -629,30 +719,27 @@ public class dashboardPegawai extends javax.swing.JFrame {
                         .addGroup(panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelUtama_dashboardPegawaiLayout.createSequentialGroup()
                                 .addGroup(panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(panelUtama_dashboardPegawaiLayout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(panelUtama_dashboardPegawaiLayout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                                        .addGap(6, 6, 6)))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelUtama_dashboardPegawaiLayout.createSequentialGroup()
                                 .addGroup(panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
                                 .addGroup(panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(46, 46, 46)
+                        .addGap(40, 40, 40)
                         .addComponent(buttonCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ButtonCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         panelUtama_dashboardPegawaiLayout.setVerticalGroup(
             panelUtama_dashboardPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -704,11 +791,15 @@ public class dashboardPegawai extends javax.swing.JFrame {
                 .addComponent(panelUtama_dashboardPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 640));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jamLabelAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jamLabelAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jamLabelAncestorAdded
 
     private void MenuGajikuPegawaiMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_MenuGajikuPegawaiMouseClicked
         menuGajiku_Pegawai menuGaji = new menuGajiku_Pegawai();
@@ -852,6 +943,7 @@ public class dashboardPegawai extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jabatanPegawai_isiOtomatis;
+    private javax.swing.JLabel jamLabel;
     private javax.swing.JLabel namaPegawai_isiOtomatis;
     private javax.swing.JLabel nipPegawai_isiOtomatis;
     private javax.swing.JPanel panelUtama_dashboardPegawai;

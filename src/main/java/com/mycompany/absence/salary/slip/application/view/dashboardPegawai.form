@@ -43,7 +43,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="1200" height="-1"/>
+          <AbsoluteConstraints x="0" y="0" width="1200" height="640"/>
         </Constraint>
       </Constraints>
 
@@ -231,6 +231,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="haloNamaPegawai_isiOtomatis" min="-2" pref="582" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jamLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btmCancel" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -251,6 +253,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btmCancel" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jamLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="30" max="32767" attributes="0"/>
                   </Group>
@@ -293,6 +296,17 @@
                 <Property name="text" type="java.lang.String" value="Nama Pegawai"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="jamLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="2"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tanggal, jam"/>
+              </Properties>
+              <Events>
+                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jamLabelAncestorAdded"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="panelUtama_dashboardPegawai">
@@ -312,15 +326,10 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel3" max="32767" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel7" pref="92" max="32767" attributes="0"/>
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabel7" pref="86" max="32767" attributes="0"/>
+                                          <Component id="jLabel3" max="32767" attributes="0"/>
                                       </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jPanel2" min="-2" pref="265" max="-2" attributes="0"/>
                                           <Component id="jPanel5" alignment="0" min="-2" pref="265" max="-2" attributes="0"/>
@@ -328,25 +337,25 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel6" pref="86" max="32767" attributes="0"/>
                                           <Component id="jLabel5" max="32767" attributes="0"/>
-                                          <Component id="jLabel6" pref="92" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jPanel3" min="-2" pref="265" max="-2" attributes="0"/>
                                           <Component id="jPanel4" min="-2" pref="265" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="buttonCheckIn" min="-2" pref="240" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="ButtonCheckOut" min="-2" pref="240" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel4" alignment="0" min="-2" pref="448" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -545,8 +554,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="namaPegawai_isiOtomatis" pref="249" max="32767" attributes="0"/>
+                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <Component id="namaPegawai_isiOtomatis" min="-2" pref="240" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -560,8 +569,9 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="namaPegawai_isiOtomatis">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="Nama Pegawai"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -588,8 +598,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="nipPegawai_isiOtomatis" pref="249" max="32767" attributes="0"/>
+                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <Component id="nipPegawai_isiOtomatis" min="-2" pref="240" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -603,7 +613,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="nipPegawai_isiOtomatis">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="NIP Pegawai"/>
                   </Properties>
                 </Component>
@@ -631,8 +641,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jabatanPegawai_isiOtomatis" pref="249" max="32767" attributes="0"/>
+                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <Component id="jabatanPegawai_isiOtomatis" min="-2" pref="240" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -646,7 +656,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jabatanPegawai_isiOtomatis">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="Jabatan Pegawai"/>
                   </Properties>
                 </Component>
@@ -674,8 +684,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="shiftPegawai_isiOtomatis" pref="249" max="32767" attributes="0"/>
+                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <Component id="shiftPegawai_isiOtomatis" min="-2" pref="240" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -689,7 +699,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="shiftPegawai_isiOtomatis">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" value="Shift Pegawai"/>
                   </Properties>
                 </Component>

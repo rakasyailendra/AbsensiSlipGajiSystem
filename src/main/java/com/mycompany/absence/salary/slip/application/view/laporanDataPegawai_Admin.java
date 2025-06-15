@@ -295,7 +295,7 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        panelUtama_dashboardAdmin.setPreferredSize(new java.awt.Dimension(900, 499));
+        panelUtama_dashboardAdmin.setPreferredSize(new java.awt.Dimension(900, 525));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 84, 106));
@@ -332,14 +332,16 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
         panelUtama_dashboardAdminLayout.setHorizontalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelUtama_dashboardAdminLayout.createSequentialGroup()
-                        .addGap(833, 833, 833)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelUtama_dashboardAdminLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 886, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         panelUtama_dashboardAdminLayout.setVerticalGroup(
             panelUtama_dashboardAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,8 +363,8 @@ public class laporanDataPegawai_Admin extends javax.swing.JFrame {
                 .addComponent(sideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
-                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)))
+                    .addComponent(headerAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                    .addComponent(panelUtama_dashboardAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

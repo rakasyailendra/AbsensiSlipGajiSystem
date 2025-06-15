@@ -106,6 +106,30 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         populateComboBox();
         populateTableGaji();
 
+        // Set style for jamLabel
+        jamLabel2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22));
+        jamLabel2.setForeground(new java.awt.Color(0, 123, 255));
+        jamLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        // Add shadow effect (simple workaround)
+        jamLabel2.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createEmptyBorder(2, 10, 2, 10),
+            javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(2, 84, 106))
+        ));
+
+        // Timer for updating time with date
+        javax.swing.Timer timer = new javax.swing.Timer(1000, e -> {
+            java.time.LocalDate today = java.time.LocalDate.now();
+            java.time.LocalTime now = java.time.LocalTime.now();
+            java.time.format.DateTimeFormatter dateFmt = java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy");
+            java.time.format.DateTimeFormatter timeFmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss");
+            jamLabel2.setText("<html><div style='text-align:right;'>" +
+            "<span style='font-size:10px;color:#02546A;'>" + today.format(dateFmt) + "</span><br>" +
+            "<span style='font-size:14px;color:#007bff;'>" + now.format(timeFmt) + "</span></div></html>");
+        });
+        timer.setInitialDelay(0);
+        timer.start();
+
         // Update table on year/month selection change
         jCombo_Tahun.addActionListener(evt -> populateTableGaji());
         jCombo_Bulan.addActionListener(evt -> populateTableGaji());
@@ -271,6 +295,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         btmCancel = new javax.swing.JLabel();
         halo = new javax.swing.JLabel();
         haloNamaPegawai_isiOtomatis = new javax.swing.JLabel();
+        jamLabel2 = new javax.swing.JLabel();
         panelUtama_shiftkuPegawai = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -394,6 +419,18 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         haloNamaPegawai_isiOtomatis.setForeground(new java.awt.Color(2, 84, 106));
         haloNamaPegawai_isiOtomatis.setText("Nama Pegawai");
 
+        jamLabel2.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
+        jamLabel2.setText("Tanggal, jam");
+        jamLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jamLabel2AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         javax.swing.GroupLayout headerPegawaiLayout = new javax.swing.GroupLayout(headerPegawai);
         headerPegawai.setLayout(headerPegawaiLayout);
         headerPegawaiLayout.setHorizontalGroup(
@@ -404,6 +441,8 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(haloNamaPegawai_isiOtomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jamLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btmCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -418,7 +457,8 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
                             .addComponent(haloNamaPegawai_isiOtomatis)))
                     .addGroup(headerPegawaiLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btmCancel)))
+                        .addComponent(btmCancel))
+                    .addComponent(jamLabel2))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -622,6 +662,10 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_cetakGajikuActionPerformed
 
+    private void jamLabel2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jamLabel2AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jamLabel2AncestorAdded
+
     // Helper untuk cell info (tanpa border)
     private com.itextpdf.text.pdf.PdfPCell getCell(String text, com.itextpdf.text.Font font, int alignment) {
         com.itextpdf.text.pdf.PdfPCell cell = new com.itextpdf.text.pdf.PdfPCell(new com.itextpdf.text.Phrase(text, font));
@@ -787,6 +831,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jamLabel2;
     private javax.swing.JPanel panelUtama_shiftkuPegawai;
     private javax.swing.JPanel sideBar;
     private javax.swing.JTable table_shiftkuPegawai_isiOtomatis;
