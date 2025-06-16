@@ -1,26 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI;
 
 public class Admin {
     private int idAdmin;
     private String username;
-    private String password; // Pertimbangkan keamanan untuk password di aplikasi nyata
+    private String password; // Hindari plaintext di aplikasi nyata
     private String namaLengkap;
     private String jabatan;
-    private final String peran = "admin"; // Peran bersifat final dan spesifik untuk admin
+    private final String peran = "admin"; // Final karena peran khusus
 
     // Konstruktor default
     public Admin() {
     }
 
-    // Konstruktor dengan parameter
+    // Konstruktor parameter
     public Admin(int idAdmin, String username, String password, String namaLengkap, String jabatan) {
         this.idAdmin = idAdmin;
-        this.username = username;
-        this.password = password;
+        this.setUsername(username);
+        this.setPassword(password);
         this.namaLengkap = namaLengkap;
         this.jabatan = jabatan;
     }
@@ -39,7 +35,11 @@ public class Admin {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        if (username != null && !username.trim().isEmpty()) {
+            this.username = username;
+        } else {
+            throw new IllegalArgumentException("Username tidak boleh kosong.");
+        }
     }
 
     public String getPassword() {
@@ -47,7 +47,11 @@ public class Admin {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null && password.length() >= 4) {
+            this.password = password;
+        } else {
+            throw new IllegalArgumentException("Password minimal 4 karakter.");
+        }
     }
 
     public String getNamaLengkap() {
@@ -68,6 +72,11 @@ public class Admin {
 
     public String getPeran() {
         return peran;
+    }
+
+    // Cek login sederhana (untuk simulasi lokal, bukan produksi)
+    public boolean loginCheck(String inputUsername, String inputPassword) {
+        return this.username.equals(inputUsername) && this.password.equals(inputPassword);
     }
 
     @Override
