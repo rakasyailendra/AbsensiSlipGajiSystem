@@ -1,20 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI;
 
-import java.util.Date; // Menggunakan java.util.Date untuk kemudahan dengan JDateChooser
+import java.util.Date;
 import java.sql.Time;
 
 public class Absensi {
     private int idAbsensi;
-    private int idPegawai; // Bisa juga menggunakan objek Pegawai
+    private int idPegawai; // Referensi ke Pegawai, bisa diganti objek Pegawai
     private Date tanggal;
     private Time jamMasuk;
     private Time jamKeluar;
     private String fotoBuktiPath;
-    private String statusKehadiran; // "hadir", "tidak hadir"
+    private String statusKehadiran; // Nilai yang diperbolehkan: "hadir", "tidak hadir"
 
     // Konstruktor default
     public Absensi() {
@@ -28,7 +24,7 @@ public class Absensi {
         this.jamMasuk = jamMasuk;
         this.jamKeluar = jamKeluar;
         this.fotoBuktiPath = fotoBuktiPath;
-        this.statusKehadiran = statusKehadiran;
+        setStatusKehadiran(statusKehadiran); // validasi lewat setter
     }
 
     // Getter dan Setter
@@ -85,18 +81,23 @@ public class Absensi {
     }
 
     public void setStatusKehadiran(String statusKehadiran) {
-        this.statusKehadiran = statusKehadiran;
+        if (statusKehadiran.equalsIgnoreCase("hadir") || statusKehadiran.equalsIgnoreCase("tidak hadir")) {
+            this.statusKehadiran = statusKehadiran.toLowerCase();
+        } else {
+            throw new IllegalArgumentException("Status kehadiran hanya boleh 'hadir' atau 'tidak hadir'");
+        }
     }
 
     @Override
     public String toString() {
         return "Absensi{" +
-               "idAbsensi=" + idAbsensi +
-               ", idPegawai=" + idPegawai +
-               ", tanggal=" + tanggal +
-               ", jamMasuk=" + jamMasuk +
-               ", jamKeluar=" + jamKeluar +
-               ", statusKehadiran='" + statusKehadiran + '\'' +
-               '}';
+                "idAbsensi=" + idAbsensi +
+                ", idPegawai=" + idPegawai +
+                ", tanggal=" + tanggal +
+                ", jamMasuk=" + jamMasuk +
+                ", jamKeluar=" + jamKeluar +
+                ", statusKehadiran='" + statusKehadiran + '\'' +
+                ", fotoBukti='" + fotoBuktiPath + '\'' +
+                '}';
     }
 }
