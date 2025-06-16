@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 // Nama File: Shift.java
 package GUI;
 
@@ -25,8 +21,8 @@ public class Shift {
         this.idShift = idShift;
         this.idPegawai = idPegawai;
         this.tanggal = tanggal;
-        this.jamMulai = jamMulai;
-        this.jamSelesai = jamSelesai;
+        setJamMulai(jamMulai);       // Gunakan setter untuk validasi
+        setJamSelesai(jamSelesai);   // Gunakan setter untuk validasi
         this.keterangan = keterangan;
     }
 
@@ -68,6 +64,9 @@ public class Shift {
     }
 
     public void setJamSelesai(Time jamSelesai) {
+        if (jamMulai != null && jamSelesai != null && jamSelesai.before(jamMulai)) {
+            throw new IllegalArgumentException("Jam selesai tidak boleh lebih awal dari jam mulai.");
+        }
         this.jamSelesai = jamSelesai;
     }
 
@@ -79,6 +78,15 @@ public class Shift {
         this.keterangan = keterangan;
     }
 
+    // Menghitung durasi shift dalam jam (pembulatan ke jam terdekat)
+    public long getDurasiShiftDalamJam() {
+        if (jamMulai != null && jamSelesai != null) {
+            long millis = jamSelesai.getTime() - jamMulai.getTime();
+            return millis / (1000 * 60 * 60); // konversi ke jam
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "Shift{" +
@@ -87,6 +95,8 @@ public class Shift {
                ", tanggal=" + tanggal +
                ", jamMulai=" + jamMulai +
                ", jamSelesai=" + jamSelesai +
+               ", keterangan='" + keterangan + '\'' +
+               ", durasi=" + getDurasiShiftDalamJam() + " jam" +
                '}';
     }
 }
