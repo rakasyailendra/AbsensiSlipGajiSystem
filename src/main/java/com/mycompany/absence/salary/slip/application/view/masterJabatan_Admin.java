@@ -9,6 +9,7 @@ package com.mycompany.absence.salary.slip.application.view;
  * @author User
  */
 public class masterJabatan_Admin extends javax.swing.JFrame {
+    int xx, xy;
 
     /**
      * Creates new form masterJabatan_Admin
@@ -49,6 +50,16 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -366,6 +377,17 @@ public class masterJabatan_Admin extends javax.swing.JFrame {
         laporanDataPegawai.setVisible(true);                      // Menampilkan form tujuan
         this.dispose();
     }//GEN-LAST:event_MenuDatapegawaiAdminMouseClicked
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_formMousePressed
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_formMouseDragged
 
     /**
      * @param args the command line arguments

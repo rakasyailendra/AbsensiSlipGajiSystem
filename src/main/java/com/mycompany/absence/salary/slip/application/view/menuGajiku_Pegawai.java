@@ -32,6 +32,7 @@ import com.mycompany.absence.salary.slip.application.utils.SessionManager;
  * @author User
  */
 public class menuGajiku_Pegawai extends javax.swing.JFrame {
+    int xx, xy;
 
     // Daftar nama bulan dalam Bahasa Indonesia
     private static final String[] MONTHS_ID = {
@@ -308,6 +309,16 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -484,7 +495,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
 
         jLabel9.setText("Tahun :");
 
-        btn_cetakGajiku.setText("Cetak");
+        btn_cetakGajiku.setText("CETAK");
         btn_cetakGajiku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cetakGajikuActionPerformed(evt);
@@ -533,7 +544,7 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
                     .addComponent(btn_cetakGajiku))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -665,6 +676,17 @@ public class menuGajiku_Pegawai extends javax.swing.JFrame {
     private void jamLabel2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jamLabel2AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jamLabel2AncestorAdded
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_formMousePressed
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_formMouseDragged
 
     // Helper untuk cell info (tanpa border)
     private com.itextpdf.text.pdf.PdfPCell getCell(String text, com.itextpdf.text.Font font, int alignment) {
