@@ -73,7 +73,7 @@ public class form_transaksiPerubahanShift extends javax.swing.JPanel {
     }
 
     private void populateTableDataPerubahanShift() {
-        String[] columnNames = { "NIP", "Nama Pegawai", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Pulang" };
+        String[] columnNames = { "NIP", "Nama Pegawai", "Jabatan", "Nama Shift", "Jam Masuk", "Jam Keluar" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
