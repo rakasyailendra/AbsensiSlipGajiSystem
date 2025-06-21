@@ -24,11 +24,17 @@ Disusun Oleh:
 <p align="center">
   <strong>Screenshots Aplikasi</strong>
 </p>
+
 <p align="center">
-  <img src="TAMPILAN/loginframe.png" alt="Tampilan Admin" width="40%">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="TAMPILAN/admindashboard.png" alt="Tampilan Pegawai" width="53%">
-   <img src="TAMPILAN/adminframe2.png" alt="Tampilan Pegawai" width="53%">
+  <img src="TAMPILAN/loginframe.png" alt="Tampilan Login" width="48%">
+  &nbsp;&nbsp;
+  <img src="TAMPILAN/admindashboard.png" alt="Tampilan Dashboard Admin" width="48%">
+</p>
+
+<p align="center">
+  <img src="TAMPILAN/adminframe2.png" alt="Tampilan Data Pegawai" width="48%">
+  &nbsp;&nbsp;
+  <img src="TAMPILAN/adminframe3.png" alt="Tampilan Data Shift" width="48%">
 </p>
 
 
