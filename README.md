@@ -1,5 +1,5 @@
 <img src="opening pondok baitul hikmah.gif" alt="GitHub Banner" width="100%" />
-<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 <h1 align="center">
 <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=800&height=80&duration=7000&lines=Assalamu'alaikum+Warahmatullahi+Wabarakatuh;+Aplikasi+Absensi+Pegawai+%26+Slip+Gaji📿📊"
   />
@@ -22,7 +22,7 @@ Disusun Oleh:
 <br>
 
 <p align="center">
-  <strong>Screenshots Aplikasi</strong>
+  <strong>Tampilan Aplikasi</strong>
 </p>
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 <p align="center">
@@ -51,7 +51,7 @@ ADMIN PESANTREN 👨‍💼
 #### **PEGAWAI ( Pengurus, Pengajar (Ustadz/Ustadzah), dan Penjaga) 👳🏻‍♀️🧕🏻📿** <br>
 
 1. Melakukan absensi harian chek in dan check out sesuai jabatan <br>
-2. Melihat jadwal shift pesantren<br>
+2. Melihat dan mencetak slip gajijadwal shift pesantren<br>
 3. Melihat dan mencetak slip gaji
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
